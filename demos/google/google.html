@@ -1,0 +1,58 @@
+<html>
+<head>
+    <title>Google</title>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <script src="../../scripts/sockit.js"></script>
+
+    <style>
+
+        #out {
+            padding: 5px;
+            width: 900px;
+            height: 500px;
+            margin: 0 auto;
+            background-color: #eeeeee;
+            border: 1px gray solid;
+            overflow: auto;
+        }
+
+    </style>
+</head>
+
+<body>
+<center>
+    <h2>Fetching <code>www.google.com</code></h2>
+</center>
+
+<div id="temp" style="display:hidden;"></div>
+
+<div id="out">
+</div>
+
+<script type="text/javascript">
+
+    loadSockitPlugin();
+
+	function output(s)
+	{
+		$("#out").html( $("#out").html() + "<p>" + s + "</p>");
+		console.log(s);
+        scrollDown();
+	}
+
+    var client = sockit.createTcpClient("www.google.com", 80);
+    client.addEventListener('data', function(event) {
+        $("#temp").html(escape(event.read()));
+        $("#temp").hide();
+        var data = $("#temp").text();
+        output(data);
+        scrollDown();
+    });
+    var send = "GET / HTTP/1.0\n\n"
+    output("Sending: " + send);
+    client.send(send);
+
+</script>
+
+</body>
+</html> 

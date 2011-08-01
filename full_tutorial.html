@@ -1,0 +1,269 @@
+<html>
+	<head>
+		<title>SockIt &#183; Full Tutorial</title>
+		<link href="tutorial.css" rel="stylesheet" type="text/css">
+	</head>
+
+	<body>
+		<center>
+			<h2>Full Tutorial</h2>
+            <br><a href="index.html">Home</a> &#183; <a href="tutorial.html">Quick Tutorial</a> &#183; <a href="full_tutorial.html">Full Tutorial</a> &#183; <a href="downloads.html">Downloads</a> &#183; <a href="demos.html">Demos</a> &#183; <a href="api_documentation.html">API Documentation</a> &#183; <a href="html/index.html">Source Documentation</a> &#183; <a href="developers.html">Developers</a>
+
+        </center>
+
+		<h3>Initialization</h3>
+		<div class='section'>
+			The plugin allows Javascript applications to perform asynchronous network I/O using TCP or UDP. To begin, load the plugin into the page by calling:
+				<pre>	var sockit = loadSockitPlugin();</pre>
+			This function is found in <a href="scripts/sockit.js">sockit.js</a>. Once <code>loadSockitPlugin</code> has been called, you can create a TCP or UDP server or client, and asynchronously communicate using Javascript event callbacks.
+		</div>
+
+		<h3>Server</h3>
+		<div class='section'>
+			To create a client, we must minimally specify the hostname and port to which the client will connect. This hostname and port are permanent for the client, so that a client is bound to a single remote endpoint. To create a UDP server that will listen on port 1234, we simply create it:
+<pre>
+	var server = sockit.createUdpServer(1234);
+</pre>
+			And tell it to start bind to the given port and start listening:
+<pre>
+	server.listen();
+</pre>
+		Now, suppose we are finished with this server, and would like to free the port and associated resources:
+<pre>
+	server.close();
+</pre>
+		Now, the server finishes sending any necessary responses, and gracefully shuts down.
+		</div>
+
+		<h3>Client</h3>
+		<div class='section'>
+			To create a TCP client to connect to <code>"www.example.com"</code> on port 12345, we first create a client:
+
+<pre>
+	var client = sockit.createTcpClient("www.example.com", 12345);
+</pre>
+			Now, let's send some data over the wire:
+<pre>
+	client.send("Some data");
+</pre>
+			To send structured data across the connection, we simply flatten the data to a string. For instance, to send some data structure <code>myDataStructure</code>, we could first convert it into JSON:
+<pre>
+	client.send(JSON.stringify(myDataStructure));
+</pre>
+			Once we are finished with our client, we can gracefully shut it down. This is performed asynchronously, so that all <code>send</code> calls complete before the client shuts down.
+<pre>
+	client.close();
+</pre>
+			
+		</div>
+
+		<h3>Registering Callbacks</h3>
+		<div class='section'>
+			<p>Using the plugin, we can register to call arbitrary Javascript functions when any of several events occurs.</p>
+
+			<h4>Registering 'Data Received' Callbacks</h4>
+			<div class='subsection'>
+				<p>On either clients or servers, we can register callbacks to be invoked when any data is received on the connection. Assuming we already have a TCP (or UDP) server <code>myServer</code> listening on some port, we can log all 
+					data received with:</p>
+<pre>
+	myServer.addEventListener('data', function(event) {
+                var data = event.read();
+		console.log("Received: " + data);
+	});
+</pre>
+				<p>Likewise, functions that handle <code>'data'</code> functions should receive an event object, with which we can read the data received, reply to any data received, or get information about the remote endpoint. For instance, to have <code>myServer</code> also reply to
+					every message received with an acknowledgement, we simply change the previous code to the following:
+				</p>
+<pre>
+	myServer.addEventListener('data', function(event) {
+                var message = event.read();
+		console.log("Received: " + message);
+		event.send("Got your message!");
+		
+	});
+</pre>
+			</div>
+
+			<h4>Registering 'Error' Callbacks</h4>
+			<div class='subsection'>
+				<p>
+				On either clients or servers, we can register a callback to be invoked when an error occurs in an object. For instance, suppose we have some client, <code>myErrorProneClient</code>, and would like to log any errors on that object to the browser console. We can do so with the following:
+				</p>
+<pre>
+	myErrorProneClient.addEventListener('error', function(message) {
+		console.log("Error: " + message);
+		// Error handle
+	});
+</pre>
+				<p>When an error occurs, an event is fired which contains the error message as a parameter, so that it can be used for debugging as shown above.</p>
+			</div>
+
+			<h4>Registering 'Shutdown' Callbacks</h4>
+			<div class='subsection'>
+				<p>
+				Since all I/O is performed asynchronously, calling <code>shutdown</code> on a server or client may not immediately complete, but will be executed once any data waiting to be sent has been sent. 
+				Suppose we want to be notified when some server, say <code>myOldServer</code>, has completely shutdown and closed its socket. We can do this by registering a callback on a <code>'close'</code> event, which provides no parameters, as shown below:
+				</p>
+<pre>
+	myOldServer.addEventListener('close', function() {
+		console.log("My old server finally shutdown!");
+		// Cleanup
+	});
+</pre>
+            Note that shutdown callbacks will not be performed when the page is refreshed
+			</div>
+
+			<h4>Registering 'Resolve' Callbacks</h4>
+			<div class='subsection'>
+				When we create a client, it will asynchronously resolve the remote endpoint. To execute a function once the client has successfully performed the DNS resolution, we register the <code>'resolve'</code> callback:
+<pre>
+	server.addEventListener('resolve', function() {
+		console.log("Remote endpoint successfully resolved!");
+		// Do stuff
+	});
+</pre>
+			This callback can only be registered on a client object, as it is fired from the client once has resolved the remote endpoint.
+			</div>
+
+			<h4>Registering 'Open' Callbacks</h4>
+			<div class='subsection'>
+				When creating a server using the plugin, the server may not immediately begin listening for incoming connections. To execute a function once a server has been initialized and opened, we register the <code>'open'</code> callback:
+<pre>
+	server.addEventListener('open', function() {
+		console.log("Server is now listening!");
+		// Do stuff
+	});
+</pre>
+			This callback only applies to the server, as it is fired once the server has bound to its listening port and started listening for incoming connections.
+    		</div>
+
+			<h4>Registering 'Disconnect' Callbacks</h4>
+			<div class='subsection'>
+				<p>
+                For TCP clients and servers we can register a callback to occur whenever the client or server has disconnect from the remote host:
+				</p>
+<pre>
+	myTcpClientOrServer.addEventListener('disconnect', function(message) {
+		console.log("My TCP object has been disconnected! Error message: " + message);
+		// Error handle
+	});
+</pre>
+				<p>Thus, when a TCP client or server has disconnected from some remote host, an event is fired which contains the error message as a parameter, so that it can be used for debugging as shown above.</p>
+			</div>
+
+			<h4>Registering 'Connect' Callbacks</h4>
+			<div class='subsection'>
+				<p>
+                For TCP clients or servers we can register a callback to occur whenever the client or server has connected to a remote host: 
+				</p>
+<pre>
+	myTcpClientOrServer.addEventListener('connect', function() {
+		console.log("My TCP client or server has been connected!");
+		// Do stuff
+	});
+</pre>
+				<p>When a TCP client or server has connected to some remote host, an event is fired which contain no parameters.</p>
+			</div>
+
+</div>
+
+		<h3>Controlling Threading</h3>
+		<div class='section'>
+			<p>
+			To gain tighter control over resources used by the plugin, and better control the performance and interaction between clients or servers, we can manually create thread objects. 
+			These thread objects expose the same methods as does the top level API, but each each thread represents a separate thread of computation.
+			</p>
+			<p>
+			Behind the scenes, each <code>thread</code> object actually consists of two threads of computation: first, the foreground that represents the main thread of computation of the browser, and second, a worker thread that executes I/O requests made by the foreground thead.
+			While each <code>thread</code> object shares the foreground thread, the power of controlling threading comes from the background worker thread, which is unique to each <code>thread</code> object, so that
+			I/O requests from a thread object executes in parallel to I/O requests from any other thread object. 
+			</p>
+			<p>
+			Actions performed on each thread are still asynchronous, but actions running on separate threads may execute in parallel, while actions executed on a single thread will be asynchronous, but will not execute in parallel. Using the top level API for the plugin rather
+			than creating thread objects uses a default background thread, so that actions called from the root API may be executed in parallel with actions called from an explicitly created thread.
+			</p>
+
+			To create a new network thread, simply call <code>createThread</code> from the plugin root:
+<pre>
+	var myThread = sockit.createThread();
+</pre>
+			Then, we can create clients or servers on this thread, and actions invoked on these objects will be executed in this thread:
+<pre>
+	var anotherTcpServer = myThread.createTcpServer(1234);
+</pre>
+			Likewise, all other server and client initialization methods that exist on the top level API are mirrored on the thread objects, and on each thread, we can create any number of servers and clients.
+		</div>
+
+		<h3>Using Additional Socket Options</h3>
+		<p>In order to specify options on the underlying TCP and UDP sockets of the plugin, servers and clients can be created with several optional arguments. Arguments that are not included revert to their default value in each client and server.</p>
+		<div class='section'>
+
+			<h4>A Multicast UDP Server</h4>
+			<div class='section'>
+				<p>Suppose we want to create a UDP server that will receive messages from multicast group <code>DEV.SockIt.DEMO</code>, which resolves to <code>239.8.128.34</code>, port <code>54321</code>. Then, we simply do the following:</p>
+<pre>
+	var multicastUdpServer = sockit.createUdpServer('localhost', 54321, {
+		multicast	:   true,
+		multicastGroup	:   "239.8.128.34",
+		reuseAddress	:   true
+	});
+	
+	multicastUdpServer.listen();
+</pre>
+			<p>Additionally, if we plan to reply from this server, we should be sure to set the <code>MulticastTTL</code> parameter, since this has no specified default value. Likewise, for a multicast server such as in this example, we should always set <code>ReuseAddress</code> to be true, so that multiple servers may listen to the same port.</p>
+			</div>
+			
+			<h4>A Multicast UDP Client</h4>
+			<div class='section'>
+				<p>Suppose we want to create a UDP client that will multicast to a multicast group <code>DEV.SockIt.DEMO</code> which is bound to <code>239.8.128.34</code>, port <code>9999</code>.
+				Then, to create a client to send a multicast message to this group, with a <code>TTL</code> of 16, we simply do the following:</p>
+<pre>
+	var multicastUdpClient = sockit.createUdpClient('239.8.128.34', 9999, {
+		multicast	:   true,
+		multicastTTL	:   16
+	});
+	
+	multicastUdpClient.send("Hello!");
+</pre>
+				<p>Note that when using multicast, we should always be sure to include both the <code>Multicast</code> and <code>MulticastTTL</code> parameters for sending to a multicast group such as in this example.</p>
+			</div>
+
+			<h4>IPv6 TCP Client</h4>
+			<div class='section'>
+				<p>Suppose we want to create a TCP client to <code>::1</code> on port 8888, that will use IPv6, and request to send keep-alive messages over its connection every <code>100ms</code>. Then, we can do this with the following:</p>
+<pre>
+	var tcpClient = sockit.createTcpClient('::1', 8888, {
+	        keepAliveTimeout : 100,
+	        keepAlive :   true,     
+		ipv6  	  :   true
+	});
+</pre>
+				<p>For a full list of the available options for each client and server, see our full <a href="api_documentation.html">API documentation</a>.</p>
+			</div>
+
+    		<h4>Binary Data</h4>
+			<div class='section'>
+				<p>Suppose we want to use a TCP client connected to <code>google.com:80</code> to implement a new protocol, where we must start each message with the byte <code>0xFF</code>, followed by a single byte containing the message length, then the message itself. Although this is typically difficult using Javascript, to do this using the client API, we simply do the following:</p>
+<pre>
+    var binaryTcpClient = sockit.createTcpClient('google.com', 80);
+    binaryTcpClient.sendBytes([0xFF, message.length]);
+    binaryTcpClient.send(message);
+</pre>
+                <p>Alternatively, we could have used the top level API to convert the bytes into string data, and used the typical client <code>send</code> to send the result:</p>
+<pre>
+    var binaryTcpClient = sockit.createTcpClient('google.com', 80);
+    var stringData = sockit.toBinary([0xFF, message.length]);
+    binaryTcpClient.send(stringData + message);
+</pre>
+				<p>Note that here, we assume that <code>message.length</code> is at most <code>255</code>.</p>
+			</div>
+           
+		</div>
+		
+		<p>&nbsp;</p>
+	<center>
+		<a href="index.html">Home</a> &#183; <a href="tutorial.html">Quick Tutorial</a> &#183; <a href="full_tutorial.html">Full Tutorial</a> &#183; <a href="downloads.html">Downloads</a> &#183; <a href="demos.html">Demos</a> &#183; <a href="api_documentation.html">API Documentation</a> &#183; <a href="html/index.html">Source Documentation</a> &#183; <a href="developers.html">Developers</a>
+
+	</center>
+	</body>
+</html>

@@ -1,0 +1,115 @@
+<html>
+	<head>
+		<title>SockIt &#183; Downloads</title>
+		<link href="tutorial.css" rel="stylesheet" type="text/css">
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> 
+        <script src="scripts/systemDetector.js"></script>
+	</head>
+
+	<body>
+			<center>
+				<h1>SockIt &#183; Downloads</h1>
+		        <br><br><a href="index.html">Home</a> &#183; <a href="tutorial.html">Quick Tutorial</a> &#183; <a href="full_tutorial.html">Full Tutorial</a> &#183; <a href="downloads.html">Downloads</a> &#183; <a href="demos.html">Demos</a> &#183; <a href="api_documentation.html">API Documentation</a> &#183; <a href="html/index.html">Source Documentation</a> &#183; <a href="developers.html">Developers</a>
+                <br>
+        	</center>
+		
+		<center>
+		<div class='section'>
+		<br><br><br>
+			<table class="downloads">
+				<thead>
+					<td></td>
+					<td>Windows</td>
+					<td>Linux 64-bit</td>
+					<td>Linux 32-bit</td>
+					<td>Mac</td>
+				</thead>
+				<tr>
+					<td><strong>Chrome</strong></td>
+					<td><a id="windows_chrome" href="downloads/sockit_win.crx">download</a></td>
+					<td><a id="linux_chrome_64" href="downloads/sockit_linux64.crx">download</a></td>
+					<td><a id="linux_chrome_32" href="downloads/sockit_linux32.crx">download</a></td>
+					<td onmouseover="$('#mac_info').show();" onmouseout="$('#mac_info').hide();">
+                        <a id="mac_chrome" href="downloads/sockit_mac.installer.zip">download</a>
+                    </td>
+				</tr>
+				<tr>
+					<td><strong>Firefox</strong></td>
+					<td onmouseover="$('#firefox_info').show();" onmouseout="$('#firefox_info').hide();">
+                        <a id="windows_firefox" href="downloads/sockit.msi">download</a>
+                    </td>
+					<td onmouseover="$('#firefox_info').show(); $('#firefox_linux_info').show();" onmouseout="$('#firefox_info').hide(); $('#firefox_linux_info').hide();">
+                        <a id="linux_firefox_64" href="downloads/sockit_linux.sh">download</a>
+                    </td>
+					<td onmouseover="$('#firefox_info').show(); $('#firefox_linux_info').show();" onmouseout="$('#firefox_info').hide(); $('#firefox_linux_info').hide();">
+                        <a id="linux_firefox_32" href="downloads/sockit_linux.sh">download</a>
+                    </td>
+					<td onmouseover="$('#firefox_info').show(); $('#mac_info').show();" onmouseout="$('#firefox_info').hide(); $('#mac_info').hide();">
+                        <a id="mac_firefox" href="downloads/sockit_mac.installer.zip">download</a>
+                    </td>
+				</tr>
+				<tr>
+					<td><strong>Safari</strong></td>
+					<td onmouseover="$('#safari_info').show();" onmouseout="$('#safari_info').hide();" >
+                        <a id="windows_safari" href="downloads/sockit.msi">download</a>
+                    </td>
+	    			<td>- - - - - -</td>
+	    			<td>- - - - - -</td>
+					<td onmouseover="$('#safari_info').show(); $('#mac_info').show();" onmouseout="$('#safari_info').hide(); $('#mac_info').hide();" >
+                        <a id="mac_safari" href="downloads/sockit_mac.installer.zip">download</a>
+                    </td>
+				</tr>
+		    </table>
+		</div>
+
+		</center>
+		
+		<br>
+        <div id='firefox_info' class='section'>
+            <h3>Firefox Disclaimer</h3>
+            Compatibility with Firefox is relatively unstested. For now, use with caution. 
+        </div>
+
+        <div id='safari_info' class='section'>
+			<h3>Safari Disclaimer</h3>
+            Compatibility with Safari is relatively untested. For now, use with caution.
+			</p>		
+		</div>
+
+		<div id='firefox_linux_info' class='section'>
+			<h3>Firefox Installation on Linux</h3>
+			<p>Download the installation script from the provided link, <code>chmod u+x sockit_linux.sh</code> if necessary, and run.</p> 
+		</div>
+
+        <div id='mac_info' class="section">
+            <h3>Installation on Mac</h3>
+			<p>Download the installation script from the provided link and double click it in Finder.</p> 
+        </div>
+		
+	<br/><br/>
+	<center>
+		<a href="index.html">Home</a> &#183; <a href="tutorial.html">Quick Tutorial</a> &#183; <a href="full_tutorial.html">Full Tutorial</a> &#183; <a href="downloads.html">Downloads</a> &#183; <a href="demos.html">Demos</a> &#183; <a href="api_documentation.html">API Documentation</a> &#183; <a href="html/index.html">Source Documentation</a> &#183; <a href="developers.html">Developers</a>
+
+	</center>
+
+    <script>
+        $('#safari_info').hide();
+        $('#firefox_linux_info').hide();
+        $('#mac_info').hide();
+        $('#firefox_info').hide();
+
+        var bestDownload = (BrowserDetect.OS.toLowerCase()) + "_" + (BrowserDetect.BROWSER.toLowerCase()) + "_" + (BrowserDetect.ARCHITECTURE.toLowerCase());
+        var bestIndependentDownload = (BrowserDetect.OS.toLowerCase()) + "_" + (BrowserDetect.BROWSER.toLowerCase());
+
+        if($("#"+bestDownload) != undefined)
+        {
+            $("#"+bestDownload).addClass("highlight");
+        }
+        if ($("#"+bestIndependentDownload) != undefined)
+        {
+            $("#"+bestIndependentDownload).addClass("highlight");
+        }
+        
+    </script>
+	</body>
+</html>

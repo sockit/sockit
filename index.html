@@ -1,77 +1,70 @@
-<!DOCTYPE html>
 <html>
-<head>
-  <meta charset='utf-8'>
+	<head>
+		<title>SockIt</title>
+		<link href="tutorial.css" rel="stylesheet" type="text/css">
+	 </head>
 
-  <title>sockit/sockit @ GitHub</title>
+	<body>
+		<div class='section'>
+		
+			<center>
+				<h1>SockIt</h1>
+                <br/><br/>
+                <h2><a href="downloads.html">Download</a></h2><br /><br />
+                
+                <a href="index.html">Home</a> &#183; <a href="tutorial.html">Quick Tutorial</a> &#183; <a href="full_tutorial.html">Full Tutorial</a> &#183; <a href="downloads.html">Downloads</a> &#183; <a href="demos.html">Demos</a> &#183; <a href="api_documentation.html">API Documentation</a> &#183; <a href="html/index.html">Source Documentation</a> &#183; <a href="developers.html">Developers</a>
+	</center>
+	</body>
+	
+			<h2>Introduction</h2>
+			<p>
+				The SockIt, or SockIt, is a browser plugin that allows Javascript to perform asynchronous, low-level networking functions.
+				The API allows web developers to create servers and clients which perform asynchronous network I/O by using Javascript events to perform callbacks.
+				The API provides access to both TCP and UDP protocols, as well as basic concurrency control for tweaking performance.
+		    </p>
+            <p>
+            First, load the plugin:
+<pre>
+    var sockit = loadSockitPlugin();
+</pre>
+            Create a new client to connection <code>google.com</code>:
+<pre>
+    var client = sockit.createTcpClient("www.google.com", 80);
+</pre>
+            Now, we register our client to alert us when it receives a response and send a GET request across the wire:
+<pre>
+    client.addEventListener("data", function(event) { 
+        console.log(event.read());
+    });
 
-  <style type="text/css">
-    body {
-      margin-top: 1.0em;
-      background-color: #641b3c;
-      font-family: Helvetica, Arial, FreeSans, san-serif;
-      color: #ffffff;
-    }
-    #container {
-      margin: 0 auto;
-      width: 700px;
-    }
-    h1 { font-size: 3.8em; color: #9be4c3; margin-bottom: 3px; }
-    h1 .small { font-size: 0.4em; }
-    h1 a { text-decoration: none }
-    h2 { font-size: 1.5em; color: #9be4c3; }
-    h3 { text-align: center; color: #9be4c3; }
-    a { color: #9be4c3; }
-    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-    .download { float: right; }
-    pre { background: #000; color: #fff; padding: 15px;}
-    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-    .footer { text-align:center; padding-top:30px; font-style: italic; }
-  </style>
-</head>
+    client.send("GET / HTTP/1.0\n\n");
+</pre>
+            And with six lines of javascript, we've created a simple TCP client. <a href="demos/google/google.html">See it in action here.</a>
+            </p>
 
-<body>
-  <a href="http://github.com/sockit/sockit"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+			
+			<h2>Installation</h2>
+			<p>
+				The plugin is currently packaged for Chrome and Firefox on Windows, Linux. and Mac OSX. To install the plugin, visit the <a href="downloads.html">downloads</a> page.
+			</p>
+			
+			<h2>Features</h2>
+			<p>
+				The plugin allows creation of TCP and UDP clients and servers, exposes a basic API for controlling each, and allows developers to perform asynchronous I/O with this clients and servers using Javascript event callbacks. Likewise, the API allows
+				some concurrency control to improve performance, provides hooks to handle additional events such as errors, connection, disconnection, and asynchronously logs errors on the client machine for debugging. 
+			</p>
+			
+			<h2>Tutorials</h2>
+			<p>
+				To see a quick example of the plugin, see the <a href="tutorial.html">quick tutorial</a> or <a href="full_tutorial.html">full tutorial</a>.
+			</p>
+			<p>
+				To learn about everything that the plugin can do, see the <a href="api_documentation.html">API documentation</a>.
+			</p>
+		</div><br>
 
-  <div id="container">
-
-    <div class="download">
-      <a href="http://github.com/sockit/sockit/zipball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
-      <a href="http://github.com/sockit/sockit/tarball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
-    </div>
-
-    <h1><a href="http://github.com/sockit/sockit">sockit</a>
-      <span class="small">by <a href="http://github.com/sockit">sockit</a></span></h1>
-
-    <div class="description">
-      Low level network functionality using FireBreath to create a simple non-blocking Javascript UPD & TCP API
-    </div>
-
-    <h2>Authors</h2>
-<p>Jon Tedesco (jtedesco@drw.com)<br/><br/>      </p>
-<h2>Contact</h2>
-<p>SockIt (sockit-dev@googlegroups.com)<br/>      </p>
-
-
-    <h2>Download</h2>
-    <p>
-      You can download this project in either
-      <a href="http://github.com/sockit/sockit/zipball/master">zip</a> or
-      <a href="http://github.com/sockit/sockit/tarball/master">tar</a> formats.
-    </p>
-    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-      by running:
-      <pre>$ git clone git://github.com/sockit/sockit</pre>
-    </p>
-
-    <div class="footer">
-      get the source code on GitHub : <a href="http://github.com/sockit/sockit">sockit/sockit</a>
-    </div>
-
-  </div>
-
-  
-</body>
+	<center>
+		<a href="index.html">Home</a> &#183; <a href="tutorial.html">Quick Tutorial</a> &#183; <a href="full_tutorial.html">Full Tutorial</a> &#183; <a href="downloads.html">Downloads</a> &#183; <a href="demos.html">Demos</a> &#183; <a href="api_documentation.html">API Documentation</a> &#183; <a href="html/index.html">Source Documentation</a> &#183; <a href="developers.html">Developers</a>
+	</center>
+	</body>
 </html>

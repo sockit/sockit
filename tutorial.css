@@ -1,0 +1,84 @@
+.section {
+	margin-left: 20px;
+}
+
+.subsection {
+	margin-left: 40px;
+}
+
+.highlight {
+    font-weight: bolder;
+    font-size: 18px;
+}
+
+code {
+	font-size: 14px;	
+}
+
+a {
+    text-decoration: none;
+}
+
+pre {
+	font-size: 14px;
+}
+
+.indented {
+	margin-left: 20px;
+}
+
+.indented2 {
+	margin-left: 40px;
+}
+
+td, tr {
+	padding: 1.1em;
+}
+
+thead {
+	font-weight: bolder;
+	font-size: 18px;
+} 
+
+.downloads {
+	text-align: center;
+}
+
+hr {
+	width : 80%;
+	padding: 2em;
+	border: 0px;
+	border-top: gray 1px solid;
+}
+
+.section pre, .subsection pre {
+	font-size: 14px;
+    padding: 2em 1.6em 2em 1.2em;
+    vertical-align: top;
+    background: #f8f8f8;
+    border: 1px solid #e8e8e8;
+    border-width: 1px 1px 1px 6px;
+    margin: 1.1em;
+}
+
+
+body {
+	padding: 50px;
+	margin: auto;
+	text-align: justify;
+	width: 70%;
+	max-width: 1400px;
+	min-width: 600px;
+}
+
+.leftColumn {
+	float: left;
+	width: 10%;
+	padding: 1.2em;
+}
+
+.rightColumn {
+	width: 50%
+	margin-left: 30%;
+	padding:1em;
+}

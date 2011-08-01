@@ -1,0 +1,51 @@
+<html>
+	<head>
+		<title>SockIt &#183; Developers</title>
+		<link href="tutorial.css" rel="stylesheet" type="text/css">
+	 </head>
+
+	<body>
+		<div class='section'>
+		
+			<center>
+				<h1>SockIt &#183; Developers</h1>
+                <p></p>
+                <h1><a href="downloads.html">Download</a></h1>
+	            <br><a href="index.html">Home</a> &#183; <a href="tutorial.html">Quick Tutorial</a> &#183; <a href="full_tutorial.html">Full Tutorial</a> &#183; <a href="downloads.html">Downloads</a> &#183; <a href="demos.html">Demos</a> &#183; <a href="api_documentation.html">API Documentation</a> &#183; <a href="html/index.html">Source Documentation</a> &#183; <a href="developers.html">Developers</a>
+
+			</center>
+
+			<h2>Developers</h2>
+			<p>
+				To get familiar with the code, see the full <a href="html/index.html">source documentation</a>, or browse the code on GitHub.
+			</p>
+			<div class="section">
+				<p>
+					The build process is automated on both Windows and Linux, but has several dependencies.
+				</p>
+				
+				<h2>Windows</h2>
+				<ol>
+					<li>Install Visual Studio 2010 (Visual Studio 2005 and 2008 should also work, but are untested)</li>
+					<li>Add Visual Studio's <code>msbuild</code> and its dependencies to your path</li>
+					<li>Install Git</li>
+					<li>Clone the SockIt repo into the <code>projects</code> directory</li>
+					<li>Go to the <code>projects/sockit</code> directory, and run <code>build.bat</code></li>
+					<li>To package the plugin, add Google Chrome to your path, and run <code>copy.bat</code> followed by <code>pack.bat</code></li>
+				</ol>
+				
+				<h2>Linux</h2>
+				<ol>
+					<li>Install dependencies:</li>
+						<pre>sudo apt-get install cmake libgtk2.0 doxygen git g++</pre>
+					<li>Clone the SockIt repo into the <code>projects</code> directory and go to the SockIt project directory</li>
+
+					<li>Run <code>make</code>. This will build the project, generate the doxygen documentation, and package and install the plugin.</li>
+				</ol>
+			</div> <br><br>
+	<center>
+		<a href="index.html">Home</a> &#183; <a href="tutorial.html">Quick Tutorial</a> &#183; <a href="full_tutorial.html">Full Tutorial</a> &#183; <a href="downloads.html">Downloads</a> &#183; <a href="demos.html">Demos</a> &#183; <a href="api_documentation.html">API Documentation</a> &#183; <a href="html/index.html">Source Documentation</a> &#183; <a href="developers.html">Developers</a>
+
+	</center>
+	</body>
+</html>

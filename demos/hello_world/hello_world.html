@@ -1,0 +1,48 @@
+<html>
+<head>
+    <title>Hello World Example</title>
+    <script src="../../scripts/sockit.js"></script>
+
+    <style>
+
+        #out
+        {
+            padding: 5px;
+            width: 900px;
+            height: 500px;
+            margin: 0 auto;
+            background-color: #eeeeee;
+            overflow: auto;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<script type="text/javascript">
+
+    var sockit = loadSockitPlugin();
+
+    var server = sockit.createTcpServer(8080);
+    server.listen();
+
+    server.addEventListener('data', function(event) {
+        console.log(event.read());        // log the input
+        event.send('world!');	     // send the data back to the client
+    });
+
+    var client = sockit.createTcpClient("127.0.0.1", 8080);
+
+    client.addEventListener('data', function(event) {
+        alert(event.read());
+    });
+
+</script>
+
+<center>
+    <h2>Click to send 'hello' from the client:</h2>
+    <input type="button" value="Send it!" onclick="javascript:client.send('hello');"/>
+</center>
+</body>
+</html> 

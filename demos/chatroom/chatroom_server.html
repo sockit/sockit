@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<!-- saved from url=(0013)about:internet -->
+<!-- The above comment makes IE treat this as a web page -->
+<html>
+<head>
+    <title>Chatroom Server</title>
+    <style>
+
+        body
+        {
+            padding: 5;
+            margin: 5;
+        }
+        .header
+        {
+            text-align: center;
+            border: 1px solid black;
+            width: 900px;
+        }
+
+        #chat
+        {
+            border: 3px solid gray;
+            background-color: #eeeeee;
+            width: 750px;
+            height: 400px;
+            margin: 0px auto;
+            padding: 5px;
+            overflow: auto;
+            text-align: left
+        }
+
+        #input
+        {
+            margin: 0px auto;
+            width: 750px;
+        }
+
+        #space
+        {
+            padding: 5px;
+            margin-bottom: 30px;
+        }
+
+        #text
+        {
+            width: 500px;
+        }
+
+        #me
+        {
+            color: #2a4480;
+            padding: 3px;
+        }
+
+        #you
+        {
+            color: #689ad3;
+            padding: 3px;
+        }
+
+        span
+        {
+            padding-right: 4px;
+            width: 150px;
+        }
+
+    </style>
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> 
+    <script src="../../scripts/sockit.js"></script>
+    <script src="chatroom_server.js"></script>
+    <script src="chatroom_server_ui.js"></script>
+
+    <script type="text/javascript">
+        loadSockitPlugin();
+
+        window.chatServer = sockit.createTcpServer(20202);
+        window.chatServer.listen();
+
+        window.connectedClients = new Array();
+
+        window.chatServer.addEventListener('data', receiveMessage);
+
+    </script>
+
+</head>
+<body>
+<center><h2>Chatroom Host</h2></center>
+
+<div id="temp" style="display:hidden;"></div>
+
+<div id="chat">
+</div>
+
+<p></p>
+
+<div id='input'>
+    <center>
+        <div id='space'> After entering a value press the 'enter' key. </div>
+        <span id='usernamebutton'> Username: </span>
+        <input type='text' id='username' size='20'/>
+        <p></p>
+        <span id='chatterbutton'> Enter Message: </span>
+        <input type='text' id='chatter' size='80'/>
+    </center>
+</div>
+
+<script>
+
+    $("#username").show()
+    $("#usernamebutton").show();
+    $("#username").focus();
+
+    $("#username").keyup(keyup_username);
+    $("#chatter").keyup(keyup_chatter);
+
+    $("#chatter").hide();
+    $("#chatterbutton").hide();
+
+    $("#username").click(function(event) {
+        if($("#username").val() == 'username') {
+            $("#username").val("")
+        }
+    });
+
+    $("#chatter").click(function(event) {
+        if($("#chatter").val() == 'type here') {
+            $("#chatter").val("")
+        }
+    });
+
+</script>
+
+</body>
+</html> 

@@ -1,0 +1,502 @@
+<html>
+	<head>
+		<title>SockIt &#183; API Documentation</title>
+		<link href="tutorial.css" rel="stylesheet" type="text/css">
+	</head>
+
+	<body>
+		<center>
+			<h2>API Documentation</h2><br>
+	    	<a href="index.html">Home</a> &#183; <a href="tutorial.html">Quick Tutorial</a> &#183; <a href="full_tutorial.html">Full Tutorial</a> &#183; <a href="downloads.html">Downloads</a> &#183; <a href="demos.html">Demos</a> &#183; <a href="api_documentation.html">API Documentation</a> &#183; <a href="html/index.html">Source Documentation</a> &#183; <a href="developers.html">Developers</a>
+
+    	</center>
+
+		<h2>Top Level API</h2>
+		<br>
+		<table>
+			<tr><pre>createThread()</pre></tr>
+			<tr>
+				<td>
+					<p>Creates a new thread on which to create new clients and servers.</p>
+					<table>
+						<tr>
+							<td><code>returns</code></td>
+							<td>A new thread, on which we can create new clients and servers.</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+		<br><br>
+		<table>
+			<tr><pre>toBinary(data)</pre></tr>
+			<tr>
+				<td>
+					<p>Converts an array of bytes by encoding each byte into a UTF-16 character, and returns a UTF-16 string encoded from the given data.</p>
+					<table>
+                        <tr>
+                            <td><code>data</code></td>
+                            <td>An array of 1-byte integers, which will be converted into a string.</td>
+                        </tr>
+						<tr>
+							<td><code>returns</code></td>
+							<td>A UTF-16 string encoded from the given data.</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+        <br><br>
+    	<table>
+			<tr><pre>fromBinary(data)</pre></tr>
+			<tr>
+				<td>
+					<p>Converts a UTF-16 string into an array of bytes.</p>
+					<table>
+                        <tr>
+                            <td><code>data</code></td>
+                            <td>The UTF-16 string to convert to bytes.</td>
+                        </tr>
+						<tr>
+							<td><code>returns</code></td>
+							<td>An array of bytes, the result of decoding <code>data</code> character by character.</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+        <br><br>
+	    <table>
+			<tr><pre>createTcpServer(port [, options])</pre></tr>
+			<tr>
+				<td>
+					<p>Creates a TCP server, but does not start the server listening.</p>
+					<table>
+						<tr>
+							<td><code>port</code></td>
+							<td>An integer representing the port on which the server will listen.</td>
+						</tr>
+						<tr>
+							<td><code>options</code></td>
+							<td>An optional map of strings to strings, which enumerates further options for the TCP connections for this server, and controls the underlying TCP sockets. If this map is not provided, each property takes its default value.
+						</tr>
+						<tr>
+							<td></td><td>
+								<table>
+									<tr>
+										<td><code>doNotRoute</code></td>
+										<td>Specifies whether this server should disable routing on its TCP connections. If this field is set to <code>false</code> or is not provided, the server defaults to <code>false</code>, so that routing is enabled.</td>
+									</tr>
+									<tr>
+										<td><code>ipv6</code></td>
+										<td>Specifies whether this server should use IPv6 over IPv4. If this field is set to <code>false</code> or is not provided, the server defaults to IPv4.</td>
+									</tr>
+									<tr>
+										<td><code>keepAlive</code></td>
+										<td>If this field is set to true, then the underlying TCP connection will try to maintain a keep-alive connections with clients. By default, this field is <code>true</code>.</td>
+									</tr>
+									<tr>
+										<td><code>keepAliveTimeout</code></td>
+										<td>If this field is set, then the underlying TCP connection will maintain a keep-alive connections with this specified timeout, interpreted in milliseconds.</td>
+									</tr>
+								<tr>
+										<td><code>noDelay</code></td>
+										<td>Setting this field to <code>true</code> forces the underlying TCP connections to disable <a href="http://en.wikipedia.org/wiki/Nagle's_algorithm">Nagle's algorithm</a> for TCP. By default, this field is <code>false</code>.</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td><code>returns</code></td>
+							<td>A newly created TCP server, which is not yet listening.</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+		<br><br>
+		<table>
+			<tr><pre>createUdpServer(port [, options])</pre></tr>
+			<tr>
+				<td>
+					<p>Creates a UDP server, but does not start the server listening.</p>
+					<table>
+						<tr>
+							<td><code>port</code></td>
+							<td>An integer representing the port on which the server will listen.</td>
+						</tr>
+						<tr>
+							<td><code>options</code></td>
+							<td>An optional map of strings to strings, which enumerates further options for the UDP connections for this server, and controls the underlying UDP sockets. If this map is not provided, each property takes its default value.
+						</tr>
+						<tr>
+							<td></td><td>
+								<table>
+									<tr>
+										<td><code>ipv6</code></td>
+										<td>Specifies whether this server should use IPv6 over IPv4. If this field is set to <code>false</code> or is not provided, the server defaults to IPv4.</td>
+									</tr>
+									<tr>
+										<td><code>doNotRoute</code></td>
+										<td>Specifies whether this server should disable routing on its UDP connections. If this field is set to <code>false</code> or is not provided, the server defaults to <code>false</code>, so that routing is enabled.</td>
+									</tr>
+									<tr>
+										<td><code>multicast</code></td>
+										<td>Specifies whether this server should enable UDP multicast. If this field is not provided, it defaults to <code>false</code>, such that multicast is disabled for this server. If this is set to true, <code>MulticastGroup</code> must also be specified, and <code>ReuseAddress</code> will be set to true.</td>
+									</tr>
+									<tr>
+										<td><code>multicastGroup</code></td>
+										<td>The multicast group to which this UDP server has subscribed and from which it will receive messages. This field has no default value.</td>
+									</tr>
+									<tr>
+										<td><code>multicastTTL</code></td>
+										<td>The multicast TTL for this UDP server, or the number of router hops that a multicast message sent from this server will make. This field has no specified default value. Note that large values may be ignored by routers.</td>
+									</tr>
+									<tr>
+										<td><code>reuseAddress</code></td>
+										<td>Specifies whether this server should fail if the port on which it should listen already has another socket bound to it. By default, this parameter is <code>false</code>, so that the server will not try to reuse addresses and will fail if another socket is already bound to the port. This is automatically set to <code>true</code> if <code>Multicast</code> is enabled.</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td><code>returns</code></td>
+							<td>A newly created UDP server, which is not yet listening.</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+		<br><br>
+		<table>
+			<tr><pre>createTcpClient(hostname, port [, options])</pre></tr>
+			<tr>
+				<td>
+					<p>Creates a TCP client.</p>
+					<table>
+						<tr>
+							<td><code>hostname</code></td>
+							<td>A string, the hostname or IP address to which this client should connect.</td>
+						</tr>
+						<tr>
+							<td><code>port</code></td>
+							<td>An integer representing the port to which the client will connect.</td>
+						</tr>
+						<tr>
+							<td><code>options</code></td>
+							<td>An optional map of strings to strings, which enumerates further options for the TCP connections for this client, and controls the underlying TCP socket. If this map is not provided, each property takes its default value.
+						</tr>
+						<tr>
+							<td></td><td>
+								<table>
+									<tr>
+										<td><code>doNotRoute</code></td>
+										<td>Specifies whether this client should disable routing on its TCP connections. If this field is set to <code>false</code> or is not provided, the client defaults to <code>false</code>, so that routing is enabled.</td>
+									</tr>
+									<tr>
+										<td><code>ipv6</code></td>
+										<td>Specifies whether this client should use IPv6 over IPv4. If this field is set to <code>false</code> or is not provided, the client defaults to IPv4.</td>
+									</tr>
+									<tr>
+										<td><code>keepAlive</code></td>
+										<td>If this field is set to true, then the underlying TCP connection will try to maintain a keep-alive connections with servers. By default, this field is <code>false</code>.</td>
+									</tr>
+									<tr>
+										<td><code>keepAliveTimeout</code></td>
+										<td>If this field is set, then the underlying TCP connection will maintain a keep-alive connections with this specified timeout, interpreted in milliseconds.</td>
+									</tr>
+	    							<tr>
+										<td><code>noDelay</code></td>
+										<td>Setting this field to <code>true</code> forces the underlying TCP connections to disable <a href="http://en.wikipedia.org/wiki/Nagle's_algorithm">Nagle's algorithm</a> for TCP. By default, this field is <code>false</code>.</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td><code>returns</code></td>
+							<td>A newly created TCP client.</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+		<br><br>
+		<table>
+			<tr><pre>createUdpClient(hostname, port [, options])</pre></tr>
+			<tr>
+				<td>
+					<p>Creates a UDP client.</p>
+					<table >
+						<tr>
+							<td><code>hostname</code></td>
+							<td>A string, the hostname or IP address to which this client should connect.</td>
+						</tr>
+						<tr>
+							<td><code>port</code></td>
+							<td>An integer representing the port to which the client will connect.</td>
+						</tr>
+						<tr>
+							<td><code>options</code></td>
+							<td>An optional map of strings to strings, which enumerates further options for the UDP connections for this client, and controls the underlying UDP sockets. If this map is not provided, each property takes its default value.
+						</tr>
+						<tr>
+							<td></td><td>
+								<table>
+									<tr>
+										<td><code>doNotRoute</code></td>
+										<td>Specifies whether this client should disable routing on its UDP connections. If this field is set to <code>false</code> or is not provided, the client defaults to <code>false</code>, so that routing is enabled.</td>
+									</tr>
+									<tr>
+										<td><code>ipv6</code></td>
+										<td>Specifies whether this client should use IPv6 over IPv4. If this field is set to <code>false</code> or is not provided, the client defaults to IPv4.</td>
+									</tr>
+									<tr>
+										<td><code>multicast</code></td>
+										<td>Specifies whether this client should enable UDP multicast. If this field is not provided, it defaults to <code>false</code>, such that multicast is disabled for this client. If this is set to true, <code>MulticastGroup</code> must also be specified, and <code>ReuseAddress</code> will be set to true.</td>
+									</tr>
+									<tr>
+										<td><code>multicastTTL</code></td>
+										<td>The multicast TTL for this UDP client, or the number of router hops that a multicast message sent from this client will make. This field has no specified default value. Note that large values may be ignored by routers.</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td><code>returns</code></td>
+							<td>A newly created UDP client.</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+
+		<h2>Thread API</h2>
+		<div class='indented'>
+			Mirrors the top level API, except that it does not contain the <code>createThread</code> method.<p>&nbsp;</p>
+		</div>
+
+		<h2>Client API</h2>
+		<p class='indented'>The API exposed to both UDP and TCP clients contain these common functions.</p>
+		<table class='indented'>
+			<tr>
+				<td>
+					<pre>send(data)</pre>
+				</td>
+				<td>
+					<p>Asynchronously sends some data to the remote endpoint for this client.</p>
+					<table>
+						<tr>
+							<td><code>data</code></td>
+							<td>A string, the data the client should be sent to the remote endpoint.</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<pre>sendBytes(data)</pre>
+				</td>
+				<td>
+					<p>Asynchronously sends some bytes of data across the connection.</p>
+					<table>
+						<tr>
+							<td><code>data</code></td>
+							<td>An array of bytes to send over the connection.</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+	    	<tr>
+				<td>
+					<pre>close()</pre>
+				</td>
+				<td>
+					<p>Gracefully shuts down the client, freeing all resources once pending sends have been completed.</p>
+				</td>
+	    	<tr>
+				<td>
+					<pre>getHost()</pre>
+				</td>
+				<td>
+					<p>Gets the hostname to which this client connects.</p>
+				</td>
+		    </tr>
+ 	    	<tr>
+				<td>
+					<pre>getPort()</pre>
+				</td>
+				<td>
+					<p>Gets the port on which this client will connect to the remote host.</p>
+				</td>
+		    </tr>
+			</tr>
+		</table>
+		<p>&nbsp;</p>
+
+		<h2>Server API</h2>
+		<p class='indented'>The API exposed to both UDP and TCP servers contain these common functions.</p>
+		<table class='indented'>
+ 			<tr>
+				<td>
+					<pre>listen()</pre>
+				</td>
+				<td>
+					<p>Starts up the server listening on the port given.</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<pre>close()</pre>
+				</td>
+				<td>
+					<p>Gracefully shuts down the server, freeing the port and resources once any pending sends have completed. The server will continue to listen for connections and incoming data until all pending sends have been sent.</p>
+				</td>
+			</tr>
+	    	<tr>
+				<td>
+					<pre>getPort()</pre>
+				</td>
+				<td>
+					<p>Returns the port on which this server listens.</p>
+				</td>
+		    </tr>
+		</table>
+		<p>&nbsp;</p>
+
+		<h2>Event API</h2>
+		<p class='indented'>The API exposed to the event parameter of the <code>data</code> handler function, which allows reading and sending data.</p>
+		<table class='indented'>
+			<tr>
+				<td>
+					<pre>send(data)</pre>
+				</td>
+				<td>
+					<p>Asynchronously send back some data across the connection.</p>
+					<table>
+						<tr>
+							<td><code>data</code></td>
+							<td>A string, the data the client should be sent to the remote endpoint.</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+	    	<tr>
+				<td>
+					<pre>sendBytes(data)</pre>
+				</td>
+				<td>
+					<p>Asynchronously send back some byte data across the connection.</p>
+					<table>
+						<tr>
+							<td><code>data</code></td>
+							<td>An array of bytes, which will be sent to the remote endpoint as binary data.</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+ 			<tr>
+				<td>
+					<pre>read()</pre>
+				</td>
+				<td>
+					<p>Read the string data that triggered this event.</p>
+					<table>
+						<tr>
+							<td><code>returns</code></td>
+							<td>A string, the data received that triggered this event.</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+	    	<tr>
+				<td>
+					<pre>readBytes(data)</pre>
+				</td>
+				<td>
+					<p>Read the bytes of the data received that triggered this event.</p>
+					<table>
+						<tr>
+							<td><code>returns</code></td>
+							<td>An array of bytes, representing the data received that triggered this event.</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+    	    <tr>
+				<td>
+					<pre>getHost()</pre>
+				</td>
+				<td>
+					<p>Returns the hostname from which the data was received.</p>
+				</td>
+		    </tr>
+ 	    	<tr>
+				<td>
+					<pre>getPort()</pre>
+				</td>
+				<td>
+					<p>Returns the port from which the data was received on the remote host.</p>
+				</td>
+		    </tr>
+        </table>
+		<p>&nbsp;</p>
+		
+		<h2>Events</h2>
+		<p class='indented'>The events for which we can attach Javascript event handlers to perform callbacks.</p>
+		<table class='indented'>
+			<tr>
+				<td>
+					<pre>data</pre>
+				</td>
+				<td>
+					<p>This event can occur on server or clients, and is fired whenever a connection receives some data.</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<pre>error</pre>
+				</td>
+				<td>
+					<p>This event can occur on clients or server objects, and is fired whenever an unrecoverable error occurs.</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<pre>close</pre>
+				</td>
+				<td>
+					<p>This event occurs whenever a client or server completely shuts down, after the <code>close</code> function</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<pre>open</pre>
+				</td>
+				<td>
+					<p>This event occurs once a server successfully opens a new socket and begins listening for incoming connnections</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<pre>resolve</pre>
+				</td>
+				<td>
+					<p>This event occurs once a client successfully resolves the hostname of its remote endpoint</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<pre>disconnect</pre>
+				</td>
+				<td>
+					<p>This event occurs for TCP clients and servers when an error occurs that severs the TCP connection.</p>
+				</td>
+			</tr>
+	</table>
+		
+	<center>
+		<br><a href="index.html">Home</a> &#183; <a href="tutorial.html">Quick Tutorial</a> &#183; <a href="full_tutorial.html">Full Tutorial</a> &#183; <a href="downloads.html">Downloads</a> &#183; <a href="demos.html">Demos</a> &#183; <a href="api_documentation.html">API Documentation</a> &#183; <a href="html/index.html">Source Documentation</a> &#183; <a href="developers.html">Developers</a>
+
+	</center>
+	</body>
+</html>

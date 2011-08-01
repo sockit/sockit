@@ -1,0 +1,69 @@
+<html>
+	<head>
+		<title>SockIt &#183; Quick Tutorial</title>
+		<link href="tutorial.css" rel="stylesheet" type="text/css">
+	</head>
+
+	<body>
+
+		<div class='section'>
+		<center>
+			<h2>Quick Tutorial</h2>
+	        <br><a href="index.html">Home</a> &#183; <a href="tutorial.html">Quick Tutorial</a> &#183; <a href="full_tutorial.html">Full Tutorial</a> &#183; <a href="downloads.html">Downloads</a> &#183; <a href="demos.html">Demos</a> &#183; <a href="api_documentation.html">API Documentation</a> &#183; <a href="html/index.html">Source Documentation</a> &#183; <a href="developers.html">Developers</a>
+
+            <br><br><br>
+    	</center>
+
+		The plugin allows us to perform asynchronous network I/O in Javascript. To begin, load the plugin by calling
+<pre>
+	var sockit = loadSockitPlugin();
+</pre>
+
+		This function is found in <a href="scripts/sockit.js">sockit.js</a>, and returns the <code>window.sockit</code> object. Then we can start a (TCP) server listening on port 8080 (using IPv4):
+<pre>
+	var server = sockit.createTcpServer(8080);
+</pre>
+		And start it listening on the given port:
+<pre>
+	server.listen();
+</pre>
+
+		Since all of the network calls are asynchronous, the server needs to register a callback function in order to respond to events on the server. The API allows registering 
+
+<pre>
+	server.addEventListener('ondata', function(event) {
+                var message = event.read();
+		console.log(message);	// log the message
+		event.send("world");	// respond to the client's message
+	});
+</pre>
+
+		Now whenever the server receives data, the anonymous function provided will be invoked, so that the message received will be logged, and the server will reply with <code>"world"</code>. Since the plugin is already loaded, to start a (TCP) client:
+
+<pre>
+	var client = sockit.createTcpClient("localhost", 8080);
+</pre>
+
+		Now, we can listen for responses on the client connection by registering a callback on the client:
+
+<pre>
+	client.addEventListener('ondata', function(event) {
+		alert(event.read());
+	});
+</pre>
+
+		Finally, we can send data from this client to trigger the data callback on our server:
+
+<pre>
+	client.send("hello");
+</pre>
+		<p>To see this example in action, click <a href="../demos/hello_world/hello_world.html">here</a>.</p><br><br><br><br>
+	</div>
+	
+	<center>
+		<a href="index.html">Home</a> &#183; <a href="tutorial.html">Quick Tutorial</a> &#183; <a href="full_tutorial.html">Full Tutorial</a> &#183; <a href="downloads.html">Downloads</a> &#183; <a href="demos.html">Demos</a> &#183; <a href="api_documentation.html">API Documentation</a> &#183; <a href="html/index.html">Source Documentation</a> &#183; <a href="developers.html">Developers</a>
+
+	</center>
+	
+	</body>
+</html>
