@@ -1,0 +1,504 @@
+\hypertarget{classNetworkThread}{
+\section{NetworkThread Class Reference}
+\label{classNetworkThread}\index{NetworkThread@{NetworkThread}}
+}
+
+
+{\ttfamily \#include $<$NetworkThread.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classNetworkThread_a19bdf760c822f879a1f8a6700ee19e52}{NetworkThread} ()
+\item 
+virtual \hyperlink{classNetworkThread_adaed788a9be6fbb4ed1aef9905e3e18f}{$\sim$NetworkThread} ()
+\item 
+boost::shared\_\-ptr$<$ \hyperlink{classTcpServer}{TcpServer} $>$ \hyperlink{classNetworkThread_a84196d67235b83ba74d62e292f0a989c}{create\_\-tcp\_\-server} (int port, boost::optional$<$ map$<$ string, string $>$ $>$ options)
+\item 
+boost::shared\_\-ptr$<$ \hyperlink{classTcpClient}{TcpClient} $>$ \hyperlink{classNetworkThread_a7ad75918bab6747ea97ed3f0f4a9a560}{create\_\-tcp\_\-client} (const string \&host, int port, boost::optional$<$ map$<$ string, string $>$ $>$ options)
+\item 
+boost::shared\_\-ptr$<$ \hyperlink{classUdpServer}{UdpServer} $>$ \hyperlink{classNetworkThread_ab54b7e487112e608a23627ae04c70096}{create\_\-udp\_\-server} (int port, boost::optional$<$ map$<$ string, string $>$ $>$ options)
+\item 
+boost::shared\_\-ptr$<$ \hyperlink{classUdpClient}{UdpClient} $>$ \hyperlink{classNetworkThread_a4198f121c3884eb0f6857a35c8b66af7}{create\_\-udp\_\-client} (const string \&host, int port, boost::optional$<$ map$<$ string, string $>$ $>$ options)
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classNetworkThread_a8659a516d3561c486844bf7bc9aff8b0}{run} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+string \hyperlink{classNetworkThread_a042e0a67fcd12363be06de1967410a61}{logger\_\-category}
+\item 
+boost::asio::io\_\-service \hyperlink{classNetworkThread_a8dd2b75a9da06933cedfb086390fc522}{io\_\-service}
+\item 
+boost::thread \hyperlink{classNetworkThread_ac9a925860e33ec1afb88a2b2f91e24c6}{background\_\-thread}
+\item 
+set$<$ boost::shared\_\-ptr$<$ \hyperlink{classUdpClient}{UdpClient} $>$ $>$ \hyperlink{classNetworkThread_a5763ee354a9fff9e8b5f56961b1c3f92}{udp\_\-clients}
+\item 
+set$<$ boost::shared\_\-ptr$<$ \hyperlink{classUdpServer}{UdpServer} $>$ $>$ \hyperlink{classNetworkThread_acd2cc1475b8ebeafd3e7dafc835dbec4}{udp\_\-servers}
+\item 
+set$<$ boost::shared\_\-ptr$<$ \hyperlink{classTcpClient}{TcpClient} $>$ $>$ \hyperlink{classNetworkThread_af502746d9b95956a36cadba40a8a1f36}{tcp\_\-clients}
+\item 
+set$<$ boost::shared\_\-ptr$<$ \hyperlink{classTcpServer}{TcpServer} $>$ $>$ \hyperlink{classNetworkThread_a7948c2fc23492ed42115bd710a8889a1}{tcp\_\-servers}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class representing a high-\/level thread of computation for the plugin. This class a single background thread associated with it to perform asynchronous I/O for all clients and servers created from this (high-\/level) thread.
+
+This class also exposes four methods to Javascript to allow creating servers and clients whose I/O will be performed on this {\ttfamily \hyperlink{classNetworkThread}{NetworkThread}}. 
+
+Definition at line 37 of file NetworkThread.h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classNetworkThread_a19bdf760c822f879a1f8a6700ee19e52}{
+\index{NetworkThread@{NetworkThread}!NetworkThread@{NetworkThread}}
+\index{NetworkThread@{NetworkThread}!NetworkThread@{NetworkThread}}
+\subsubsection[{NetworkThread}]{\setlength{\rightskip}{0pt plus 5cm}NetworkThread::NetworkThread (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classNetworkThread_a19bdf760c822f879a1f8a6700ee19e52}
+Creates a new network thread, registers its functions to the Javascript, and starts up the background thread. 
+
+Definition at line 10 of file NetworkThread.cpp.
+
+
+
+References background\_\-thread, create\_\-tcp\_\-client(), create\_\-tcp\_\-server(), create\_\-udp\_\-client(), create\_\-udp\_\-server(), Logger::info(), logger\_\-category, Logger::NO\_\-PORT, and run().
+
+
+\begin{DoxyCode}
+                             :
+    logger_category("NETWORK THREAD")
+{
+    // No initialization required for the logger
+    Logger::info("Network thread initialized", Logger::NO_PORT, logger_category);
+      
+
+    // Register root methods for creating servers & clients
+    registerMethod("createUdpClient", make_method(this, &
+      NetworkThread::create_udp_client));
+    registerMethod("createUdpServer", make_method(this, &
+      NetworkThread::create_udp_server));
+    registerMethod("createTcpClient", make_method(this, &
+      NetworkThread::create_tcp_client));
+    registerMethod("createTcpServer", make_method(this, &
+      NetworkThread::create_tcp_server));
+
+    // Start the I/O service running in the background
+    background_thread = boost::thread(boost::bind(&NetworkThread::run, this));
+}
+\end{DoxyCode}
+\hypertarget{classNetworkThread_adaed788a9be6fbb4ed1aef9905e3e18f}{
+\index{NetworkThread@{NetworkThread}!$\sim$NetworkThread@{$\sim$NetworkThread}}
+\index{$\sim$NetworkThread@{$\sim$NetworkThread}!NetworkThread@{NetworkThread}}
+\subsubsection[{$\sim$NetworkThread}]{\setlength{\rightskip}{0pt plus 5cm}NetworkThread::$\sim$NetworkThread (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classNetworkThread_adaed788a9be6fbb4ed1aef9905e3e18f}
+Destroys this network thread by stopping the background I/O service and joining on the background thread. 
+
+Definition at line 26 of file NetworkThread.cpp.
+
+
+
+References background\_\-thread, io\_\-service, logger\_\-category, Logger::NO\_\-PORT, tcp\_\-clients, tcp\_\-servers, udp\_\-clients, udp\_\-servers, and Logger::warn().
+
+
+\begin{DoxyCode}
+{
+    // Stop the IO service, and wait for the background thread to exit, log (but 
+      don't do anything) if there's an error
+    try
+    {
+        io_service.stop();
+        background_thread.join();
+    }
+    catch (std::exception & error)
+    {
+        Logger::warn("Warning, improperly shutdown network thread IO service: '" 
+      + string(error.what()) + "'",
+                Logger::NO_PORT, logger_category);
+    }
+    
+    tcp_clients.clear();
+    tcp_servers.clear();
+    udp_clients.clear();
+    udp_servers.clear();
+}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classNetworkThread_a7ad75918bab6747ea97ed3f0f4a9a560}{
+\index{NetworkThread@{NetworkThread}!create\_\-tcp\_\-client@{create\_\-tcp\_\-client}}
+\index{create\_\-tcp\_\-client@{create\_\-tcp\_\-client}!NetworkThread@{NetworkThread}}
+\subsubsection[{create\_\-tcp\_\-client}]{\setlength{\rightskip}{0pt plus 5cm}boost::shared\_\-ptr$<$ {\bf TcpClient} $>$ NetworkThread::create\_\-tcp\_\-client (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{host, }
+\item[{int}]{port, }
+\item[{boost::optional$<$ map$<$ string, string $>$ $>$}]{options}
+\end{DoxyParamCaption}
+)}}
+\label{classNetworkThread_a7ad75918bab6747ea97ed3f0f4a9a560}
+Creates a new TCP client on this {\ttfamily \hyperlink{classNetworkThread}{NetworkThread}}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em host} & The hostname to which this TCP client will connect \\
+\hline
+{\em port} & The port on the remote host to which this client should connect \\
+\hline
+{\em options} & A map of options to specify the behavior of this object. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A shared pointer to a newly created TCP client 
+\end{DoxyReturn}
+
+
+Definition at line 63 of file NetworkThread.cpp.
+
+
+
+References Logger::info(), io\_\-service, logger\_\-category, Logger::NO\_\-PORT, and tcp\_\-clients.
+
+
+
+Referenced by SockItAPI::create\_\-tcp\_\-client(), and NetworkThread().
+
+
+\begin{DoxyCode}
+{
+    Logger::info(
+            "Spawning TCP client to '" + boost::lexical_cast<string>(host) + ":" 
+      + boost::lexical_cast<string>(port)
+                    + "'", Logger::NO_PORT, logger_category);
+
+    if (options)
+    {
+        boost::shared_ptr<TcpClient> new_client(new TcpClient(host, port, 
+      io_service, *options));
+        tcp_clients.insert(new_client);
+        return new_client;
+    }
+
+    boost::shared_ptr<TcpClient> new_client(new TcpClient(host, port, io_service)
+      );
+    tcp_clients.insert(new_client);
+    return new_client;
+}
+\end{DoxyCode}
+\hypertarget{classNetworkThread_a84196d67235b83ba74d62e292f0a989c}{
+\index{NetworkThread@{NetworkThread}!create\_\-tcp\_\-server@{create\_\-tcp\_\-server}}
+\index{create\_\-tcp\_\-server@{create\_\-tcp\_\-server}!NetworkThread@{NetworkThread}}
+\subsubsection[{create\_\-tcp\_\-server}]{\setlength{\rightskip}{0pt plus 5cm}boost::shared\_\-ptr$<$ {\bf TcpServer} $>$ NetworkThread::create\_\-tcp\_\-server (
+\begin{DoxyParamCaption}
+\item[{int}]{port, }
+\item[{boost::optional$<$ map$<$ string, string $>$ $>$}]{options}
+\end{DoxyParamCaption}
+)}}
+\label{classNetworkThread_a84196d67235b83ba74d62e292f0a989c}
+Creates a new TCP server on this {\ttfamily \hyperlink{classNetworkThread}{NetworkThread}}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em port} & The port on which this new TCP server should listen \\
+\hline
+{\em options} & A map of options to specify the behavior of this object. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A shared pointer to a newly created TCP server 
+\end{DoxyReturn}
+
+
+Definition at line 46 of file NetworkThread.cpp.
+
+
+
+References Logger::info(), io\_\-service, logger\_\-category, Logger::NO\_\-PORT, and tcp\_\-servers.
+
+
+
+Referenced by SockItAPI::create\_\-tcp\_\-server(), and NetworkThread().
+
+
+\begin{DoxyCode}
+{
+    Logger::info("Spawning TCP server on port = " + boost::lexical_cast<string>(p
+      ort), Logger::NO_PORT,
+            logger_category);
+
+    if (options)
+    {
+        boost::shared_ptr<TcpServer> new_server(new TcpServer(port, io_service, *
+      options));
+        tcp_servers.insert(new_server);
+        return new_server;
+    }
+
+    boost::shared_ptr<TcpServer> new_server(new TcpServer(port, io_service));
+    tcp_servers.insert(new_server);
+    return new_server;
+}
+\end{DoxyCode}
+\hypertarget{classNetworkThread_a4198f121c3884eb0f6857a35c8b66af7}{
+\index{NetworkThread@{NetworkThread}!create\_\-udp\_\-client@{create\_\-udp\_\-client}}
+\index{create\_\-udp\_\-client@{create\_\-udp\_\-client}!NetworkThread@{NetworkThread}}
+\subsubsection[{create\_\-udp\_\-client}]{\setlength{\rightskip}{0pt plus 5cm}boost::shared\_\-ptr$<$ {\bf UdpClient} $>$ NetworkThread::create\_\-udp\_\-client (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{host, }
+\item[{int}]{port, }
+\item[{boost::optional$<$ map$<$ string, string $>$ $>$}]{options}
+\end{DoxyParamCaption}
+)}}
+\label{classNetworkThread_a4198f121c3884eb0f6857a35c8b66af7}
+Creates a new UDP client on this {\ttfamily \hyperlink{classNetworkThread}{NetworkThread}}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em host} & The hostname to which this UDP client will connect \\
+\hline
+{\em port} & The port on the remote host to which this client should connect \\
+\hline
+{\em options} & A map of options to specify the behavior of this object. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A shared pointer to a newly created UDP client 
+\end{DoxyReturn}
+
+
+Definition at line 99 of file NetworkThread.cpp.
+
+
+
+References Logger::info(), io\_\-service, logger\_\-category, Logger::NO\_\-PORT, and udp\_\-clients.
+
+
+
+Referenced by SockItAPI::create\_\-udp\_\-client(), and NetworkThread().
+
+
+\begin{DoxyCode}
+{
+    Logger::info(
+            "Spawning TCP client to '" + boost::lexical_cast<string>(host) + ":" 
+      + boost::lexical_cast<
+                    string>(port) + "'", Logger::NO_PORT, logger_category);
+
+    if (options)
+    {
+        boost::shared_ptr<UdpClient> new_client(new UdpClient(host, port, 
+      io_service, *options));
+        udp_clients.insert(new_client);
+        return new_client;
+    }
+
+    boost::shared_ptr<UdpClient> new_client(new UdpClient(host, port, io_service)
+      );
+    udp_clients.insert(new_client);
+    return new_client;
+}
+\end{DoxyCode}
+\hypertarget{classNetworkThread_ab54b7e487112e608a23627ae04c70096}{
+\index{NetworkThread@{NetworkThread}!create\_\-udp\_\-server@{create\_\-udp\_\-server}}
+\index{create\_\-udp\_\-server@{create\_\-udp\_\-server}!NetworkThread@{NetworkThread}}
+\subsubsection[{create\_\-udp\_\-server}]{\setlength{\rightskip}{0pt plus 5cm}boost::shared\_\-ptr$<$ {\bf UdpServer} $>$ NetworkThread::create\_\-udp\_\-server (
+\begin{DoxyParamCaption}
+\item[{int}]{port, }
+\item[{boost::optional$<$ map$<$ string, string $>$ $>$}]{options}
+\end{DoxyParamCaption}
+)}}
+\label{classNetworkThread_ab54b7e487112e608a23627ae04c70096}
+Creates a new UDP server on this {\ttfamily \hyperlink{classNetworkThread}{NetworkThread}}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em port} & The port on which this new UDP server should listen \\
+\hline
+{\em options} & A map of options to specify the behavior of this object. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A shared pointer to a newly created UDP server 
+\end{DoxyReturn}
+
+
+Definition at line 82 of file NetworkThread.cpp.
+
+
+
+References Logger::info(), io\_\-service, logger\_\-category, Logger::NO\_\-PORT, and udp\_\-servers.
+
+
+
+Referenced by SockItAPI::create\_\-udp\_\-server(), and NetworkThread().
+
+
+\begin{DoxyCode}
+{
+    Logger::info("Spawning UDP server on port = " + boost::lexical_cast<string>(p
+      ort), Logger::NO_PORT,
+            logger_category);
+
+    if (options)
+    {
+        boost::shared_ptr<UdpServer> new_server(new UdpServer(port, io_service, *
+      options));
+        udp_servers.insert(new_server);
+        return new_server;
+    }
+
+    boost::shared_ptr<UdpServer> new_server(new UdpServer(port, io_service));
+    udp_servers.insert(new_server);
+    return new_server;
+}
+\end{DoxyCode}
+\hypertarget{classNetworkThread_a8659a516d3561c486844bf7bc9aff8b0}{
+\index{NetworkThread@{NetworkThread}!run@{run}}
+\index{run@{run}!NetworkThread@{NetworkThread}}
+\subsubsection[{run}]{\setlength{\rightskip}{0pt plus 5cm}void NetworkThread::run (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classNetworkThread_a8659a516d3561c486844bf7bc9aff8b0}
+A helper method in which the background thread will run. This method simply starts the I/O service, and returns once the I/O service is stopped. 
+
+Definition at line 118 of file NetworkThread.cpp.
+
+
+
+References Logger::error(), io\_\-service, logger\_\-category, and Logger::NO\_\-PORT.
+
+
+
+Referenced by NetworkThread().
+
+
+\begin{DoxyCode}
+{
+    boost::asio::io_service::work work(io_service);
+
+    try
+    {
+        io_service.run();
+    }
+    catch (std::exception & error)
+    {
+        // Catch any exception and dump it to the log
+        Logger::error("Error running network thread: '" + string(error.what()) + 
+      "'", Logger::NO_PORT, logger_category);
+    }
+}
+\end{DoxyCode}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classNetworkThread_ac9a925860e33ec1afb88a2b2f91e24c6}{
+\index{NetworkThread@{NetworkThread}!background\_\-thread@{background\_\-thread}}
+\index{background\_\-thread@{background\_\-thread}!NetworkThread@{NetworkThread}}
+\subsubsection[{background\_\-thread}]{\setlength{\rightskip}{0pt plus 5cm}boost::thread {\bf NetworkThread::background\_\-thread}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classNetworkThread_ac9a925860e33ec1afb88a2b2f91e24c6}
+The background thread which launches the I/O service, and exits when the I/O service is stopped. 
+
+Definition at line 113 of file NetworkThread.h.
+
+
+
+Referenced by NetworkThread(), and $\sim$NetworkThread().
+
+\hypertarget{classNetworkThread_a8dd2b75a9da06933cedfb086390fc522}{
+\index{NetworkThread@{NetworkThread}!io\_\-service@{io\_\-service}}
+\index{io\_\-service@{io\_\-service}!NetworkThread@{NetworkThread}}
+\subsubsection[{io\_\-service}]{\setlength{\rightskip}{0pt plus 5cm}boost::asio::io\_\-service {\bf NetworkThread::io\_\-service}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classNetworkThread_a8dd2b75a9da06933cedfb086390fc522}
+The {\ttfamily boost} I/O service to be shared between all clients and servers created on this {\ttfamily \hyperlink{classNetworkThread}{NetworkThread}}, which will be used to perform asynchronous I/O. 
+
+Definition at line 108 of file NetworkThread.h.
+
+
+
+Referenced by create\_\-tcp\_\-client(), create\_\-tcp\_\-server(), create\_\-udp\_\-client(), create\_\-udp\_\-server(), run(), and $\sim$NetworkThread().
+
+\hypertarget{classNetworkThread_a042e0a67fcd12363be06de1967410a61}{
+\index{NetworkThread@{NetworkThread}!logger\_\-category@{logger\_\-category}}
+\index{logger\_\-category@{logger\_\-category}!NetworkThread@{NetworkThread}}
+\subsubsection[{logger\_\-category}]{\setlength{\rightskip}{0pt plus 5cm}string {\bf NetworkThread::logger\_\-category}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classNetworkThread_a042e0a67fcd12363be06de1967410a61}
+The category string for a network thread 
+
+Definition at line 96 of file NetworkThread.h.
+
+
+
+Referenced by create\_\-tcp\_\-client(), create\_\-tcp\_\-server(), create\_\-udp\_\-client(), create\_\-udp\_\-server(), NetworkThread(), run(), and $\sim$NetworkThread().
+
+\hypertarget{classNetworkThread_af502746d9b95956a36cadba40a8a1f36}{
+\index{NetworkThread@{NetworkThread}!tcp\_\-clients@{tcp\_\-clients}}
+\index{tcp\_\-clients@{tcp\_\-clients}!NetworkThread@{NetworkThread}}
+\subsubsection[{tcp\_\-clients}]{\setlength{\rightskip}{0pt plus 5cm}set$<$boost::shared\_\-ptr$<${\bf TcpClient}$>$ $>$ {\bf NetworkThread::tcp\_\-clients}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classNetworkThread_af502746d9b95956a36cadba40a8a1f36}
+Set of all tcp clients 'on' this thread 
+
+Definition at line 122 of file NetworkThread.h.
+
+
+
+Referenced by create\_\-tcp\_\-client(), and $\sim$NetworkThread().
+
+\hypertarget{classNetworkThread_a7948c2fc23492ed42115bd710a8889a1}{
+\index{NetworkThread@{NetworkThread}!tcp\_\-servers@{tcp\_\-servers}}
+\index{tcp\_\-servers@{tcp\_\-servers}!NetworkThread@{NetworkThread}}
+\subsubsection[{tcp\_\-servers}]{\setlength{\rightskip}{0pt plus 5cm}set$<$boost::shared\_\-ptr$<${\bf TcpServer}$>$ $>$ {\bf NetworkThread::tcp\_\-servers}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classNetworkThread_a7948c2fc23492ed42115bd710a8889a1}
+Set of all tcp servers 'on' this thread 
+
+Definition at line 125 of file NetworkThread.h.
+
+
+
+Referenced by create\_\-tcp\_\-server(), and $\sim$NetworkThread().
+
+\hypertarget{classNetworkThread_a5763ee354a9fff9e8b5f56961b1c3f92}{
+\index{NetworkThread@{NetworkThread}!udp\_\-clients@{udp\_\-clients}}
+\index{udp\_\-clients@{udp\_\-clients}!NetworkThread@{NetworkThread}}
+\subsubsection[{udp\_\-clients}]{\setlength{\rightskip}{0pt plus 5cm}set$<$boost::shared\_\-ptr$<${\bf UdpClient}$>$ $>$ {\bf NetworkThread::udp\_\-clients}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classNetworkThread_a5763ee354a9fff9e8b5f56961b1c3f92}
+Set of all udp clients 'on' this thread 
+
+Definition at line 116 of file NetworkThread.h.
+
+
+
+Referenced by create\_\-udp\_\-client(), and $\sim$NetworkThread().
+
+\hypertarget{classNetworkThread_acd2cc1475b8ebeafd3e7dafc835dbec4}{
+\index{NetworkThread@{NetworkThread}!udp\_\-servers@{udp\_\-servers}}
+\index{udp\_\-servers@{udp\_\-servers}!NetworkThread@{NetworkThread}}
+\subsubsection[{udp\_\-servers}]{\setlength{\rightskip}{0pt plus 5cm}set$<$boost::shared\_\-ptr$<${\bf UdpServer}$>$ $>$ {\bf NetworkThread::udp\_\-servers}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classNetworkThread_acd2cc1475b8ebeafd3e7dafc835dbec4}
+Set of all udp servers 'on' this thread 
+
+Definition at line 119 of file NetworkThread.h.
+
+
+
+Referenced by create\_\-udp\_\-server(), and $\sim$NetworkThread().
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+/home/jtedesco/dev/sockit/src/common/\hyperlink{NetworkThread_8h}{NetworkThread.h}\item 
+/home/jtedesco/dev/sockit/src/common/\hyperlink{NetworkThread_8cpp}{NetworkThread.cpp}\end{DoxyCompactItemize}

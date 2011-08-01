@@ -1,0 +1,869 @@
+\hypertarget{classUdpClient}{
+\section{UdpClient Class Reference}
+\label{classUdpClient}\index{UdpClient@{UdpClient}}
+}
+
+
+{\ttfamily \#include $<$UdpClient.h$>$}
+
+Inheritance diagram for UdpClient:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classUdpClient}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classUdpClient_a3939a516b0c78c572bb6318be26039c8}{UdpClient} (const string \&\hyperlink{classUdp_a798fd48815d9d97045e8e6a3a290d301}{host}, int \hyperlink{classUdp_af69ea781b31a1fa62e5d3012b6288dc8}{port}, boost::asio::io\_\-service \&\hyperlink{classUdp_a7e143116ab3a0f478c8461ca04af782b}{io\_\-service})
+\item 
+\hyperlink{classUdpClient_a3a44547ebe0cbc3b85e0163b32767338}{UdpClient} (const string \&\hyperlink{classUdp_a798fd48815d9d97045e8e6a3a290d301}{host}, int \hyperlink{classUdp_af69ea781b31a1fa62e5d3012b6288dc8}{port}, boost::asio::io\_\-service \&\hyperlink{classUdp_a7e143116ab3a0f478c8461ca04af782b}{io\_\-service}, map$<$ string, string $>$ options)
+\item 
+virtual \hyperlink{classUdpClient_a9e69046802da8ea9e0bf3da874c49e47}{$\sim$UdpClient} ()
+\item 
+virtual void \hyperlink{classUdpClient_a86e50f32bbb7aaf657ea5cc91cbc99d2}{send} (const string \&data)
+\item 
+virtual void \hyperlink{classUdpClient_ad55f42a3c5cb3698b49975c8a065079e}{send\_\-bytes} (const vector$<$ \hyperlink{Event_8h_ae0aa21f6bcb621fe36c2c962aa0452fe}{byte} $>$ \&bytes)
+\item 
+virtual void \hyperlink{classUdpClient_a64b6b51f6a2316f7235381409f9cc327}{shutdown} ()
+\item 
+virtual int \hyperlink{classUdpClient_aaa19f0f767306e0e974782dd700c5c49}{get\_\-port} ()
+\item 
+virtual string \hyperlink{classUdpClient_ac18bd8d30497c82dfe1a63a464d01e00}{get\_\-host} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classUdpClient_a4c1f1672598ea18294f2486e071e0985}{init\_\-socket} ()
+\item 
+virtual void \hyperlink{classUdpClient_ae62b9e08cc550a47bbedca2e4556ebcc}{fire\_\-error\_\-event} (const string \&message)
+\item 
+virtual void \hyperlink{classUdpClient_acce4181d7ce20a812fffed395486a1bd}{fire\_\-data\_\-event} (const string data, boost::shared\_\-ptr$<$ udp::socket $>$ \hyperlink{classUdpClient_a5e929af056033e7b1fd3f72ad2bd1849}{socket}, boost::shared\_\-ptr$<$ udp::endpoint $>$ endpoint)
+\item 
+virtual void \hyperlink{classUdpClient_a48cc5f9ce547f5b0505fb8395ac93d32}{close} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classUdpClient_a2694066d9e432d68eca656f00152278d}{UdpClient} (const \hyperlink{classUdpClient}{UdpClient} \&other)
+\item 
+virtual void \hyperlink{classUdpClient_ae62759a7050f171fe12413ec658bb38b}{listen} ()
+\item 
+void \hyperlink{classUdpClient_a16e67afc411590eb1602fc02e3395599}{resolve\_\-handler} (const boost::system::error\_\-code \&err, udp::resolver::iterator endpoint\_\-iterator)
+\item 
+void \hyperlink{classUdpClient_a755db78b027af8161b0b79563c857f2f}{flush} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+boost::shared\_\-ptr$<$ udp::resolver $>$ \hyperlink{classUdpClient_a1ea233a699d5d1955bb3fa4bfca2ee2f}{resolver}
+\item 
+boost::shared\_\-ptr$<$ udp::socket $>$ \hyperlink{classUdpClient_a5e929af056033e7b1fd3f72ad2bd1849}{socket}
+\item 
+boost::mutex \hyperlink{classUdpClient_aa978126795bc551151f6442ba8421fc9}{queue\_\-mtx}
+\item 
+std::queue$<$ string $>$ \hyperlink{classUdpClient_a8843ba58204e08e3250b483d459b3416}{msgs\_\-not\_\-sent}
+\item 
+bool \hyperlink{classUdpClient_a342b58425b4ccaf7de2a3ad8dcbc4df8}{resolved\_\-endpoint}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 22 of file UdpClient.h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classUdpClient_a3939a516b0c78c572bb6318be26039c8}{
+\index{UdpClient@{UdpClient}!UdpClient@{UdpClient}}
+\index{UdpClient@{UdpClient}!UdpClient@{UdpClient}}
+\subsubsection[{UdpClient}]{\setlength{\rightskip}{0pt plus 5cm}UdpClient::UdpClient (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{host, }
+\item[{int}]{port, }
+\item[{boost::asio::io\_\-service \&}]{io\_\-service}
+\end{DoxyParamCaption}
+)}}
+\label{classUdpClient_a3939a516b0c78c572bb6318be26039c8}
+Asynchronously resolves the host and port number after creation. The client will not be able to send messages until after the resolve handler has run to completion.
+
+
+\begin{DoxyParams}{Parameters}
+{\em host} & The host to connect to \\
+\hline
+{\em port} & The port the host is listening on \\
+\hline
+{\em io\_\-service} & The I/O service to be used for asynchronous I/O requests \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 16 of file UdpClient.cpp.
+
+
+
+References Logger::error(), Udp::failed, resolver, and socket.
+
+
+\begin{DoxyCode}
+                                                                                 
+       :
+    Udp(host, port, ioService), resolver(new udp::resolver(io_service)), socket(n
+      ew udp::socket(io_service)), resolved_endpoint(false)
+{
+    // Check that the connection and resolver are valid, and fail gracefully if t
+      hey are not
+    if (!resolver.get() || !socket.get())
+    {
+        failed = true;
+        string message("Failed to initialize UDP client, failed to initialize pro
+      perly");
+        Logger::error(message, port, host);
+        fire_error(message);
+        return;
+    }
+}
+\end{DoxyCode}
+\hypertarget{classUdpClient_a3a44547ebe0cbc3b85e0163b32767338}{
+\index{UdpClient@{UdpClient}!UdpClient@{UdpClient}}
+\index{UdpClient@{UdpClient}!UdpClient@{UdpClient}}
+\subsubsection[{UdpClient}]{\setlength{\rightskip}{0pt plus 5cm}UdpClient::UdpClient (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{host, }
+\item[{int}]{port, }
+\item[{boost::asio::io\_\-service \&}]{io\_\-service, }
+\item[{map$<$ string, string $>$}]{options}
+\end{DoxyParamCaption}
+)}}
+\label{classUdpClient_a3a44547ebe0cbc3b85e0163b32767338}
+Asynchronously resolves the host and port number after creation. The client will not be able to send messages until after the resolve handler has run to completion.
+
+
+\begin{DoxyParams}{Parameters}
+{\em host} & The host to connect to \\
+\hline
+{\em port} & The port the host is listening on \\
+\hline
+{\em io\_\-service} & The I/O service to be used for asynchronous I/O requests \\
+\hline
+{\em options} & A map of additional options to configure this UDP client \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 30 of file UdpClient.cpp.
+
+
+
+References Logger::error(), Udp::failed, Udp::parse\_\-args(), resolver, and socket.
+
+
+\begin{DoxyCode}
+                                                                                 
+                                    :
+    Udp(host, port, ioService), resolver(new udp::resolver(io_service)), socket(n
+      ew udp::socket(io_service)), resolved_endpoint(false)
+{
+    // Check that the connection and resolver are valid, and fail gracefully if t
+      hey are not
+    if (!resolver.get() || !socket.get())
+    {
+        failed = true;
+        string message("Failed to initialize UDP client, failed to initialize pro
+      perly");
+        Logger::error(message, port, host);
+        fire_error(message);
+        return;
+    }
+
+    parse_args(options);
+}
+\end{DoxyCode}
+\hypertarget{classUdpClient_a9e69046802da8ea9e0bf3da874c49e47}{
+\index{UdpClient@{UdpClient}!$\sim$UdpClient@{$\sim$UdpClient}}
+\index{$\sim$UdpClient@{$\sim$UdpClient}!UdpClient@{UdpClient}}
+\subsubsection[{$\sim$UdpClient}]{\setlength{\rightskip}{0pt plus 5cm}UdpClient::$\sim$UdpClient (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classUdpClient_a9e69046802da8ea9e0bf3da874c49e47}
+Deconstructs a UDP client, immediately calling {\ttfamily close} to shutdown this client's socket and stop listening for responses. 
+
+Definition at line 92 of file UdpClient.cpp.
+
+
+
+References close().
+
+
+\begin{DoxyCode}
+{
+    close();
+}
+\end{DoxyCode}
+\hypertarget{classUdpClient_a2694066d9e432d68eca656f00152278d}{
+\index{UdpClient@{UdpClient}!UdpClient@{UdpClient}}
+\index{UdpClient@{UdpClient}!UdpClient@{UdpClient}}
+\subsubsection[{UdpClient}]{\setlength{\rightskip}{0pt plus 5cm}UdpClient::UdpClient (
+\begin{DoxyParamCaption}
+\item[{const {\bf UdpClient} \&}]{other}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classUdpClient_a2694066d9e432d68eca656f00152278d}
+Disallows copying a UDP client 
+
+\subsection{Member Function Documentation}
+\hypertarget{classUdpClient_a48cc5f9ce547f5b0505fb8395ac93d32}{
+\index{UdpClient@{UdpClient}!close@{close}}
+\index{close@{close}!UdpClient@{UdpClient}}
+\subsubsection[{close}]{\setlength{\rightskip}{0pt plus 5cm}void UdpClient::close (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classUdpClient_a48cc5f9ce547f5b0505fb8395ac93d32}
+Immediately cancels any pending operations and closes this client's socket. 
+
+Implements \hyperlink{classUdp_a035ec772c3af57eba9d69cf3ba9dcdda}{Udp}.
+
+
+
+Definition at line 97 of file UdpClient.cpp.
+
+
+
+References Udp::should\_\-close, and socket.
+
+
+
+Referenced by shutdown(), and $\sim$UdpClient().
+
+
+\begin{DoxyCode}
+{
+    should_close = true;
+
+    if (socket->is_open())
+    {
+        socket->close();
+    }
+}
+\end{DoxyCode}
+\hypertarget{classUdpClient_acce4181d7ce20a812fffed395486a1bd}{
+\index{UdpClient@{UdpClient}!fire\_\-data\_\-event@{fire\_\-data\_\-event}}
+\index{fire\_\-data\_\-event@{fire\_\-data\_\-event}!UdpClient@{UdpClient}}
+\subsubsection[{fire\_\-data\_\-event}]{\setlength{\rightskip}{0pt plus 5cm}void UdpClient::fire\_\-data\_\-event (
+\begin{DoxyParamCaption}
+\item[{const string}]{data, }
+\item[{boost::shared\_\-ptr$<$ udp::socket $>$}]{socket, }
+\item[{boost::shared\_\-ptr$<$ udp::endpoint $>$}]{endpoint}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classUdpClient_acce4181d7ce20a812fffed395486a1bd}
+Helper to fire data event to javascript.
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & The data received \\
+\hline
+{\em socket} & The socket on which to reply to this data \\
+\hline
+{\em endpoint} & The connected endpoint to the remote host \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classUdp_a08e6e588781ce1e7a4d643b97d63dc5c}{Udp}.
+
+
+
+Definition at line 281 of file UdpClient.cpp.
+
+
+
+References Udp::should\_\-close.
+
+
+\begin{DoxyCode}
+{
+    if (should_close)
+        return;
+
+    fire_data(boost::make_shared<UdpEvent>(this, socket, endpoint, data));
+}
+\end{DoxyCode}
+\hypertarget{classUdpClient_ae62b9e08cc550a47bbedca2e4556ebcc}{
+\index{UdpClient@{UdpClient}!fire\_\-error\_\-event@{fire\_\-error\_\-event}}
+\index{fire\_\-error\_\-event@{fire\_\-error\_\-event}!UdpClient@{UdpClient}}
+\subsubsection[{fire\_\-error\_\-event}]{\setlength{\rightskip}{0pt plus 5cm}void UdpClient::fire\_\-error\_\-event (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{message}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classUdpClient_ae62b9e08cc550a47bbedca2e4556ebcc}
+Helper to fire an error event to javascript.
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & The error message \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classUdp_a9b79c3603ee9196623aa93b505bda1f6}{Udp}.
+
+
+
+Definition at line 273 of file UdpClient.cpp.
+
+
+
+References Udp::should\_\-close.
+
+
+\begin{DoxyCode}
+{
+    if (should_close)
+        return;
+
+    fire_error(message);
+}
+\end{DoxyCode}
+\hypertarget{classUdpClient_a755db78b027af8161b0b79563c857f2f}{
+\index{UdpClient@{UdpClient}!flush@{flush}}
+\index{flush@{flush}!UdpClient@{UdpClient}}
+\subsubsection[{flush}]{\setlength{\rightskip}{0pt plus 5cm}void UdpClient::flush (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classUdpClient_a755db78b027af8161b0b79563c857f2f}
+Flush all pending messages. 
+
+Definition at line 238 of file UdpClient.cpp.
+
+
+
+References msgs\_\-not\_\-sent, queue\_\-mtx, and send().
+
+
+
+Referenced by resolve\_\-handler(), and send().
+
+
+\begin{DoxyCode}
+{
+    queue_mtx.lock();
+
+    while (!msgs_not_sent.empty())
+    {
+        string msg = msgs_not_sent.front();
+        msgs_not_sent.pop();
+        queue_mtx.unlock();
+        send(msg);
+        queue_mtx.lock();
+    }
+
+    queue_mtx.unlock();
+}
+\end{DoxyCode}
+\hypertarget{classUdpClient_ac18bd8d30497c82dfe1a63a464d01e00}{
+\index{UdpClient@{UdpClient}!get\_\-host@{get\_\-host}}
+\index{get\_\-host@{get\_\-host}!UdpClient@{UdpClient}}
+\subsubsection[{get\_\-host}]{\setlength{\rightskip}{0pt plus 5cm}string UdpClient::get\_\-host (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classUdpClient_ac18bd8d30497c82dfe1a63a464d01e00}
+Returns the host to which this client connects 
+
+Implements \hyperlink{classClient_a01e5ea1bae012b2a46e8abd6b0bab704}{Client}.
+
+
+
+Definition at line 263 of file UdpClient.cpp.
+
+
+
+References Udp::host.
+
+
+\begin{DoxyCode}
+{
+    return host;
+}
+\end{DoxyCode}
+\hypertarget{classUdpClient_aaa19f0f767306e0e974782dd700c5c49}{
+\index{UdpClient@{UdpClient}!get\_\-port@{get\_\-port}}
+\index{get\_\-port@{get\_\-port}!UdpClient@{UdpClient}}
+\subsubsection[{get\_\-port}]{\setlength{\rightskip}{0pt plus 5cm}int UdpClient::get\_\-port (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classUdpClient_aaa19f0f767306e0e974782dd700c5c49}
+Returns the port of the remote host on which this client connects 
+
+Implements \hyperlink{classClient_ac9e4f13eef6b9a776b2bb6cca9d4f78b}{Client}.
+
+
+
+Definition at line 268 of file UdpClient.cpp.
+
+
+
+References Udp::port.
+
+
+\begin{DoxyCode}
+{
+    return port;
+}
+\end{DoxyCode}
+\hypertarget{classUdpClient_a4c1f1672598ea18294f2486e071e0985}{
+\index{UdpClient@{UdpClient}!init\_\-socket@{init\_\-socket}}
+\index{init\_\-socket@{init\_\-socket}!UdpClient@{UdpClient}}
+\subsubsection[{init\_\-socket}]{\setlength{\rightskip}{0pt plus 5cm}void UdpClient::init\_\-socket (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classUdpClient_a4c1f1672598ea18294f2486e071e0985}
+Initializes the socket according to the passed in options (if any). 
+
+Definition at line 46 of file UdpClient.cpp.
+
+
+
+References Udp::BUFFER\_\-SIZE, Udp::do\_\-not\_\-route, Logger::error(), Udp::host, Logger::info(), Udp::log\_\-options(), Udp::multicast, Udp::multicast\_\-ttl, Udp::port, Udp::reuse\_\-address, socket, and Udp::using\_\-ipv6.
+
+
+
+Referenced by resolve\_\-handler().
+
+
+\begin{DoxyCode}
+{
+    Logger::info(
+            "Initializing UDP client to host '" + boost::lexical_cast<string>(
+      host) + "' on port " + boost::lexical_cast<string>(port),
+            port, host);
+    log_options();
+
+    if (using_ipv6 && *using_ipv6)
+        socket->open(udp::v6());
+    else
+        socket->open(udp::v4());
+
+    if (!socket->is_open())
+    {
+        string message("Failed to open UDP client socket");
+        Logger::error(message, port, host);
+        fire_error(message);
+    }
+
+    // synchronize the buffer size of the socket with this class's buffer size
+    boost::asio::socket_base::receive_buffer_size buf_size_option(BUFFER_SIZE);
+    socket->set_option(buf_size_option);
+
+    // set multicast ttl and out going interface
+    if (multicast && *multicast)
+    {
+        if (multicast_ttl)
+        {
+            boost::asio::ip::multicast::hops option(*multicast_ttl);
+            socket->set_option(option);
+        }
+    }
+
+    if (do_not_route)
+    {
+        boost::asio::socket_base::do_not_route option(*do_not_route);
+        socket->set_option(option);
+    }
+
+    if (reuse_address)
+    {
+        boost::asio::socket_base::reuse_address option(*reuse_address);
+        socket->set_option(option);
+    }
+}
+\end{DoxyCode}
+\hypertarget{classUdpClient_ae62759a7050f171fe12413ec658bb38b}{
+\index{UdpClient@{UdpClient}!listen@{listen}}
+\index{listen@{listen}!UdpClient@{UdpClient}}
+\subsubsection[{listen}]{\setlength{\rightskip}{0pt plus 5cm}void UdpClient::listen (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private, virtual\mbox{]}}}}
+\label{classUdpClient_ae62759a7050f171fe12413ec658bb38b}
+Helper function that will listen for incoming data on the UDP connection for the client, specifically responses to data already sent. 
+
+Implements \hyperlink{classUdp_a645a7a67007362e349cacc78f9870954}{Udp}.
+
+
+
+Definition at line 254 of file UdpClient.cpp.
+
+
+
+References Udp::host, Udp::port, Udp::receive\_\-buffer, Udp::receive\_\-handler(), Udp::remote\_\-endpoint, socket, and Logger::warn().
+
+
+
+Referenced by send().
+
+
+\begin{DoxyCode}
+{
+    if (remote_endpoint && remote_endpoint.get())
+        socket->async_receive_from(boost::asio::buffer(receive_buffer), *
+      remote_endpoint,
+                boost::bind(&UdpClient::receive_handler, this, _1, _2, socket, 
+      remote_endpoint, host, port));
+    else
+        Logger::warn("remote endpoint is null", port, host);
+}
+\end{DoxyCode}
+\hypertarget{classUdpClient_a16e67afc411590eb1602fc02e3395599}{
+\index{UdpClient@{UdpClient}!resolve\_\-handler@{resolve\_\-handler}}
+\index{resolve\_\-handler@{resolve\_\-handler}!UdpClient@{UdpClient}}
+\subsubsection[{resolve\_\-handler}]{\setlength{\rightskip}{0pt plus 5cm}void UdpClient::resolve\_\-handler (
+\begin{DoxyParamCaption}
+\item[{const boost::system::error\_\-code \&}]{err, }
+\item[{udp::resolver::iterator}]{endpoint\_\-iterator}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classUdpClient_a16e67afc411590eb1602fc02e3395599}
+I/O handler invoked when the remote host is resolved. This handler attempts to asynchronously establish a UDP connection with the remote host.
+
+
+\begin{DoxyParams}{Parameters}
+{\em err} & The error code encountered when trying to receive data, if any occurred. On success, this value is zero, and nonzero on error. \\
+\hline
+{\em endpoint\_\-iterator} & Allows the client to iterate through resolvers to retry the connection if it initially fails to connect. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 200 of file UdpClient.cpp.
+
+
+
+References Logger::error(), flush(), Udp::host, Logger::info(), init\_\-socket(), Udp::port, Udp::remote\_\-endpoint, resolved\_\-endpoint, resolver, and socket.
+
+
+
+Referenced by send().
+
+
+\begin{DoxyCode}
+{
+    if (err)
+    {
+        udp::resolver::iterator end;
+        if (endpoint_iterator != end && err == boost::asio::error::host_not_found
+      )
+        {
+            // If we haven't tried resolving using all resolvers, try with anothe
+      r
+            udp::resolver::query query(host, boost::lexical_cast<string>(port));
+            resolver->async_resolve(query, boost::bind(&
+      UdpClient::resolve_handler, this, _1, endpoint_iterator++));
+        }
+        else
+        { // We have tried and cannot recover, fail permanently
+            string message("Error: resolving host " + host + ":" + boost::lexical
+      _cast<string>(port) + " error was " + err.message());
+
+            Logger::error(message, port, host);
+            fire_error(message);
+
+            return;
+        }
+    }
+
+    fire_resolve();
+
+    Logger::info("udpclient: resolved, going to send", port, host);
+
+    // We succeeded resolving the endpoint, continue
+    remote_endpoint = boost::make_shared<udp::endpoint>(*endpoint_iterator);
+
+    if (!socket->is_open())
+        init_socket();
+
+    // This endpoint has now been initialized
+    resolved_endpoint = true;
+
+    flush();
+}
+\end{DoxyCode}
+\hypertarget{classUdpClient_a86e50f32bbb7aaf657ea5cc91cbc99d2}{
+\index{UdpClient@{UdpClient}!send@{send}}
+\index{send@{send}!UdpClient@{UdpClient}}
+\subsubsection[{send}]{\setlength{\rightskip}{0pt plus 5cm}void UdpClient::send (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{data}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classUdpClient_a86e50f32bbb7aaf657ea5cc91cbc99d2}
+Asynchronously sends data to the remote host to which this client is connected.
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & The data to send across the wire \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classClient_ae02f1c7ffac49b7543244da28fbb58aa}{Client}.
+
+
+
+Definition at line 137 of file UdpClient.cpp.
+
+
+
+References Logger::error(), Udp::failed, flush(), Udp::host, Logger::info(), listen(), msgs\_\-not\_\-sent, Udp::pending\_\-sends, Udp::pending\_\-sends\_\-mutex, Udp::port, queue\_\-mtx, Udp::remote\_\-endpoint, resolve\_\-handler(), resolved\_\-endpoint, resolver, Udp::send\_\-handler(), Udp::should\_\-close, socket, and Udp::using\_\-ipv6.
+
+
+
+Referenced by flush(), and send\_\-bytes().
+
+
+\begin{DoxyCode}
+{
+    if (failed)
+    {
+        // Log & fire an error
+        string message("Trying to send from a UDP client that has permanently fai
+      led!");
+        Logger::error(message, port, host);
+        return;
+    }
+
+    if (should_close)
+        return;
+
+    Logger::info("udpclient: sending a msg of size: " + boost::lexical_cast<std::
+      string>(msg.size()) + " which is: " + msg, port, host);
+
+    pending_sends_mutex.lock();
+    pending_sends++;
+    pending_sends_mutex.unlock();
+
+    if (!resolved_endpoint)
+    {
+        Logger::info("udpclient: resolving " + host + ":" + boost::lexical_cast<s
+      tring>(port), port, host);
+
+        queue_mtx.lock();
+        msgs_not_sent.push(msg);
+        queue_mtx.unlock();
+
+        // Create a query to resolve this host & port
+        if (using_ipv6 && *using_ipv6)
+        {
+            // Asynchronously resolve the remote host, and once the host is resol
+      ved, create a connection
+            udp::resolver::query query(udp::v6(), host, boost::lexical_cast<strin
+      g>(port),
+                    boost::asio::ip::resolver_query_base::numeric_service);
+            resolver->async_resolve(query, boost::bind(&
+      UdpClient::resolve_handler, this, _1, _2));
+        }
+        else
+        {
+            // Asynchronously resolve the remote host, and once the host is resol
+      ved, create a connection
+            udp::resolver::query query(udp::v4(), host, boost::lexical_cast<strin
+      g>(port),
+                    boost::asio::ip::resolver_query_base::numeric_service);
+            resolver->async_resolve(query, boost::bind(&
+      UdpClient::resolve_handler, this, _1, _2));
+        }
+    }
+    else
+    {
+        flush(); // any pending messages? send them.
+
+        Logger::info("udpclient: attempting to send " + boost::lexical_cast<strin
+      g>(msg.size()) + " bytes of data: " + msg, port, host);
+
+        // send the message
+        if (socket->is_open() && remote_endpoint.get())
+        {
+            socket->async_send_to(boost::asio::buffer(msg.data(), msg.size()), *
+      remote_endpoint,
+                    boost::bind(&UdpClient::send_handler, this, _1, _2, msg, 
+      host, port));
+
+            Logger::info("udpclient: (async) send called", port, host);
+
+            if (!should_close)
+                listen(); // listen for responses
+        }
+    }
+}
+\end{DoxyCode}
+\hypertarget{classUdpClient_ad55f42a3c5cb3698b49975c8a065079e}{
+\index{UdpClient@{UdpClient}!send\_\-bytes@{send\_\-bytes}}
+\index{send\_\-bytes@{send\_\-bytes}!UdpClient@{UdpClient}}
+\subsubsection[{send\_\-bytes}]{\setlength{\rightskip}{0pt plus 5cm}void UdpClient::send\_\-bytes (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf byte} $>$ \&}]{bytes}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classUdpClient_ad55f42a3c5cb3698b49975c8a065079e}
+Asynchronously sends bytes to the remote host to which this client is connected.
+
+
+\begin{DoxyParams}{Parameters}
+{\em bytes} & The data to send across the wire \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classClient_a6d77759bc7022e45a3e4326757bd6b8b}{Client}.
+
+
+
+Definition at line 125 of file UdpClient.cpp.
+
+
+
+References UdpEvent::data, and send().
+
+
+\begin{DoxyCode}
+{
+    string data;
+
+    for (int i = 0; i < bytes.size(); i++)
+    {
+        data.push_back((unsigned char) bytes[i]);
+    }
+
+    send(data);
+}
+\end{DoxyCode}
+\hypertarget{classUdpClient_a64b6b51f6a2316f7235381409f9cc327}{
+\index{UdpClient@{UdpClient}!shutdown@{shutdown}}
+\index{shutdown@{shutdown}!UdpClient@{UdpClient}}
+\subsubsection[{shutdown}]{\setlength{\rightskip}{0pt plus 5cm}void UdpClient::shutdown (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classUdpClient_a64b6b51f6a2316f7235381409f9cc327}
+Gracefully shutdown this UDP client, waiting until all sends have completed before freeing all resources for this UDP client and shutting down any open connections. This function is exposed the javascript API. 
+
+Implements \hyperlink{classNetworkObject_a2f519457fd87c8a92cf265a2b2883e96}{NetworkObject}.
+
+
+
+Definition at line 107 of file UdpClient.cpp.
+
+
+
+References close(), Udp::failed, Udp::pending\_\-sends, Udp::pending\_\-sends\_\-mutex, and Udp::should\_\-close.
+
+
+\begin{DoxyCode}
+{
+    if (!failed)
+    {
+        should_close = true;
+
+        pending_sends_mutex.lock();
+        int pending_sends_now = pending_sends;
+        pending_sends_mutex.unlock();
+
+        if (pending_sends_now == 0)
+        {
+            fire_close();
+            close();
+        }
+    }
+}
+\end{DoxyCode}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classUdpClient_a8843ba58204e08e3250b483d459b3416}{
+\index{UdpClient@{UdpClient}!msgs\_\-not\_\-sent@{msgs\_\-not\_\-sent}}
+\index{msgs\_\-not\_\-sent@{msgs\_\-not\_\-sent}!UdpClient@{UdpClient}}
+\subsubsection[{msgs\_\-not\_\-sent}]{\setlength{\rightskip}{0pt plus 5cm}std::queue$<$string$>$ {\bf UdpClient::msgs\_\-not\_\-sent}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classUdpClient_a8843ba58204e08e3250b483d459b3416}
+Messages waiting to be sent, since the host hasn't been resolved yet. 
+
+Definition at line 159 of file UdpClient.h.
+
+
+
+Referenced by flush(), and send().
+
+\hypertarget{classUdpClient_aa978126795bc551151f6442ba8421fc9}{
+\index{UdpClient@{UdpClient}!queue\_\-mtx@{queue\_\-mtx}}
+\index{queue\_\-mtx@{queue\_\-mtx}!UdpClient@{UdpClient}}
+\subsubsection[{queue\_\-mtx}]{\setlength{\rightskip}{0pt plus 5cm}boost::mutex {\bf UdpClient::queue\_\-mtx}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classUdpClient_aa978126795bc551151f6442ba8421fc9}
+Mutex for the message queue. 
+
+Definition at line 154 of file UdpClient.h.
+
+
+
+Referenced by flush(), and send().
+
+\hypertarget{classUdpClient_a342b58425b4ccaf7de2a3ad8dcbc4df8}{
+\index{UdpClient@{UdpClient}!resolved\_\-endpoint@{resolved\_\-endpoint}}
+\index{resolved\_\-endpoint@{resolved\_\-endpoint}!UdpClient@{UdpClient}}
+\subsubsection[{resolved\_\-endpoint}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf UdpClient::resolved\_\-endpoint}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classUdpClient_a342b58425b4ccaf7de2a3ad8dcbc4df8}
+A flag representing whether the remote host for this UDP client has already been resolved. 
+
+Definition at line 164 of file UdpClient.h.
+
+
+
+Referenced by resolve\_\-handler(), and send().
+
+\hypertarget{classUdpClient_a1ea233a699d5d1955bb3fa4bfca2ee2f}{
+\index{UdpClient@{UdpClient}!resolver@{resolver}}
+\index{resolver@{resolver}!UdpClient@{UdpClient}}
+\subsubsection[{resolver}]{\setlength{\rightskip}{0pt plus 5cm}boost::shared\_\-ptr$<$udp::resolver$>$ {\bf UdpClient::resolver}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classUdpClient_a1ea233a699d5d1955bb3fa4bfca2ee2f}
+Resolver object provided by {\ttfamily boost} to resolve the remote hostname and port 
+
+Definition at line 144 of file UdpClient.h.
+
+
+
+Referenced by resolve\_\-handler(), send(), and UdpClient().
+
+\hypertarget{classUdpClient_a5e929af056033e7b1fd3f72ad2bd1849}{
+\index{UdpClient@{UdpClient}!socket@{socket}}
+\index{socket@{socket}!UdpClient@{UdpClient}}
+\subsubsection[{socket}]{\setlength{\rightskip}{0pt plus 5cm}boost::shared\_\-ptr$<$udp::socket$>$ {\bf UdpClient::socket}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classUdpClient_a5e929af056033e7b1fd3f72ad2bd1849}
+A shared reference to the socket used to connect to the remote host 
+
+Definition at line 149 of file UdpClient.h.
+
+
+
+Referenced by close(), init\_\-socket(), listen(), resolve\_\-handler(), send(), and UdpClient().
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+/home/jtedesco/dev/sockit/src/udp/\hyperlink{UdpClient_8h}{UdpClient.h}\item 
+/home/jtedesco/dev/sockit/src/udp/\hyperlink{UdpClient_8cpp}{UdpClient.cpp}\end{DoxyCompactItemize}

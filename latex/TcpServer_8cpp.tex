@@ -1,0 +1,68 @@
+\hypertarget{TcpServer_8cpp}{
+\section{/home/jtedesco/dev/sockit/src/tcp/TcpServer.cpp File Reference}
+\label{TcpServer_8cpp}\index{/home/jtedesco/dev/sockit/src/tcp/TcpServer.cpp@{/home/jtedesco/dev/sockit/src/tcp/TcpServer.cpp}}
+}
+{\ttfamily \#include \char`\"{}TcpServer.h\char`\"{}}\par
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{TcpServer_8cpp_ac9dd6924c09e22e8976648dfb53b9d77}{socket\_\-deallocate} (tcp::socket $\ast$socket)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{TcpServer_8cpp_ac9dd6924c09e22e8976648dfb53b9d77}{
+\index{TcpServer.cpp@{TcpServer.cpp}!socket\_\-deallocate@{socket\_\-deallocate}}
+\index{socket\_\-deallocate@{socket\_\-deallocate}!TcpServer.cpp@{TcpServer.cpp}}
+\subsubsection[{socket\_\-deallocate}]{\setlength{\rightskip}{0pt plus 5cm}void socket\_\-deallocate (
+\begin{DoxyParamCaption}
+\item[{tcp::socket $\ast$}]{socket}
+\end{DoxyParamCaption}
+)}}
+\label{TcpServer_8cpp_ac9dd6924c09e22e8976648dfb53b9d77}
+Helper function to shutdown and deallocate the memory for a socket.
+
+
+\begin{DoxyParams}{Parameters}
+{\em socket} & The socket to deallocate. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 138 of file TcpServer.cpp.
+
+
+
+References Logger::error().
+
+
+
+Referenced by TcpServer::start\_\-listening().
+
+
+\begin{DoxyCode}
+{
+    // may already have been deallocated
+    if(!socket) return;
+
+    try
+    {
+        if(socket && socket->is_open())
+        {
+            //s->shutdown(s->shutdown_both);
+            socket->close();
+        }
+    }
+    catch(boost::system::error_code &e)
+    {
+        Logger::error("socket deallocate: " + e.message());
+    }
+    catch(std::exception &er)
+    {
+        Logger::error("socket deallocate: " + std::string(er.what()));
+    }
+
+    delete socket;
+    socket = 0;
+}
+\end{DoxyCode}

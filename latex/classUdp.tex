@@ -1,0 +1,872 @@
+\hypertarget{classUdp}{
+\section{Udp Class Reference}
+\label{classUdp}\index{Udp@{Udp}}
+}
+
+
+{\ttfamily \#include $<$Udp.h$>$}
+
+Inheritance diagram for Udp:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classUdp}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classUdp_a9a7578235269c76bf6d810b7ac1eb268}{Udp} (string \hyperlink{classUdp_a798fd48815d9d97045e8e6a3a290d301}{host}, int \hyperlink{classUdp_af69ea781b31a1fa62e5d3012b6288dc8}{port}, boost::asio::io\_\-service \&\hyperlink{classUdp_a7e143116ab3a0f478c8461ca04af782b}{io\_\-service})
+\item 
+virtual \hyperlink{classUdp_a74976ab6af022569ab20089c317d0cb6}{$\sim$Udp} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+string \hyperlink{classUdp_a5fd51bb7cc419e81b873053d7e6b262f}{bool\_\-option\_\-to\_\-string} (optional$<$ bool $>$ \&arg, string iftrue, string iffalse)
+\item 
+{\footnotesize template$<$class T $>$ }\\string \hyperlink{classUdp_afefa55570fcf5adc18fc131437f31390}{option\_\-to\_\-string} (optional$<$ T $>$ \&arg)
+\item 
+void \hyperlink{classUdp_ab1af87966ec4c68e8958844f95a75e47}{parse\_\-string\_\-bool\_\-arg} (map$<$ string, string $>$ \&options, string arg, optional$<$ bool $>$ \&arg\_\-value)
+\item 
+void \hyperlink{classUdp_a19fe0f8b3b2f75cee6ae2841b032c64e}{parse\_\-args} (map$<$ string, string $>$ options)
+\item 
+void \hyperlink{classUdp_aa3def7bb682cc264bb2e425d93517e17}{log\_\-options} ()
+\item 
+virtual void \hyperlink{classUdp_a645a7a67007362e349cacc78f9870954}{listen} ()=0
+\item 
+virtual void \hyperlink{classUdp_a035ec772c3af57eba9d69cf3ba9dcdda}{close} ()=0
+\item 
+void \hyperlink{classUdp_a8c7b302089f5dd3979b5e1572b190ca8}{send\_\-handler} (const boost::system::error\_\-code \&err, std::size\_\-t bytes\_\-transferred, string msg, string \hyperlink{classUdp_a798fd48815d9d97045e8e6a3a290d301}{host}, int \hyperlink{classUdp_af69ea781b31a1fa62e5d3012b6288dc8}{port})
+\item 
+void \hyperlink{classUdp_a1edcafcfd4202b3f9cc5a0724f26fe7a}{receive\_\-handler} (const boost::system::error\_\-code \&err, std::size\_\-t bytes\_\-transferred, boost::shared\_\-ptr$<$ udp::socket $>$ socket, boost::shared\_\-ptr$<$ udp::endpoint $>$ endpoint, string \hyperlink{classUdp_a798fd48815d9d97045e8e6a3a290d301}{host}, int \hyperlink{classUdp_af69ea781b31a1fa62e5d3012b6288dc8}{port})
+\item 
+virtual void \hyperlink{classUdp_a9b79c3603ee9196623aa93b505bda1f6}{fire\_\-error\_\-event} (const string \&message)=0
+\item 
+virtual void \hyperlink{classUdp_a08e6e588781ce1e7a4d643b97d63dc5c}{fire\_\-data\_\-event} (const string data, boost::shared\_\-ptr$<$ udp::socket $>$ socket, boost::shared\_\-ptr$<$ udp::endpoint $>$ endpoint)=0
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+boost::asio::io\_\-service \& \hyperlink{classUdp_a7e143116ab3a0f478c8461ca04af782b}{io\_\-service}
+\item 
+boost::array$<$ char, \hyperlink{classUdp_aa72dc03ed420eee2098841f5998e3c53}{BUFFER\_\-SIZE} $>$ \hyperlink{classUdp_a7f21cfeaaccb297124d7582607981afc}{receive\_\-buffer}
+\item 
+int \hyperlink{classUdp_ac4b9b234de6090250125a1ea05764014}{pending\_\-sends}
+\item 
+boost::mutex \hyperlink{classUdp_af67ced15878e36d5dbfa433262876922}{pending\_\-sends\_\-mutex}
+\item 
+bool \hyperlink{classUdp_a01a27e2a1b252f39cefd61eb81a18220}{should\_\-close}
+\item 
+optional$<$ bool $>$ \hyperlink{classUdp_a3522427333a9a3520e8c8a207cb1a6f2}{using\_\-ipv6}
+\item 
+optional$<$ bool $>$ \hyperlink{classUdp_aff2511b739bdeee2875c07305b364042}{multicast}
+\item 
+optional$<$ string $>$ \hyperlink{classUdp_a012f2fbbab10ad7112b6c727e6951207}{multicast\_\-group}
+\item 
+optional$<$ int $>$ \hyperlink{classUdp_a11f39b2d209d628bdb52ff461e5898d2}{multicast\_\-ttl}
+\item 
+optional$<$ bool $>$ \hyperlink{classUdp_ace1cbe1cd248a6ae689848f25c26d9d1}{do\_\-not\_\-route}
+\item 
+optional$<$ bool $>$ \hyperlink{classUdp_a7572159d5d08e4e85e8a1eeba37eb1b9}{reuse\_\-address}
+\item 
+string \hyperlink{classUdp_a798fd48815d9d97045e8e6a3a290d301}{host}
+\item 
+int \hyperlink{classUdp_af69ea781b31a1fa62e5d3012b6288dc8}{port}
+\item 
+boost::shared\_\-ptr$<$ udp::endpoint $>$ \hyperlink{classUdp_ae7fa8c26a933bf54f13f2230760a17e3}{remote\_\-endpoint}
+\item 
+bool \hyperlink{classUdp_a91a6ea6959febc662830e818b89ed884}{failed}
+\end{DoxyCompactItemize}
+\subsection*{Static Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static const int \hyperlink{classUdp_aa72dc03ed420eee2098841f5998e3c53}{BUFFER\_\-SIZE} = 2048
+\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classUdp_aa3db591e179836aff8d4a6d952d43101}{UdpEvent}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Interface to abstract out the client-\/server model for use in the {\ttfamily \hyperlink{classEvent}{Event}}. Contains common handlers used by both UDP servers and clients.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classEvent}{Event} 
+\end{DoxySeeAlso}
+
+
+Definition at line 39 of file Udp.h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classUdp_a9a7578235269c76bf6d810b7ac1eb268}{
+\index{Udp@{Udp}!Udp@{Udp}}
+\index{Udp@{Udp}!Udp@{Udp}}
+\subsubsection[{Udp}]{\setlength{\rightskip}{0pt plus 5cm}Udp::Udp (
+\begin{DoxyParamCaption}
+\item[{string}]{host, }
+\item[{int}]{port, }
+\item[{boost::asio::io\_\-service \&}]{io\_\-service}
+\end{DoxyParamCaption}
+)}}
+\label{classUdp_a9a7578235269c76bf6d810b7ac1eb268}
+Builds a generic UDP object, and registers the 'shutdown' method on the API.
+
+
+\begin{DoxyParams}{Parameters}
+{\em host} & The hostname for this UDP object. For clients, this represents the remote host's hostname, and for servers, defaults to 'localhost'. \\
+\hline
+{\em port} & The port for this UDP object, which for clients, represents the port of the remote host to which to connect, and for servers, represents the port to which to bind and listen for incoming connections. \\
+\hline
+{\em io\_\-service} & The I/O service used for asynchronous I/O requests \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 10 of file Udp.cpp.
+
+
+
+References remote\_\-endpoint.
+
+
+\begin{DoxyCode}
+                                                                :
+    host(host), port(port), pending_sends(0), should_close(false), io_service(
+      io_service), failed(false)
+{
+    remote_endpoint = boost::shared_ptr<udp::endpoint>(new udp::endpoint());
+}
+\end{DoxyCode}
+\hypertarget{classUdp_a74976ab6af022569ab20089c317d0cb6}{
+\index{Udp@{Udp}!$\sim$Udp@{$\sim$Udp}}
+\index{$\sim$Udp@{$\sim$Udp}!Udp@{Udp}}
+\subsubsection[{$\sim$Udp}]{\setlength{\rightskip}{0pt plus 5cm}virtual Udp::$\sim$Udp (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{classUdp_a74976ab6af022569ab20089c317d0cb6}
+Immediately calls the {\ttfamily close} function, freeing all resources for this UDP object and shutting down any open connections. 
+
+Definition at line 59 of file Udp.h.
+
+
+\begin{DoxyCode}
+{}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classUdp_a5fd51bb7cc419e81b873053d7e6b262f}{
+\index{Udp@{Udp}!bool\_\-option\_\-to\_\-string@{bool\_\-option\_\-to\_\-string}}
+\index{bool\_\-option\_\-to\_\-string@{bool\_\-option\_\-to\_\-string}!Udp@{Udp}}
+\subsubsection[{bool\_\-option\_\-to\_\-string}]{\setlength{\rightskip}{0pt plus 5cm}string Udp::bool\_\-option\_\-to\_\-string (
+\begin{DoxyParamCaption}
+\item[{optional$<$ bool $>$ \&}]{arg, }
+\item[{string}]{iftrue, }
+\item[{string}]{iffalse}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, protected\mbox{]}}}}
+\label{classUdp_a5fd51bb7cc419e81b873053d7e6b262f}
+Helper for logging options passed in.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arg} & optional bool option \\
+\hline
+{\em iftrue} & if the arg has been set to true, return this \\
+\hline
+{\em iffalse} & if the arg hasn't been set, or is set to false, return this \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 143 of file Udp.cpp.
+
+
+
+Referenced by log\_\-options().
+
+
+\begin{DoxyCode}
+{
+    if (arg && *arg)
+        return iftrue;
+    return iffalse;
+}
+\end{DoxyCode}
+\hypertarget{classUdp_a035ec772c3af57eba9d69cf3ba9dcdda}{
+\index{Udp@{Udp}!close@{close}}
+\index{close@{close}!Udp@{Udp}}
+\subsubsection[{close}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Udp::close (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, pure virtual\mbox{]}}}}
+\label{classUdp_a035ec772c3af57eba9d69cf3ba9dcdda}
+Immediately frees all resources for this UDP object and shutting down any open connections. This function should never be invoked by the base class, and logs an error if this ever occurs. 
+
+Implemented in \hyperlink{classUdpClient_a48cc5f9ce547f5b0505fb8395ac93d32}{UdpClient}, and \hyperlink{classUdpServer_a020144da72e1f29be85ed99225372b21}{UdpServer}.
+
+
+
+Referenced by send\_\-handler().
+
+\hypertarget{classUdp_a08e6e588781ce1e7a4d643b97d63dc5c}{
+\index{Udp@{Udp}!fire\_\-data\_\-event@{fire\_\-data\_\-event}}
+\index{fire\_\-data\_\-event@{fire\_\-data\_\-event}!Udp@{Udp}}
+\subsubsection[{fire\_\-data\_\-event}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Udp::fire\_\-data\_\-event (
+\begin{DoxyParamCaption}
+\item[{const string}]{data, }
+\item[{boost::shared\_\-ptr$<$ udp::socket $>$}]{socket, }
+\item[{boost::shared\_\-ptr$<$ udp::endpoint $>$}]{endpoint}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, pure virtual\mbox{]}}}}
+\label{classUdp_a08e6e588781ce1e7a4d643b97d63dc5c}
+Helper to fire data event to javascript.
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & The data received \\
+\hline
+{\em socket} & The socket on which to reply to this data \\
+\hline
+{\em endpoint} & The connected endpoint to the remote host \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classUdpClient_acce4181d7ce20a812fffed395486a1bd}{UdpClient}, and \hyperlink{classUdpServer_ab3bcedec1031181a7dd3affddf3d8447}{UdpServer}.
+
+
+
+Referenced by receive\_\-handler().
+
+\hypertarget{classUdp_a9b79c3603ee9196623aa93b505bda1f6}{
+\index{Udp@{Udp}!fire\_\-error\_\-event@{fire\_\-error\_\-event}}
+\index{fire\_\-error\_\-event@{fire\_\-error\_\-event}!Udp@{Udp}}
+\subsubsection[{fire\_\-error\_\-event}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Udp::fire\_\-error\_\-event (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{message}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, pure virtual\mbox{]}}}}
+\label{classUdp_a9b79c3603ee9196623aa93b505bda1f6}
+Helper to fire an error event to javascript.
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & The error message \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classUdpClient_ae62b9e08cc550a47bbedca2e4556ebcc}{UdpClient}, and \hyperlink{classUdpServer_aa9a023a74c61ba03af476f12958385df}{UdpServer}.
+
+
+
+Referenced by receive\_\-handler(), and send\_\-handler().
+
+\hypertarget{classUdp_a645a7a67007362e349cacc78f9870954}{
+\index{Udp@{Udp}!listen@{listen}}
+\index{listen@{listen}!Udp@{Udp}}
+\subsubsection[{listen}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Udp::listen (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, pure virtual\mbox{]}}}}
+\label{classUdp_a645a7a67007362e349cacc78f9870954}
+Helper function to listen for incoming data. 
+
+Implemented in \hyperlink{classUdpClient_ae62759a7050f171fe12413ec658bb38b}{UdpClient}, and \hyperlink{classUdpServer_ad1c4a040a4c510ecd85b9b9c7e61e995}{UdpServer}.
+
+
+
+Referenced by receive\_\-handler().
+
+\hypertarget{classUdp_aa3def7bb682cc264bb2e425d93517e17}{
+\index{Udp@{Udp}!log\_\-options@{log\_\-options}}
+\index{log\_\-options@{log\_\-options}!Udp@{Udp}}
+\subsubsection[{log\_\-options}]{\setlength{\rightskip}{0pt plus 5cm}void Udp::log\_\-options (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classUdp_aa3def7bb682cc264bb2e425d93517e17}
+Write to the log the options used to create this connection. 
+
+Definition at line 158 of file Udp.cpp.
+
+
+
+References bool\_\-option\_\-to\_\-string(), do\_\-not\_\-route, host, Logger::info(), multicast, multicast\_\-group, multicast\_\-ttl, port, reuse\_\-address, and using\_\-ipv6.
+
+
+
+Referenced by UdpClient::init\_\-socket(), and UdpServer::initialize().
+
+
+\begin{DoxyCode}
+{
+    string options("These arguments were passed in: ");
+
+    options.append(bool_option_to_string(using_ipv6, "ipv6, ", "ipv4, "));
+    options.append(bool_option_to_string(multicast, "multicast enabled, ", "multi
+      cast disabled, "));
+    options.append(bool_option_to_string(do_not_route, "no routing, ", "use routi
+      ng, "));
+    options.append(bool_option_to_string(reuse_address, "reuse address, ", "don't
+       reuse address, "));
+
+    options.append("multicast group: ");
+    options.append(option_to_string<string> (multicast_group));
+
+    options.append(", multicast ttl: ");
+    options.append(option_to_string<int> (multicast_ttl));
+
+    Logger::info(options, port, host);
+}
+\end{DoxyCode}
+\hypertarget{classUdp_afefa55570fcf5adc18fc131437f31390}{
+\index{Udp@{Udp}!option\_\-to\_\-string@{option\_\-to\_\-string}}
+\index{option\_\-to\_\-string@{option\_\-to\_\-string}!Udp@{Udp}}
+\subsubsection[{option\_\-to\_\-string}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ string Udp::option\_\-to\_\-string (
+\begin{DoxyParamCaption}
+\item[{optional$<$ T $>$ \&}]{arg}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, protected\mbox{]}}}}
+\label{classUdp_afefa55570fcf5adc18fc131437f31390}
+Helper for logging options passed in.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arg} & the optional argument \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 151 of file Udp.cpp.
+
+
+\begin{DoxyCode}
+{
+    if (arg)
+        return boost::lexical_cast<string>(*arg);
+    return string("unset");
+}
+\end{DoxyCode}
+\hypertarget{classUdp_a19fe0f8b3b2f75cee6ae2841b032c64e}{
+\index{Udp@{Udp}!parse\_\-args@{parse\_\-args}}
+\index{parse\_\-args@{parse\_\-args}!Udp@{Udp}}
+\subsubsection[{parse\_\-args}]{\setlength{\rightskip}{0pt plus 5cm}void Udp::parse\_\-args (
+\begin{DoxyParamCaption}
+\item[{map$<$ string, string $>$}]{options}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classUdp_a19fe0f8b3b2f75cee6ae2841b032c64e}
+Parses any options (like whether or use IPv6 or IPv4) from the options. Supported options currently include:
+
+ipv6 if true, use ipv6. otherwise use ipv4. multicast enable udp multicasting multicast group the multicast group to join multicast ttl number of multicast hops to make; do not route prevent routing, use local interfaces reuse address allow the socket to bind to an address already in use keep alive allow the socket to send keep-\/alives.
+
+
+\begin{DoxyParams}{Parameters}
+{\em options} & A map of options to values. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 107 of file Udp.cpp.
+
+
+
+References do\_\-not\_\-route, multicast, multicast\_\-group, multicast\_\-ttl, parse\_\-string\_\-bool\_\-arg(), reuse\_\-address, and using\_\-ipv6.
+
+
+
+Referenced by UdpClient::UdpClient(), and UdpServer::UdpServer().
+
+
+\begin{DoxyCode}
+{
+    map<string, string>::iterator it;
+    map<string, string> transformed_options;
+
+    string t("true");
+    string f("false");
+
+    // transform the entire map to lower case
+    for (it = options.begin(); it != options.end(); it++)
+    {
+        string k = it->first;
+        string v = it->second;
+
+        std::transform(k.begin(), k.end(), k.begin(), ::tolower);
+        std::transform(v.begin(), v.end(), v.begin(), ::tolower);
+
+        k.erase(std::remove_if(k.begin(), k.end(), ::isspace), k.end());
+        v.erase(std::remove_if(v.begin(), v.end(), ::isspace), v.end());
+
+        transformed_options.insert(std::pair<string, string>(k, v));
+    }
+
+    /* Lets just pretend you didn't see any of this */
+    parse_string_bool_arg(transformed_options, "ipv6", using_ipv6);
+    parse_string_bool_arg(transformed_options, "multicast", multicast);
+    parse_string_bool_arg(transformed_options, "donotroute", do_not_route);
+    parse_string_bool_arg(transformed_options, "reuseaddress", reuse_address);
+
+    if ((it = transformed_options.find("multicastgroup")) != transformed_options.
+      end())
+        multicast_group.reset(it->second);
+
+    if ((it = transformed_options.find("multicastttl")) != transformed_options.en
+      d())
+        multicast_ttl.reset(boost::lexical_cast<int>(it->second));
+}
+\end{DoxyCode}
+\hypertarget{classUdp_ab1af87966ec4c68e8958844f95a75e47}{
+\index{Udp@{Udp}!parse\_\-string\_\-bool\_\-arg@{parse\_\-string\_\-bool\_\-arg}}
+\index{parse\_\-string\_\-bool\_\-arg@{parse\_\-string\_\-bool\_\-arg}!Udp@{Udp}}
+\subsubsection[{parse\_\-string\_\-bool\_\-arg}]{\setlength{\rightskip}{0pt plus 5cm}void Udp::parse\_\-string\_\-bool\_\-arg (
+\begin{DoxyParamCaption}
+\item[{map$<$ string, string $>$ \&}]{options, }
+\item[{string}]{arg, }
+\item[{optional$<$ bool $>$ \&}]{arg\_\-value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, protected\mbox{]}}}}
+\label{classUdp_ab1af87966ec4c68e8958844f95a75e47}
+Helper for parsing arguments
+
+
+\begin{DoxyParams}{Parameters}
+{\em options} & A map of strings to string representing the options passed in and their values \\
+\hline
+{\em arg} & The specific option to check for \\
+\hline
+{\em arg\_\-value} & This will hold the value of the argument, if found. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 94 of file Udp.cpp.
+
+
+
+Referenced by parse\_\-args().
+
+
+\begin{DoxyCode}
+{
+    map<string, string>::iterator it;
+
+    if ((it = options.find(arg)) != options.end())
+    {
+        if (it->second == std::string("true"))
+            arg_value.reset(true);
+        if (it->second == std::string("false"))
+            arg_value.reset(false);
+    }
+}
+\end{DoxyCode}
+\hypertarget{classUdp_a1edcafcfd4202b3f9cc5a0724f26fe7a}{
+\index{Udp@{Udp}!receive\_\-handler@{receive\_\-handler}}
+\index{receive\_\-handler@{receive\_\-handler}!Udp@{Udp}}
+\subsubsection[{receive\_\-handler}]{\setlength{\rightskip}{0pt plus 5cm}void Udp::receive\_\-handler (
+\begin{DoxyParamCaption}
+\item[{const boost::system::error\_\-code \&}]{err, }
+\item[{std::size\_\-t}]{bytes\_\-transferred, }
+\item[{boost::shared\_\-ptr$<$ udp::socket $>$}]{socket, }
+\item[{boost::shared\_\-ptr$<$ udp::endpoint $>$}]{endpoint, }
+\item[{string}]{host, }
+\item[{int}]{port}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classUdp_a1edcafcfd4202b3f9cc5a0724f26fe7a}
+Handler invoked when some data has been received.
+
+
+\begin{DoxyParams}{Parameters}
+{\em err} & The error code encountered when trying to receive data, if any occurred. On success, this value is zero, and nonzero on error. \\
+\hline
+{\em bytes\_\-transferred} & The number of bytes successfully received over the connection. \\
+\hline
+{\em socket} & The connection on which attempted to receive data. \\
+\hline
+{\em endpoint} & The connected endpoint to the remote host \\
+\hline
+{\em host} & The hostname for this UDP object \\
+\hline
+{\em port} & The port for this UDP object \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 59 of file Udp.cpp.
+
+
+
+References Logger::error(), fire\_\-data\_\-event(), fire\_\-error\_\-event(), Logger::info(), listen(), receive\_\-buffer, and should\_\-close.
+
+
+
+Referenced by UdpServer::listen(), and UdpClient::listen().
+
+
+\begin{DoxyCode}
+{
+    // Check for errors
+    if (error_code)
+    {
+        if (error_code == boost::asio::error::operation_aborted)
+        {
+            Logger::info("UDP receive failed, aborted", port, host);
+        }
+        else
+        {
+            string message(
+                    "UDP receive failed, error message: '" + error_code.message()
+       + "', code: '" + boost::lexical_cast<string>(
+                            error_code.value()) + "'");
+            Logger::error(message, port, host);
+            fire_error_event(message);
+        }
+
+        return;
+    }
+
+    // Get the data && fire a data event
+    string data(receive_buffer.c_array(), bytes_transferred);
+    fire_data_event(data, socket, endpoint);
+
+    // Pull out the data we received, and fire a data received event
+    Logger::info("UDP receive succeeded, received " + boost::lexical_cast<string>
+      (bytes_transferred) + " bytes, data is: " + data, port,
+            host);
+
+    // Listen for more messages if we're not trying to close down this UDP object
+      
+    if (!should_close)
+        listen();
+}
+\end{DoxyCode}
+\hypertarget{classUdp_a8c7b302089f5dd3979b5e1572b190ca8}{
+\index{Udp@{Udp}!send\_\-handler@{send\_\-handler}}
+\index{send\_\-handler@{send\_\-handler}!Udp@{Udp}}
+\subsubsection[{send\_\-handler}]{\setlength{\rightskip}{0pt plus 5cm}void Udp::send\_\-handler (
+\begin{DoxyParamCaption}
+\item[{const boost::system::error\_\-code \&}]{err, }
+\item[{std::size\_\-t}]{bytes\_\-transferred, }
+\item[{string}]{msg, }
+\item[{string}]{host, }
+\item[{int}]{port}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classUdp_a8c7b302089f5dd3979b5e1572b190ca8}
+Handler invoked when the data has been sent (or sending terminated in error).
+
+
+\begin{DoxyParams}{Parameters}
+{\em err} & The error code encountered when trying to send data, if any occurred. On success, this value is zero, and nonzero on error. \\
+\hline
+{\em bytes\_\-transferred} & The number of bytes successfully sent over the connection. \\
+\hline
+{\em msg} & The data to be sent. \\
+\hline
+{\em host} & The hostname for this UDP object \\
+\hline
+{\em port} & The port for this UDP object \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 16 of file Udp.cpp.
+
+
+
+References close(), Logger::error(), fire\_\-error\_\-event(), Logger::info(), pending\_\-sends, pending\_\-sends\_\-mutex, and should\_\-close.
+
+
+
+Referenced by UdpEvent::send(), and UdpClient::send().
+
+
+\begin{DoxyCode}
+{
+    if (error_code)
+    {
+        if (error_code == boost::asio::error::operation_aborted)
+        {
+            Logger::info("UDP send failed, aborted", port, host);
+        }
+        else
+        {
+            string message(
+                    "UDP send failed, error message: '" + error_code.message() + 
+      "', error code '" + boost::lexical_cast<string>(
+                            error_code.value()) + "' was encountered");
+            Logger::error(message, port, host);
+            fire_error_event(message);
+        }
+        return;
+    }
+
+    // Did not successfully send all the data, don't try and resend the rest (thi
+      s is UDP)
+    if (bytes_transferred != data.size())
+    {
+        string message(
+                string("UDP send failed, data was not successfully sent, only ") 
+      + boost::lexical_cast<string>(bytes_transferred) + " of "
+                        + boost::lexical_cast<string>(message.size()) + " total b
+      ytes were sent");
+        Logger::error(message, port, host);
+        fire_error_event(message);
+
+        return;
+    }
+
+    string message("UDP send succeeded, sent " + boost::lexical_cast<string>(byte
+      s_transferred) + " bytes, message is: " + data);
+    Logger::info(message, port, host);
+
+    pending_sends_mutex.lock();
+    pending_sends--; // just handled sending
+    int pending_sends_now = pending_sends;
+    pending_sends_mutex.unlock();
+
+    if (pending_sends_now == 0 && should_close)
+        close();
+}
+\end{DoxyCode}
+
+
+\subsection{Friends And Related Function Documentation}
+\hypertarget{classUdp_aa3db591e179836aff8d4a6d952d43101}{
+\index{Udp@{Udp}!UdpEvent@{UdpEvent}}
+\index{UdpEvent@{UdpEvent}!Udp@{Udp}}
+\subsubsection[{UdpEvent}]{\setlength{\rightskip}{0pt plus 5cm}friend class {\bf UdpEvent}\hspace{0.3cm}{\ttfamily  \mbox{[}friend\mbox{]}}}}
+\label{classUdp_aa3db591e179836aff8d4a6d952d43101}
+
+
+Reimplemented in \hyperlink{classUdpServer_aa3db591e179836aff8d4a6d952d43101}{UdpServer}.
+
+
+
+Definition at line 61 of file Udp.h.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classUdp_aa72dc03ed420eee2098841f5998e3c53}{
+\index{Udp@{Udp}!BUFFER\_\-SIZE@{BUFFER\_\-SIZE}}
+\index{BUFFER\_\-SIZE@{BUFFER\_\-SIZE}!Udp@{Udp}}
+\subsubsection[{BUFFER\_\-SIZE}]{\setlength{\rightskip}{0pt plus 5cm}const int {\bf Udp::BUFFER\_\-SIZE} = 2048\hspace{0.3cm}{\ttfamily  \mbox{[}static, protected\mbox{]}}}}
+\label{classUdp_aa72dc03ed420eee2098841f5998e3c53}
+A constant representing the size of the buffer in which to receive data. This is adjust to support the largest packet possible according to the UDP protocol. 
+
+Definition at line 171 of file Udp.h.
+
+
+
+Referenced by UdpClient::init\_\-socket(), and UdpServer::initialize().
+
+\hypertarget{classUdp_ace1cbe1cd248a6ae689848f25c26d9d1}{
+\index{Udp@{Udp}!do\_\-not\_\-route@{do\_\-not\_\-route}}
+\index{do\_\-not\_\-route@{do\_\-not\_\-route}!Udp@{Udp}}
+\subsubsection[{do\_\-not\_\-route}]{\setlength{\rightskip}{0pt plus 5cm}optional$<$bool$>$ {\bf Udp::do\_\-not\_\-route}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classUdp_ace1cbe1cd248a6ae689848f25c26d9d1}
+Flag to prevent routing, use local interfaces only 
+
+Definition at line 198 of file Udp.h.
+
+
+
+Referenced by UdpClient::init\_\-socket(), UdpServer::initialize(), log\_\-options(), and parse\_\-args().
+
+\hypertarget{classUdp_a91a6ea6959febc662830e818b89ed884}{
+\index{Udp@{Udp}!failed@{failed}}
+\index{failed@{failed}!Udp@{Udp}}
+\subsubsection[{failed}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf Udp::failed}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classUdp_a91a6ea6959febc662830e818b89ed884}
+A flag to say if this UDP object has permanently failed and cannot continue for some reason or another 
+
+Definition at line 213 of file Udp.h.
+
+
+
+Referenced by UdpEvent::send(), UdpClient::send(), UdpServer::shutdown(), UdpClient::shutdown(), UdpServer::start\_\-listening(), and UdpClient::UdpClient().
+
+\hypertarget{classUdp_a798fd48815d9d97045e8e6a3a290d301}{
+\index{Udp@{Udp}!host@{host}}
+\index{host@{host}!Udp@{Udp}}
+\subsubsection[{host}]{\setlength{\rightskip}{0pt plus 5cm}string {\bf Udp::host}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classUdp_a798fd48815d9d97045e8e6a3a290d301}
+The hostname for this UDP object ('SERVER' for servers, or the hostname of the remote host for clients) 
+
+Definition at line 204 of file Udp.h.
+
+
+
+Referenced by UdpClient::get\_\-host(), UdpClient::init\_\-socket(), UdpServer::initialize(), UdpServer::listen(), UdpClient::listen(), log\_\-options(), UdpClient::resolve\_\-handler(), UdpClient::send(), UdpServer::shutdown(), and UdpServer::start\_\-listening().
+
+\hypertarget{classUdp_a7e143116ab3a0f478c8461ca04af782b}{
+\index{Udp@{Udp}!io\_\-service@{io\_\-service}}
+\index{io\_\-service@{io\_\-service}!Udp@{Udp}}
+\subsubsection[{io\_\-service}]{\setlength{\rightskip}{0pt plus 5cm}boost::asio::io\_\-service\& {\bf Udp::io\_\-service}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classUdp_a7e143116ab3a0f478c8461ca04af782b}
+The I/O service for perform nonblocking actions 
+
+Definition at line 167 of file Udp.h.
+
+\hypertarget{classUdp_aff2511b739bdeee2875c07305b364042}{
+\index{Udp@{Udp}!multicast@{multicast}}
+\index{multicast@{multicast}!Udp@{Udp}}
+\subsubsection[{multicast}]{\setlength{\rightskip}{0pt plus 5cm}optional$<$bool$>$ {\bf Udp::multicast}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classUdp_aff2511b739bdeee2875c07305b364042}
+Flag representing whether or not multicast is enabled for this UDP object. 
+
+Definition at line 189 of file Udp.h.
+
+
+
+Referenced by UdpClient::init\_\-socket(), UdpServer::initialize(), log\_\-options(), parse\_\-args(), and UdpServer::start\_\-listening().
+
+\hypertarget{classUdp_a012f2fbbab10ad7112b6c727e6951207}{
+\index{Udp@{Udp}!multicast\_\-group@{multicast\_\-group}}
+\index{multicast\_\-group@{multicast\_\-group}!Udp@{Udp}}
+\subsubsection[{multicast\_\-group}]{\setlength{\rightskip}{0pt plus 5cm}optional$<$string$>$ {\bf Udp::multicast\_\-group}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classUdp_a012f2fbbab10ad7112b6c727e6951207}
+If multicast is enabled, use this for the group to join 
+
+Definition at line 192 of file Udp.h.
+
+
+
+Referenced by log\_\-options(), parse\_\-args(), and UdpServer::start\_\-listening().
+
+\hypertarget{classUdp_a11f39b2d209d628bdb52ff461e5898d2}{
+\index{Udp@{Udp}!multicast\_\-ttl@{multicast\_\-ttl}}
+\index{multicast\_\-ttl@{multicast\_\-ttl}!Udp@{Udp}}
+\subsubsection[{multicast\_\-ttl}]{\setlength{\rightskip}{0pt plus 5cm}optional$<$int$>$ {\bf Udp::multicast\_\-ttl}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classUdp_a11f39b2d209d628bdb52ff461e5898d2}
+If multicast is enabled, this is the TTL or hops 
+
+Definition at line 195 of file Udp.h.
+
+
+
+Referenced by UdpClient::init\_\-socket(), UdpServer::initialize(), log\_\-options(), and parse\_\-args().
+
+\hypertarget{classUdp_ac4b9b234de6090250125a1ea05764014}{
+\index{Udp@{Udp}!pending\_\-sends@{pending\_\-sends}}
+\index{pending\_\-sends@{pending\_\-sends}!Udp@{Udp}}
+\subsubsection[{pending\_\-sends}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf Udp::pending\_\-sends}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classUdp_ac4b9b234de6090250125a1ea05764014}
+The number of asynchronous I/O requests that are pending completion 
+
+Definition at line 177 of file Udp.h.
+
+
+
+Referenced by UdpEvent::send(), UdpClient::send(), send\_\-handler(), UdpServer::shutdown(), and UdpClient::shutdown().
+
+\hypertarget{classUdp_af67ced15878e36d5dbfa433262876922}{
+\index{Udp@{Udp}!pending\_\-sends\_\-mutex@{pending\_\-sends\_\-mutex}}
+\index{pending\_\-sends\_\-mutex@{pending\_\-sends\_\-mutex}!Udp@{Udp}}
+\subsubsection[{pending\_\-sends\_\-mutex}]{\setlength{\rightskip}{0pt plus 5cm}boost::mutex {\bf Udp::pending\_\-sends\_\-mutex}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classUdp_af67ced15878e36d5dbfa433262876922}
+Mutex for accessing the number of pending sends 
+
+Definition at line 180 of file Udp.h.
+
+
+
+Referenced by UdpClient::send(), send\_\-handler(), and UdpClient::shutdown().
+
+\hypertarget{classUdp_af69ea781b31a1fa62e5d3012b6288dc8}{
+\index{Udp@{Udp}!port@{port}}
+\index{port@{port}!Udp@{Udp}}
+\subsubsection[{port}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf Udp::port}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classUdp_af69ea781b31a1fa62e5d3012b6288dc8}
+The port (the port bound to by servers, port on which to connect to the remote host for clients) 
+
+Definition at line 207 of file Udp.h.
+
+
+
+Referenced by UdpServer::get\_\-port(), UdpClient::get\_\-port(), UdpClient::init\_\-socket(), UdpServer::initialize(), UdpServer::listen(), UdpClient::listen(), log\_\-options(), UdpClient::resolve\_\-handler(), UdpClient::send(), UdpServer::shutdown(), and UdpServer::start\_\-listening().
+
+\hypertarget{classUdp_a7f21cfeaaccb297124d7582607981afc}{
+\index{Udp@{Udp}!receive\_\-buffer@{receive\_\-buffer}}
+\index{receive\_\-buffer@{receive\_\-buffer}!Udp@{Udp}}
+\subsubsection[{receive\_\-buffer}]{\setlength{\rightskip}{0pt plus 5cm}boost::array$<$char, {\bf BUFFER\_\-SIZE}$>$ {\bf Udp::receive\_\-buffer}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classUdp_a7f21cfeaaccb297124d7582607981afc}
+A buffer for receiving data from the remote host. 
+
+Definition at line 174 of file Udp.h.
+
+
+
+Referenced by UdpServer::listen(), UdpClient::listen(), and receive\_\-handler().
+
+\hypertarget{classUdp_ae7fa8c26a933bf54f13f2230760a17e3}{
+\index{Udp@{Udp}!remote\_\-endpoint@{remote\_\-endpoint}}
+\index{remote\_\-endpoint@{remote\_\-endpoint}!Udp@{Udp}}
+\subsubsection[{remote\_\-endpoint}]{\setlength{\rightskip}{0pt plus 5cm}boost::shared\_\-ptr$<$udp::endpoint$>$ {\bf Udp::remote\_\-endpoint}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classUdp_ae7fa8c26a933bf54f13f2230760a17e3}
+A connected endpoint to the remote host. 
+
+Definition at line 210 of file Udp.h.
+
+
+
+Referenced by UdpServer::listen(), UdpClient::listen(), UdpClient::resolve\_\-handler(), UdpClient::send(), and Udp().
+
+\hypertarget{classUdp_a7572159d5d08e4e85e8a1eeba37eb1b9}{
+\index{Udp@{Udp}!reuse\_\-address@{reuse\_\-address}}
+\index{reuse\_\-address@{reuse\_\-address}!Udp@{Udp}}
+\subsubsection[{reuse\_\-address}]{\setlength{\rightskip}{0pt plus 5cm}optional$<$bool$>$ {\bf Udp::reuse\_\-address}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classUdp_a7572159d5d08e4e85e8a1eeba37eb1b9}
+Flag to allow the socket to be bound to an address that is already in use. 
+
+Definition at line 201 of file Udp.h.
+
+
+
+Referenced by UdpClient::init\_\-socket(), UdpServer::initialize(), log\_\-options(), and parse\_\-args().
+
+\hypertarget{classUdp_a01a27e2a1b252f39cefd61eb81a18220}{
+\index{Udp@{Udp}!should\_\-close@{should\_\-close}}
+\index{should\_\-close@{should\_\-close}!Udp@{Udp}}
+\subsubsection[{should\_\-close}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf Udp::should\_\-close}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classUdp_a01a27e2a1b252f39cefd61eb81a18220}
+A flag indicating whether or not this object has been requested to shutdown. 
+
+Definition at line 183 of file Udp.h.
+
+
+
+Referenced by UdpClient::close(), UdpClient::fire\_\-data\_\-event(), UdpClient::fire\_\-error\_\-event(), receive\_\-handler(), UdpClient::send(), send\_\-handler(), UdpServer::shutdown(), and UdpClient::shutdown().
+
+\hypertarget{classUdp_a3522427333a9a3520e8c8a207cb1a6f2}{
+\index{Udp@{Udp}!using\_\-ipv6@{using\_\-ipv6}}
+\index{using\_\-ipv6@{using\_\-ipv6}!Udp@{Udp}}
+\subsubsection[{using\_\-ipv6}]{\setlength{\rightskip}{0pt plus 5cm}optional$<$bool$>$ {\bf Udp::using\_\-ipv6}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classUdp_a3522427333a9a3520e8c8a207cb1a6f2}
+Flag for using IPv6, if true, this UDP object uses IPv6, otherwise, it is using IPv4. 
+
+Definition at line 186 of file Udp.h.
+
+
+
+Referenced by UdpClient::init\_\-socket(), UdpServer::initialize(), log\_\-options(), parse\_\-args(), UdpClient::send(), and UdpServer::start\_\-listening().
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+/home/jtedesco/dev/sockit/src/udp/\hyperlink{Udp_8h}{Udp.h}\item 
+/home/jtedesco/dev/sockit/src/udp/\hyperlink{Udp_8cpp}{Udp.cpp}\end{DoxyCompactItemize}

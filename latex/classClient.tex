@@ -1,0 +1,196 @@
+\hypertarget{classClient}{
+\section{Client Class Reference}
+\label{classClient}\index{Client@{Client}}
+}
+
+
+{\ttfamily \#include $<$Client.h$>$}
+
+Inheritance diagram for Client:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classClient}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classClient_ae51af7aa6b8f591496a8f6a4a87a14bf}{Client} ()
+\item 
+virtual \hyperlink{classClient_a897ff0f31827f7be3c661623341605ed}{$\sim$Client} ()
+\item 
+virtual void \hyperlink{classClient_ae02f1c7ffac49b7543244da28fbb58aa}{send} (const string \&data)=0
+\item 
+virtual void \hyperlink{classClient_a6d77759bc7022e45a3e4326757bd6b8b}{send\_\-bytes} (const vector$<$ \hyperlink{Event_8h_ae0aa21f6bcb621fe36c2c962aa0452fe}{byte} $>$ \&bytes)=0
+\item 
+virtual string \hyperlink{classClient_a01e5ea1bae012b2a46e8abd6b0bab704}{get\_\-host} ()=0
+\item 
+virtual int \hyperlink{classClient_ac9e4f13eef6b9a776b2bb6cca9d4f78b}{get\_\-port} ()=0
+\item 
+\hyperlink{classClient_a382edd74d967440910a27735d6d83ad9}{FB\_\-JSAPI\_\-EVENT} (resolve, 0,())
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+An abstract interface for a client object. This registers the generic client-\/specific events to javascript, and registers the 'send' method to the javascript API. 
+
+Definition at line 17 of file Client.h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classClient_ae51af7aa6b8f591496a8f6a4a87a14bf}{
+\index{Client@{Client}!Client@{Client}}
+\index{Client@{Client}!Client@{Client}}
+\subsubsection[{Client}]{\setlength{\rightskip}{0pt plus 5cm}Client::Client (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classClient_ae51af7aa6b8f591496a8f6a4a87a14bf}
+Constructs a default client object by registering the 'send' method for this client to the javascript. 
+
+Definition at line 10 of file Client.cpp.
+
+
+
+References get\_\-host(), get\_\-port(), send(), and send\_\-bytes().
+
+
+\begin{DoxyCode}
+{
+    registerMethod("send", make_method(this, &Client::send));
+    registerMethod("sendBytes", make_method(this, &Client::send_bytes));
+    registerMethod("getHost", make_method(this, &Client::get_host));
+    registerMethod("getPort", make_method(this, &Client::get_port));
+}
+\end{DoxyCode}
+\hypertarget{classClient_a897ff0f31827f7be3c661623341605ed}{
+\index{Client@{Client}!$\sim$Client@{$\sim$Client}}
+\index{$\sim$Client@{$\sim$Client}!Client@{Client}}
+\subsubsection[{$\sim$Client}]{\setlength{\rightskip}{0pt plus 5cm}virtual Client::$\sim$Client (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{classClient_a897ff0f31827f7be3c661623341605ed}
+Deconstructs a client object 
+
+Definition at line 29 of file Client.h.
+
+
+\begin{DoxyCode}
+{}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classClient_a382edd74d967440910a27735d6d83ad9}{
+\index{Client@{Client}!FB\_\-JSAPI\_\-EVENT@{FB\_\-JSAPI\_\-EVENT}}
+\index{FB\_\-JSAPI\_\-EVENT@{FB\_\-JSAPI\_\-EVENT}!Client@{Client}}
+\subsubsection[{FB\_\-JSAPI\_\-EVENT}]{\setlength{\rightskip}{0pt plus 5cm}Client::FB\_\-JSAPI\_\-EVENT (
+\begin{DoxyParamCaption}
+\item[{resolve}]{, }
+\item[{0}]{, }
+\item[{()}]{}
+\end{DoxyParamCaption}
+)}}
+\label{classClient_a382edd74d967440910a27735d6d83ad9}
+A javascript event to be fired when the client has successfully resolved the remote host name and is prepared to send data to the remote host. \hypertarget{classClient_a01e5ea1bae012b2a46e8abd6b0bab704}{
+\index{Client@{Client}!get\_\-host@{get\_\-host}}
+\index{get\_\-host@{get\_\-host}!Client@{Client}}
+\subsubsection[{get\_\-host}]{\setlength{\rightskip}{0pt plus 5cm}virtual string Client::get\_\-host (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classClient_a01e5ea1bae012b2a46e8abd6b0bab704}
+Get host to which this client connects
+
+\begin{DoxyReturn}{Returns}
+The host to which this client connects 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classTcpClient_a4c1ecfdba951d559456c4066a73c8bf6}{TcpClient}, and \hyperlink{classUdpClient_ac18bd8d30497c82dfe1a63a464d01e00}{UdpClient}.
+
+
+
+Referenced by Client().
+
+\hypertarget{classClient_ac9e4f13eef6b9a776b2bb6cca9d4f78b}{
+\index{Client@{Client}!get\_\-port@{get\_\-port}}
+\index{get\_\-port@{get\_\-port}!Client@{Client}}
+\subsubsection[{get\_\-port}]{\setlength{\rightskip}{0pt plus 5cm}virtual int Client::get\_\-port (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classClient_ac9e4f13eef6b9a776b2bb6cca9d4f78b}
+Get the port on the remote host to this client connects
+
+\begin{DoxyReturn}{Returns}
+The port on the remote host to which this client connects 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classTcpClient_a9caf99246bc1f36dcc69773077ddece8}{TcpClient}, and \hyperlink{classUdpClient_aaa19f0f767306e0e974782dd700c5c49}{UdpClient}.
+
+
+
+Referenced by Client().
+
+\hypertarget{classClient_ae02f1c7ffac49b7543244da28fbb58aa}{
+\index{Client@{Client}!send@{send}}
+\index{send@{send}!Client@{Client}}
+\subsubsection[{send}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Client::send (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{data}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classClient_ae02f1c7ffac49b7543244da28fbb58aa}
+Asynchronously sends data to the remote host to which this client is connected.
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & The data to send across the wire \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classTcpClient_a139cffd600eaf851c3560d73a1ba3a54}{TcpClient}, and \hyperlink{classUdpClient_a86e50f32bbb7aaf657ea5cc91cbc99d2}{UdpClient}.
+
+
+
+Referenced by Client().
+
+\hypertarget{classClient_a6d77759bc7022e45a3e4326757bd6b8b}{
+\index{Client@{Client}!send\_\-bytes@{send\_\-bytes}}
+\index{send\_\-bytes@{send\_\-bytes}!Client@{Client}}
+\subsubsection[{send\_\-bytes}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Client::send\_\-bytes (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf byte} $>$ \&}]{bytes}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classClient_a6d77759bc7022e45a3e4326757bd6b8b}
+Asynchronously sends bytes to the remote host to which this client is connected.
+
+
+\begin{DoxyParams}{Parameters}
+{\em bytes} & The bytes of data to send across the wire \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classTcpClient_a1d749cbc2e255d8d3204dfd2d2c58d5f}{TcpClient}, and \hyperlink{classUdpClient_ad55f42a3c5cb3698b49975c8a065079e}{UdpClient}.
+
+
+
+Referenced by Client().
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+/home/jtedesco/dev/sockit/src/common/\hyperlink{Client_8h}{Client.h}\item 
+/home/jtedesco/dev/sockit/src/common/\hyperlink{Client_8cpp}{Client.cpp}\end{DoxyCompactItemize}

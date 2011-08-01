@@ -1,0 +1,106 @@
+\hypertarget{classPluginFactory}{
+\section{PluginFactory Class Reference}
+\label{classPluginFactory}\index{PluginFactory@{PluginFactory}}
+}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+FB::PluginCorePtr \hyperlink{classPluginFactory_a07b62d2e3a7087c7d596dd76941ce5f1}{createPlugin} (const string \&mimetype)
+\item 
+void \hyperlink{classPluginFactory_a2cc350403d03ea722c910ad11c38e6ec}{globalPluginInitialize} ()
+\item 
+void \hyperlink{classPluginFactory_ab389d98485b8c205afb8e32a07046a52}{globalPluginDeinitialize} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 16 of file Factory.cpp.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classPluginFactory_a07b62d2e3a7087c7d596dd76941ce5f1}{
+\index{PluginFactory@{PluginFactory}!createPlugin@{createPlugin}}
+\index{createPlugin@{createPlugin}!PluginFactory@{PluginFactory}}
+\subsubsection[{createPlugin}]{\setlength{\rightskip}{0pt plus 5cm}FB::PluginCorePtr PluginFactory::createPlugin (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{mimetype}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classPluginFactory_a07b62d2e3a7087c7d596dd76941ce5f1}
+Creates a plugin object matching the provided mimetype. If mimetype is empty, returns the default plugin. \begin{DoxyReturn}{Returns}
+A plugin object matching the project's mimetype. 
+\end{DoxyReturn}
+
+
+Definition at line 24 of file Factory.cpp.
+
+
+\begin{DoxyCode}
+        {
+            return boost::make_shared<SockIt>();
+        }
+\end{DoxyCode}
+\hypertarget{classPluginFactory_ab389d98485b8c205afb8e32a07046a52}{
+\index{PluginFactory@{PluginFactory}!globalPluginDeinitialize@{globalPluginDeinitialize}}
+\index{globalPluginDeinitialize@{globalPluginDeinitialize}!PluginFactory@{PluginFactory}}
+\subsubsection[{globalPluginDeinitialize}]{\setlength{\rightskip}{0pt plus 5cm}void PluginFactory::globalPluginDeinitialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classPluginFactory_ab389d98485b8c205afb8e32a07046a52}
+Performs global deinitialization, or destruction, of the plugin.
+
+\begin{DoxySeeAlso}{See also}
+FB::FactoryBase::globalPluginDeinitialize 
+\end{DoxySeeAlso}
+
+
+Definition at line 44 of file Factory.cpp.
+
+
+
+References SockIt::StaticDeinitialize().
+
+
+\begin{DoxyCode}
+        {
+            SockIt::StaticDeinitialize();
+        }
+\end{DoxyCode}
+\hypertarget{classPluginFactory_a2cc350403d03ea722c910ad11c38e6ec}{
+\index{PluginFactory@{PluginFactory}!globalPluginInitialize@{globalPluginInitialize}}
+\index{globalPluginInitialize@{globalPluginInitialize}!PluginFactory@{PluginFactory}}
+\subsubsection[{globalPluginInitialize}]{\setlength{\rightskip}{0pt plus 5cm}void PluginFactory::globalPluginInitialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classPluginFactory_a2cc350403d03ea722c910ad11c38e6ec}
+Performs one-\/time global initialization of the plugin.
+
+\begin{DoxySeeAlso}{See also}
+FB::FactoryBase::globalPluginInitialize 
+\end{DoxySeeAlso}
+
+
+Definition at line 34 of file Factory.cpp.
+
+
+
+References SockIt::StaticInitialize().
+
+
+\begin{DoxyCode}
+        {
+            SockIt::StaticInitialize();
+        }
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+/home/jtedesco/dev/sockit/src/plugin/\hyperlink{Factory_8cpp}{Factory.cpp}\end{DoxyCompactItemize}

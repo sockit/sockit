@@ -1,0 +1,143 @@
+\hypertarget{classNetworkObject}{
+\section{NetworkObject Class Reference}
+\label{classNetworkObject}\index{NetworkObject@{NetworkObject}}
+}
+
+
+{\ttfamily \#include $<$NetworkObject.h$>$}
+
+Inheritance diagram for NetworkObject:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classNetworkObject}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classNetworkObject_aa317b2da072668c54e78d10b56162a6c}{NetworkObject} ()
+\item 
+virtual \hyperlink{classNetworkObject_aa8656ffcd38e0df2727945ac3122b4f3}{$\sim$NetworkObject} ()
+\item 
+virtual void \hyperlink{classNetworkObject_a2f519457fd87c8a92cf265a2b2883e96}{shutdown} ()=0
+\item 
+\hyperlink{classNetworkObject_a245ddfb27a8e31b8331c125a86b95d8b}{FB\_\-JSAPI\_\-EVENT} (error, 1,(const string \&))
+\item 
+\hyperlink{classNetworkObject_a7b5367270bfc3158309e3a3d0c353769}{FB\_\-JSAPI\_\-EVENT} (close, 0,())
+\item 
+\hyperlink{classNetworkObject_a6d44b6b5f6cf496af5519ddceaf93c13}{FB\_\-JSAPI\_\-EVENT} (data, 1,(FB::JSAPIPtr))
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 53 of file NetworkObject.h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classNetworkObject_aa317b2da072668c54e78d10b56162a6c}{
+\index{NetworkObject@{NetworkObject}!NetworkObject@{NetworkObject}}
+\index{NetworkObject@{NetworkObject}!NetworkObject@{NetworkObject}}
+\subsubsection[{NetworkObject}]{\setlength{\rightskip}{0pt plus 5cm}NetworkObject::NetworkObject (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classNetworkObject_aa317b2da072668c54e78d10b56162a6c}
+Constructs a generic network object by registering common events and API functions to javascript. 
+
+Definition at line 10 of file NetworkObject.cpp.
+
+
+
+References shutdown().
+
+
+\begin{DoxyCode}
+{
+    registerMethod("close", make_method(this, &NetworkObject::shutdown));
+}
+\end{DoxyCode}
+\hypertarget{classNetworkObject_aa8656ffcd38e0df2727945ac3122b4f3}{
+\index{NetworkObject@{NetworkObject}!$\sim$NetworkObject@{$\sim$NetworkObject}}
+\index{$\sim$NetworkObject@{$\sim$NetworkObject}!NetworkObject@{NetworkObject}}
+\subsubsection[{$\sim$NetworkObject}]{\setlength{\rightskip}{0pt plus 5cm}virtual NetworkObject::$\sim$NetworkObject (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{classNetworkObject_aa8656ffcd38e0df2727945ac3122b4f3}
+Deconstructs this network object 
+
+Definition at line 65 of file NetworkObject.h.
+
+
+\begin{DoxyCode}
+{}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classNetworkObject_a245ddfb27a8e31b8331c125a86b95d8b}{
+\index{NetworkObject@{NetworkObject}!FB\_\-JSAPI\_\-EVENT@{FB\_\-JSAPI\_\-EVENT}}
+\index{FB\_\-JSAPI\_\-EVENT@{FB\_\-JSAPI\_\-EVENT}!NetworkObject@{NetworkObject}}
+\subsubsection[{FB\_\-JSAPI\_\-EVENT}]{\setlength{\rightskip}{0pt plus 5cm}NetworkObject::FB\_\-JSAPI\_\-EVENT (
+\begin{DoxyParamCaption}
+\item[{error}]{, }
+\item[{1}]{, }
+\item[{(const string \&)}]{}
+\end{DoxyParamCaption}
+)}}
+\label{classNetworkObject_a245ddfb27a8e31b8331c125a86b95d8b}
+The javascript event fired when an error occurs, which sends the error message when fired. \hypertarget{classNetworkObject_a6d44b6b5f6cf496af5519ddceaf93c13}{
+\index{NetworkObject@{NetworkObject}!FB\_\-JSAPI\_\-EVENT@{FB\_\-JSAPI\_\-EVENT}}
+\index{FB\_\-JSAPI\_\-EVENT@{FB\_\-JSAPI\_\-EVENT}!NetworkObject@{NetworkObject}}
+\subsubsection[{FB\_\-JSAPI\_\-EVENT}]{\setlength{\rightskip}{0pt plus 5cm}NetworkObject::FB\_\-JSAPI\_\-EVENT (
+\begin{DoxyParamCaption}
+\item[{data}]{, }
+\item[{1}]{, }
+\item[{(FB::JSAPIPtr)}]{}
+\end{DoxyParamCaption}
+)}}
+\label{classNetworkObject_a6d44b6b5f6cf496af5519ddceaf93c13}
+The javascript event fired when the client data. This event sends with it the data received, and an object, a {\ttfamily \hyperlink{classEvent}{Event}} on which to reply to the message.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classEvent}{Event} 
+\end{DoxySeeAlso}
+\hypertarget{classNetworkObject_a7b5367270bfc3158309e3a3d0c353769}{
+\index{NetworkObject@{NetworkObject}!FB\_\-JSAPI\_\-EVENT@{FB\_\-JSAPI\_\-EVENT}}
+\index{FB\_\-JSAPI\_\-EVENT@{FB\_\-JSAPI\_\-EVENT}!NetworkObject@{NetworkObject}}
+\subsubsection[{FB\_\-JSAPI\_\-EVENT}]{\setlength{\rightskip}{0pt plus 5cm}NetworkObject::FB\_\-JSAPI\_\-EVENT (
+\begin{DoxyParamCaption}
+\item[{close}]{, }
+\item[{0}]{, }
+\item[{()}]{}
+\end{DoxyParamCaption}
+)}}
+\label{classNetworkObject_a7b5367270bfc3158309e3a3d0c353769}
+The javascript event fired when this object shuts down. \hypertarget{classNetworkObject_a2f519457fd87c8a92cf265a2b2883e96}{
+\index{NetworkObject@{NetworkObject}!shutdown@{shutdown}}
+\index{shutdown@{shutdown}!NetworkObject@{NetworkObject}}
+\subsubsection[{shutdown}]{\setlength{\rightskip}{0pt plus 5cm}virtual void NetworkObject::shutdown (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classNetworkObject_a2f519457fd87c8a92cf265a2b2883e96}
+Gracefully shutdown this server object, waiting until all sends have completed before freeing all resources for this server object and shutting down any open conections. This function is exposed the javascript API. 
+
+Implemented in \hyperlink{classTcpClient_a1f0ae8f7c7c12530bc481b77ed984790}{TcpClient}, \hyperlink{classTcpServer_a918898ee7b13d776a2f7ea8968168669}{TcpServer}, \hyperlink{classUdpClient_a64b6b51f6a2316f7235381409f9cc327}{UdpClient}, and \hyperlink{classUdpServer_ac5623ca24bc56b21d608426f5bc8ad91}{UdpServer}.
+
+
+
+Referenced by NetworkObject().
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+/home/jtedesco/dev/sockit/src/common/\hyperlink{NetworkObject_8h}{NetworkObject.h}\item 
+/home/jtedesco/dev/sockit/src/common/\hyperlink{NetworkObject_8cpp}{NetworkObject.cpp}\end{DoxyCompactItemize}

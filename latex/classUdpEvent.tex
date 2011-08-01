@@ -1,0 +1,488 @@
+\hypertarget{classUdpEvent}{
+\section{UdpEvent Class Reference}
+\label{classUdpEvent}\index{UdpEvent@{UdpEvent}}
+}
+
+
+{\ttfamily \#include $<$UdpEvent.h$>$}
+
+Inheritance diagram for UdpEvent:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classUdpEvent}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classUdpEvent_aca86b9eaaa735d1a5111045ce8b4d72d}{UdpEvent} (\hyperlink{classUdp}{Udp} $\ast$udp, boost::shared\_\-ptr$<$ udp::socket $>$ \hyperlink{classUdpEvent_ae0cb6d3007132d3a2481d094d009793a}{socket}, boost::shared\_\-ptr$<$ udp::endpoint $>$ \hyperlink{classUdpEvent_a50389e8d457b8f3cc425d78a5d416288}{endpoint}, string \hyperlink{classUdpEvent_a20b7ebd90eb5b21aa7658e3e77ecc96c}{data})
+\item 
+virtual \hyperlink{classUdpEvent_aa2b3a2c6bfe7b65715e9d202a27b4784}{$\sim$UdpEvent} ()
+\item 
+virtual void \hyperlink{classUdpEvent_a1f88c17a020ccf73a61a40d18b3728a0}{send} (const string \&\hyperlink{classUdpEvent_a20b7ebd90eb5b21aa7658e3e77ecc96c}{data})
+\item 
+virtual void \hyperlink{classUdpEvent_ac44fcd996dd22e49d7dd7721198f7550}{send\_\-bytes} (const vector$<$ \hyperlink{Event_8h_ae0aa21f6bcb621fe36c2c962aa0452fe}{byte} $>$ \&bytes)
+\item 
+virtual string \hyperlink{classUdpEvent_a860ceb7a3a8bb6fcd7cb1342d8b7f5c7}{read} () const 
+\item 
+virtual FB::VariantList \hyperlink{classUdpEvent_ad315a9d5969bc5d38f3d592119cac9ca}{read\_\-bytes} () const 
+\item 
+virtual string \hyperlink{classUdpEvent_ae2484477a11197f79d46e4ef4b71b839}{get\_\-host} ()
+\item 
+virtual unsigned short \hyperlink{classUdpEvent_aaad6ade41ef171993364911ed57a3185}{get\_\-port} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+string \hyperlink{classUdpEvent_a20b7ebd90eb5b21aa7658e3e77ecc96c}{data}
+\item 
+bool \hyperlink{classUdpEvent_a72bdcc219c080212438a4c045928c806}{failed}
+\item 
+string \hyperlink{classUdpEvent_aaff1c85009ef10ecd363043d7565db8f}{host}
+\item 
+int \hyperlink{classUdpEvent_a80ca416c15e74042c0e9f440931647d1}{port}
+\item 
+boost::shared\_\-ptr$<$ udp::socket $>$ \hyperlink{classUdpEvent_ae0cb6d3007132d3a2481d094d009793a}{socket}
+\item 
+boost::shared\_\-ptr$<$ udp::endpoint $>$ \hyperlink{classUdpEvent_a50389e8d457b8f3cc425d78a5d416288}{endpoint}
+\item 
+\hyperlink{classUdp}{Udp} $\ast$ \hyperlink{classUdpEvent_a36790f09da79074fc7506dfb3fad7013}{udp\_\-object}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A UDP implementation of a event to allow javascript to respond to data on a UDP connection.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classEvent}{Event} 
+\end{DoxySeeAlso}
+
+
+Definition at line 21 of file UdpEvent.h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classUdpEvent_aca86b9eaaa735d1a5111045ce8b4d72d}{
+\index{UdpEvent@{UdpEvent}!UdpEvent@{UdpEvent}}
+\index{UdpEvent@{UdpEvent}!UdpEvent@{UdpEvent}}
+\subsubsection[{UdpEvent}]{\setlength{\rightskip}{0pt plus 5cm}UdpEvent::UdpEvent (
+\begin{DoxyParamCaption}
+\item[{{\bf Udp} $\ast$}]{udp, }
+\item[{boost::shared\_\-ptr$<$ udp::socket $>$}]{socket, }
+\item[{boost::shared\_\-ptr$<$ udp::endpoint $>$}]{endpoint, }
+\item[{string}]{data}
+\end{DoxyParamCaption}
+)}}
+\label{classUdpEvent_aca86b9eaaa735d1a5111045ce8b4d72d}
+Constructs a new {\ttfamily \hyperlink{classUdpEvent}{UdpEvent}} object containing the UDP connection on which to reply.
+
+
+\begin{DoxyParams}{Parameters}
+{\em udp} & The UDP server or client associated with this event \\
+\hline
+{\em socket} & The UDP connection on which to reply \\
+\hline
+{\em endpoint} & The remote endpoint for this UDP event, from which we can find information about the remote host \\
+\hline
+{\em data} & The data this event was fired from \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 10 of file UdpEvent.cpp.
+
+
+
+References Logger::error(), failed, host, and port.
+
+
+\begin{DoxyCode}
+                                                                                 
+                                               :
+    port(-1), socket(socket), endpoint(endpoint), udp_object(udp_object), failed(
+      false), data(data)
+{
+    // Check to see if any the parameters are null, and log and fail if this occu
+      rs
+    if (endpoint && udp_object)
+    {
+        // Initialize only if it's safe
+        host = boost::lexical_cast<string>(endpoint->address());
+        port = endpoint->port();
+    }
+    else
+    {
+        // Fail permanently and log it
+        failed = true;
+
+        string message("UDP Event was not properly initialized, permanently faile
+      d.");
+        Logger::error(message, port, host);
+        fire_error(message);
+    }
+}
+\end{DoxyCode}
+\hypertarget{classUdpEvent_aa2b3a2c6bfe7b65715e9d202a27b4784}{
+\index{UdpEvent@{UdpEvent}!$\sim$UdpEvent@{$\sim$UdpEvent}}
+\index{$\sim$UdpEvent@{$\sim$UdpEvent}!UdpEvent@{UdpEvent}}
+\subsubsection[{$\sim$UdpEvent}]{\setlength{\rightskip}{0pt plus 5cm}UdpEvent::$\sim$UdpEvent (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classUdpEvent_aa2b3a2c6bfe7b65715e9d202a27b4784}
+Deconstructs the UDP event object, after a single reply. 
+
+Definition at line 31 of file UdpEvent.cpp.
+
+
+\begin{DoxyCode}
+{
+    // do not free socket, endpoint or udp here
+}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classUdpEvent_ae2484477a11197f79d46e4ef4b71b839}{
+\index{UdpEvent@{UdpEvent}!get\_\-host@{get\_\-host}}
+\index{get\_\-host@{get\_\-host}!UdpEvent@{UdpEvent}}
+\subsubsection[{get\_\-host}]{\setlength{\rightskip}{0pt plus 5cm}string UdpEvent::get\_\-host (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classUdpEvent_ae2484477a11197f79d46e4ef4b71b839}
+Gets the hostname of the remote endpoint of the UDP connection for this {\ttfamily \hyperlink{classUdpEvent}{UdpEvent}}.
+
+\begin{DoxyReturn}{Returns}
+The remote hostname of the UDP connection for this {\ttfamily \hyperlink{classUdpEvent}{UdpEvent}} 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classEvent_ac3fe62061cb4e4552a91be17031fcc2d}{Event}.
+
+
+
+Definition at line 93 of file UdpEvent.cpp.
+
+
+
+References host.
+
+
+\begin{DoxyCode}
+{
+    return host;
+}
+\end{DoxyCode}
+\hypertarget{classUdpEvent_aaad6ade41ef171993364911ed57a3185}{
+\index{UdpEvent@{UdpEvent}!get\_\-port@{get\_\-port}}
+\index{get\_\-port@{get\_\-port}!UdpEvent@{UdpEvent}}
+\subsubsection[{get\_\-port}]{\setlength{\rightskip}{0pt plus 5cm}unsigned short UdpEvent::get\_\-port (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classUdpEvent_aaad6ade41ef171993364911ed57a3185}
+Gets the port of the remote endpoint of the UDP connection for this {\ttfamily \hyperlink{classUdpEvent}{UdpEvent}}.
+
+\begin{DoxyReturn}{Returns}
+The remote port of the UDP connection for this {\ttfamily \hyperlink{classUdpEvent}{UdpEvent}} 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classEvent_aa23b8454f931fcbe87ed61f1ec70b8e5}{Event}.
+
+
+
+Definition at line 98 of file UdpEvent.cpp.
+
+
+
+References port.
+
+
+\begin{DoxyCode}
+{
+    return port;
+}
+\end{DoxyCode}
+\hypertarget{classUdpEvent_a860ceb7a3a8bb6fcd7cb1342d8b7f5c7}{
+\index{UdpEvent@{UdpEvent}!read@{read}}
+\index{read@{read}!UdpEvent@{UdpEvent}}
+\subsubsection[{read}]{\setlength{\rightskip}{0pt plus 5cm}string UdpEvent::read (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classUdpEvent_a860ceb7a3a8bb6fcd7cb1342d8b7f5c7}
+Reads the string data that belongs to this event.
+
+\begin{DoxyReturn}{Returns}
+The string data received when this event was fired 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classEvent_a9e334d69556816ca38a8f21845d2a1cb}{Event}.
+
+
+
+Definition at line 76 of file UdpEvent.cpp.
+
+
+
+References data.
+
+
+\begin{DoxyCode}
+{
+    return data;
+}
+\end{DoxyCode}
+\hypertarget{classUdpEvent_ad315a9d5969bc5d38f3d592119cac9ca}{
+\index{UdpEvent@{UdpEvent}!read\_\-bytes@{read\_\-bytes}}
+\index{read\_\-bytes@{read\_\-bytes}!UdpEvent@{UdpEvent}}
+\subsubsection[{read\_\-bytes}]{\setlength{\rightskip}{0pt plus 5cm}FB::VariantList UdpEvent::read\_\-bytes (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classUdpEvent_ad315a9d5969bc5d38f3d592119cac9ca}
+Reads the byte data that belongs to this event
+
+\begin{DoxyReturn}{Returns}
+The byte data received when this event was fired 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classEvent_a04fa24d70fb7ec47e50e1a71bcedfe75}{Event}.
+
+
+
+Definition at line 81 of file UdpEvent.cpp.
+
+
+
+References data.
+
+
+\begin{DoxyCode}
+{
+    FB::VariantList fb_bytes;
+
+    for (int i = 0; i < data.size(); i++)
+    {
+        fb_bytes.push_back((unsigned char) (data.data())[i]);
+    }
+
+    return fb_bytes;
+}
+\end{DoxyCode}
+\hypertarget{classUdpEvent_a1f88c17a020ccf73a61a40d18b3728a0}{
+\index{UdpEvent@{UdpEvent}!send@{send}}
+\index{send@{send}!UdpEvent@{UdpEvent}}
+\subsubsection[{send}]{\setlength{\rightskip}{0pt plus 5cm}void UdpEvent::send (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{data}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classUdpEvent_a1f88c17a020ccf73a61a40d18b3728a0}
+Replies on the UDP connection with some data.
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & The data with which to reply \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classEvent_ac4eac8e7d44356632b59381929c8978c}{Event}.
+
+
+
+Definition at line 48 of file UdpEvent.cpp.
+
+
+
+References endpoint, Logger::error(), Udp::failed, failed, host, Udp::pending\_\-sends, port, Udp::send\_\-handler(), socket, and udp\_\-object.
+
+
+
+Referenced by send\_\-bytes().
+
+
+\begin{DoxyCode}
+{
+    // Don't send if we've permanently failed
+    if (failed)
+    {
+        string message("UDP event failed to send, Event already failed permanentl
+      y");
+        Logger::error(message, port, host);
+        fire_error(message);
+        return;
+    }
+
+    if (udp_object && udp_object->failed)
+    {
+        // Log & fire an error
+        string message("UDP event failed trying to reply to a UDP object that has
+       permanently failed!");
+        Logger::error(message, port, host);
+        fire_error(message);
+        return;
+    }
+
+    if (socket && endpoint)
+    {
+        udp_object->pending_sends++;
+        socket->async_send_to(boost::asio::buffer(data.data(), data.size()), *
+      endpoint, 
+                boost::bind(&Udp::send_handler, udp_object, _1, _2, data, host, 
+      endpoint->port()));
+    }
+}
+\end{DoxyCode}
+\hypertarget{classUdpEvent_ac44fcd996dd22e49d7dd7721198f7550}{
+\index{UdpEvent@{UdpEvent}!send\_\-bytes@{send\_\-bytes}}
+\index{send\_\-bytes@{send\_\-bytes}!UdpEvent@{UdpEvent}}
+\subsubsection[{send\_\-bytes}]{\setlength{\rightskip}{0pt plus 5cm}void UdpEvent::send\_\-bytes (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf byte} $>$ \&}]{bytes}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classUdpEvent_ac44fcd996dd22e49d7dd7721198f7550}
+Replies on the UDP connection with some data.
+
+
+\begin{DoxyParams}{Parameters}
+{\em bytes} & The bytes of data with which to reply \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classEvent_ac2183e14a4f65b18d046a5e082f68e71}{Event}.
+
+
+
+Definition at line 36 of file UdpEvent.cpp.
+
+
+
+References data, and send().
+
+
+\begin{DoxyCode}
+{
+    string data;
+
+    for (int i = 0; i < bytes.size(); i++)
+    {
+        data.push_back((unsigned char) bytes[i]);
+    }
+
+    send(data);
+}
+\end{DoxyCode}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classUdpEvent_a20b7ebd90eb5b21aa7658e3e77ecc96c}{
+\index{UdpEvent@{UdpEvent}!data@{data}}
+\index{data@{data}!UdpEvent@{UdpEvent}}
+\subsubsection[{data}]{\setlength{\rightskip}{0pt plus 5cm}string {\bf UdpEvent::data}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classUdpEvent_a20b7ebd90eb5b21aa7658e3e77ecc96c}
+The data received when this event was fired 
+
+Definition at line 88 of file UdpEvent.h.
+
+
+
+Referenced by read(), read\_\-bytes(), send\_\-bytes(), and UdpClient::send\_\-bytes().
+
+\hypertarget{classUdpEvent_a50389e8d457b8f3cc425d78a5d416288}{
+\index{UdpEvent@{UdpEvent}!endpoint@{endpoint}}
+\index{endpoint@{endpoint}!UdpEvent@{UdpEvent}}
+\subsubsection[{endpoint}]{\setlength{\rightskip}{0pt plus 5cm}boost::shared\_\-ptr$<$udp::endpoint$>$ {\bf UdpEvent::endpoint}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classUdpEvent_a50389e8d457b8f3cc425d78a5d416288}
+The remote endpoint for this event 
+
+Definition at line 113 of file UdpEvent.h.
+
+
+
+Referenced by send().
+
+\hypertarget{classUdpEvent_a72bdcc219c080212438a4c045928c806}{
+\index{UdpEvent@{UdpEvent}!failed@{failed}}
+\index{failed@{failed}!UdpEvent@{UdpEvent}}
+\subsubsection[{failed}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf UdpEvent::failed}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classUdpEvent_a72bdcc219c080212438a4c045928c806}
+A flag to prevent this event from blowing up if was initialized improperly 
+
+Definition at line 93 of file UdpEvent.h.
+
+
+
+Referenced by send(), and UdpEvent().
+
+\hypertarget{classUdpEvent_aaff1c85009ef10ecd363043d7565db8f}{
+\index{UdpEvent@{UdpEvent}!host@{host}}
+\index{host@{host}!UdpEvent@{UdpEvent}}
+\subsubsection[{host}]{\setlength{\rightskip}{0pt plus 5cm}string {\bf UdpEvent::host}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classUdpEvent_aaff1c85009ef10ecd363043d7565db8f}
+The remote hostname of the UDP connection for this {\ttfamily \hyperlink{classUdpEvent}{UdpEvent}} 
+
+Definition at line 98 of file UdpEvent.h.
+
+
+
+Referenced by get\_\-host(), send(), and UdpEvent().
+
+\hypertarget{classUdpEvent_a80ca416c15e74042c0e9f440931647d1}{
+\index{UdpEvent@{UdpEvent}!port@{port}}
+\index{port@{port}!UdpEvent@{UdpEvent}}
+\subsubsection[{port}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf UdpEvent::port}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classUdpEvent_a80ca416c15e74042c0e9f440931647d1}
+The remote port of the UDP connection for this {\ttfamily \hyperlink{classUdpEvent}{UdpEvent}} 
+
+Definition at line 103 of file UdpEvent.h.
+
+
+
+Referenced by get\_\-port(), send(), and UdpEvent().
+
+\hypertarget{classUdpEvent_ae0cb6d3007132d3a2481d094d009793a}{
+\index{UdpEvent@{UdpEvent}!socket@{socket}}
+\index{socket@{socket}!UdpEvent@{UdpEvent}}
+\subsubsection[{socket}]{\setlength{\rightskip}{0pt plus 5cm}boost::shared\_\-ptr$<$udp::socket$>$ {\bf UdpEvent::socket}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classUdpEvent_ae0cb6d3007132d3a2481d094d009793a}
+The socket corresponding to this UDP 'connection', on which to reply 
+
+Definition at line 108 of file UdpEvent.h.
+
+
+
+Referenced by send().
+
+\hypertarget{classUdpEvent_a36790f09da79074fc7506dfb3fad7013}{
+\index{UdpEvent@{UdpEvent}!udp\_\-object@{udp\_\-object}}
+\index{udp\_\-object@{udp\_\-object}!UdpEvent@{UdpEvent}}
+\subsubsection[{udp\_\-object}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Udp}$\ast$ {\bf UdpEvent::udp\_\-object}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classUdpEvent_a36790f09da79074fc7506dfb3fad7013}
+The UDP server or client associated with this event 
+
+Definition at line 118 of file UdpEvent.h.
+
+
+
+Referenced by send().
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+/home/jtedesco/dev/sockit/src/udp/\hyperlink{UdpEvent_8h}{UdpEvent.h}\item 
+/home/jtedesco/dev/sockit/src/udp/\hyperlink{UdpEvent_8cpp}{UdpEvent.cpp}\end{DoxyCompactItemize}

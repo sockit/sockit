@@ -1,0 +1,1092 @@
+\hypertarget{classTcp}{
+\section{Tcp Class Reference}
+\label{classTcp}\index{Tcp@{Tcp}}
+}
+
+
+{\ttfamily \#include $<$Tcp.h$>$}
+
+Inheritance diagram for Tcp:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classTcp}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classTcp_af081afa2fd34edc12ac0dda43851352c}{Tcp} (string \hyperlink{classTcp_a0e981d15f94a460b91845bce9b930c61}{host}, int \hyperlink{classTcp_a7ed15f78afc9d0675404b4b41cc723ba}{port}, boost::asio::io\_\-service \&\hyperlink{classTcp_ad0c319a0974aa3f07e9c5ae290ea18b4}{io\_\-service})
+\item 
+virtual \hyperlink{classTcp_ab5d2bbefce3133529f51b2afa2796b90}{$\sim$Tcp} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{classTcp_aea9e4a82b08f1893900dad21a1fedfb7}{set\_\-tcp\_\-keepalive} (boost::shared\_\-ptr$<$ tcp::socket $>$ socket)
+\item 
+string \hyperlink{classTcp_af93fb7459faba8da96f1df55728dfeee}{bool\_\-option\_\-to\_\-string} (optional$<$ bool $>$ \&arg, string iftrue, string iffalse)
+\item 
+{\footnotesize template$<$class T $>$ }\\string \hyperlink{classTcp_a6324523a33b5830641fd22e32bab8066}{option\_\-to\_\-string} (optional$<$ T $>$ \&arg)
+\item 
+void \hyperlink{classTcp_a5eae377b9c7c4e49a210a0372bdb9f73}{parse\_\-string\_\-bool\_\-arg} (map$<$ string, string $>$ \&options, string arg, optional$<$ bool $>$ \&arg\_\-value)
+\item 
+void \hyperlink{classTcp_a91de22f151e40c56638ae54899f1be5a}{parse\_\-string\_\-int\_\-arg} (map$<$ string, string $>$ \&options, string arg, optional$<$ int $>$ \&arg\_\-value)
+\item 
+void \hyperlink{classTcp_a65753a8c2d9bad07216abdcd5a8a1e86}{parse\_\-args} (map$<$ string, string $>$ options)
+\item 
+void \hyperlink{classTcp_a59aee046563f221c89ab4b56146fcdc7}{log\_\-options} ()
+\item 
+virtual void \hyperlink{classTcp_a48b0192669ab99dc953ab3feae5c1b1c}{close} ()=0
+\item 
+virtual void \hyperlink{classTcp_a447cf3ccc28a073a6b871dd1f597c28d}{send\_\-handler} (const boost::system::error\_\-code \&error\_\-code, std::size\_\-t bytes\_\-transferred, string data, string \hyperlink{classTcp_a0e981d15f94a460b91845bce9b930c61}{host}, int \hyperlink{classTcp_a7ed15f78afc9d0675404b4b41cc723ba}{port}, boost::shared\_\-ptr$<$ tcp::socket $>$ connection)
+\item 
+virtual void \hyperlink{classTcp_a96707e496b0fcef660c3f22fb6efc0fd}{receive\_\-handler} (const boost::system::error\_\-code \&error\_\-code, std::size\_\-t bytes\_\-transferred, boost::shared\_\-ptr$<$ tcp::socket $>$ connection, string \hyperlink{classTcp_a0e981d15f94a460b91845bce9b930c61}{host}, int \hyperlink{classTcp_a7ed15f78afc9d0675404b4b41cc723ba}{port})
+\item 
+virtual void \hyperlink{classTcp_a9798750750bc775de9a16d0f148bc002}{fire\_\-error\_\-event} (const string \&message)=0
+\item 
+virtual void \hyperlink{classTcp_a69d92d55403e877f252bbfbfd7c02ec2}{fire\_\-disconnect\_\-event} (const string \&message)=0
+\item 
+virtual void \hyperlink{classTcp_a7e5cfd764f04ca5e2729924b9d537db2}{fire\_\-data\_\-event} (const string data, boost::shared\_\-ptr$<$ tcp::socket $>$ connection)=0
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+boost::array$<$ char, \hyperlink{classTcp_a9302fa700d80ca1aed86e41e02925051}{BUFFER\_\-SIZE} $>$ \hyperlink{classTcp_aeb630e95d24f26852437098df5896b16}{receive\_\-buffer}
+\item 
+boost::asio::io\_\-service \& \hyperlink{classTcp_ad0c319a0974aa3f07e9c5ae290ea18b4}{io\_\-service}
+\item 
+bool \hyperlink{classTcp_a96b0558a6ce522708bfd06cf1e6e45ba}{waiting\_\-to\_\-shutdown}
+\item 
+optional$<$ bool $>$ \hyperlink{classTcp_a395b2458742a84d78c1107ac8b59a7a8}{using\_\-ipv6}
+\item 
+optional$<$ bool $>$ \hyperlink{classTcp_a00a788b6d5b91b31b340f942617b9dda}{no\_\-delay}
+\item 
+optional$<$ bool $>$ \hyperlink{classTcp_a6bff7fed84126b745930da36030c68c7}{do\_\-not\_\-route}
+\item 
+optional$<$ bool $>$ \hyperlink{classTcp_a5cec5af76ec94551f8dc5f98639e9953}{keep\_\-alive}
+\item 
+optional$<$ int $>$ \hyperlink{classTcp_a08e171f501f01c117f5a3c04d394d137}{keep\_\-alive\_\-timeout}
+\item 
+int \hyperlink{classTcp_a4811b96fe77f74f10b14aac532036708}{active\_\-jobs}
+\item 
+boost::mutex \hyperlink{classTcp_adcd27ee2753e2c0c43f58efa882a3ab5}{active\_\-jobs\_\-mutex}
+\item 
+string \hyperlink{classTcp_a0e981d15f94a460b91845bce9b930c61}{host}
+\item 
+int \hyperlink{classTcp_a7ed15f78afc9d0675404b4b41cc723ba}{port}
+\item 
+std::set$<$ boost::system::error\_\-code $>$ \hyperlink{classTcp_adcbc3e86d98f8ba37247674cf67f77fd}{disconnect\_\-errors}
+\item 
+bool \hyperlink{classTcp_a9dbc59f5343aa045be1a888356ef6fbf}{failed}
+\end{DoxyCompactItemize}
+\subsection*{Static Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static const int \hyperlink{classTcp_a9302fa700d80ca1aed86e41e02925051}{BUFFER\_\-SIZE} = 4096
+\item 
+static const int \hyperlink{classTcp_a169a3d26315c2b5eecc02354ef44b777}{MAX\_\-DATA\_\-SIZE} = 65536
+\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classTcp_ac01935b5a2bc7cc5ef28348f3d64ffa2}{TcpEvent}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Interface to abstract out the client-\/server model for use in the {\ttfamily \hyperlink{classEvent}{Event}}. Contains common handlers used by both TCP servers and clients.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classEvent}{Event} 
+\end{DoxySeeAlso}
+
+
+Definition at line 60 of file Tcp.h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classTcp_af081afa2fd34edc12ac0dda43851352c}{
+\index{Tcp@{Tcp}!Tcp@{Tcp}}
+\index{Tcp@{Tcp}!Tcp@{Tcp}}
+\subsubsection[{Tcp}]{\setlength{\rightskip}{0pt plus 5cm}Tcp::Tcp (
+\begin{DoxyParamCaption}
+\item[{string}]{host, }
+\item[{int}]{port, }
+\item[{boost::asio::io\_\-service \&}]{io\_\-service}
+\end{DoxyParamCaption}
+)}}
+\label{classTcp_af081afa2fd34edc12ac0dda43851352c}
+Builds a generic TCP object, and registers the 'shutdown' method on the API.
+
+
+\begin{DoxyParams}{Parameters}
+{\em host} & The hostname for this TCP object. For clients, this represents the remote host's hostname, and for servers, defaults to 'localhost'. \\
+\hline
+{\em port} & The port for this TCP object, which for clients, represents the port of the remote host to which to connect, and for servers, represents the port to which to bind and listen for incoming connections. \\
+\hline
+{\em io\_\-service} & The I/O service used for asynchronous I/O requests \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 10 of file Tcp.cpp.
+
+
+
+References disconnect\_\-errors.
+
+
+\begin{DoxyCode}
+                                                               :
+    host(host), port(port), waiting_to_shutdown(false), active_jobs(0), 
+      io_service(ioService), using_ipv6(false), failed(false)
+{
+    // Collect the set of errors classified as 'disconnect' type errors
+    disconnect_errors.insert(boost::asio::error::connection_reset);
+    disconnect_errors.insert(boost::asio::error::eof);
+    disconnect_errors.insert(boost::asio::error::connection_aborted);
+    disconnect_errors.insert(boost::asio::error::operation_aborted);
+}
+\end{DoxyCode}
+\hypertarget{classTcp_ab5d2bbefce3133529f51b2afa2796b90}{
+\index{Tcp@{Tcp}!$\sim$Tcp@{$\sim$Tcp}}
+\index{$\sim$Tcp@{$\sim$Tcp}!Tcp@{Tcp}}
+\subsubsection[{$\sim$Tcp}]{\setlength{\rightskip}{0pt plus 5cm}virtual Tcp::$\sim$Tcp (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{classTcp_ab5d2bbefce3133529f51b2afa2796b90}
+Immediately calls the {\ttfamily close} function, freeing all resources for this TCP object and shutting down any open connections. 
+
+Definition at line 80 of file Tcp.h.
+
+
+\begin{DoxyCode}
+{}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classTcp_af93fb7459faba8da96f1df55728dfeee}{
+\index{Tcp@{Tcp}!bool\_\-option\_\-to\_\-string@{bool\_\-option\_\-to\_\-string}}
+\index{bool\_\-option\_\-to\_\-string@{bool\_\-option\_\-to\_\-string}!Tcp@{Tcp}}
+\subsubsection[{bool\_\-option\_\-to\_\-string}]{\setlength{\rightskip}{0pt plus 5cm}string Tcp::bool\_\-option\_\-to\_\-string (
+\begin{DoxyParamCaption}
+\item[{optional$<$ bool $>$ \&}]{arg, }
+\item[{string}]{iftrue, }
+\item[{string}]{iffalse}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, protected\mbox{]}}}}
+\label{classTcp_af93fb7459faba8da96f1df55728dfeee}
+Helper for logging options passed in.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arg} & optional bool option \\
+\hline
+{\em iftrue} & if the arg has been set to true, return this \\
+\hline
+{\em iffalse} & if the arg hasn't been set, or is set to false, return this \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 159 of file Tcp.cpp.
+
+
+
+Referenced by log\_\-options().
+
+
+\begin{DoxyCode}
+{
+    if (arg && *arg)
+        return iftrue;
+    return iffalse;
+}
+\end{DoxyCode}
+\hypertarget{classTcp_a48b0192669ab99dc953ab3feae5c1b1c}{
+\index{Tcp@{Tcp}!close@{close}}
+\index{close@{close}!Tcp@{Tcp}}
+\subsubsection[{close}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Tcp::close (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, pure virtual\mbox{]}}}}
+\label{classTcp_a48b0192669ab99dc953ab3feae5c1b1c}
+Closes down this TCP object immediately, by immediately ceasing to accept incoming connections, shutdown all necessary resources. 
+
+Implemented in \hyperlink{classTcpClient_a1ee082bbca3927811bbe2c0aa75386c4}{TcpClient}, and \hyperlink{classTcpServer_a6e94bd28e3d3d506609df98afb94c879}{TcpServer}.
+
+
+
+Referenced by send\_\-handler().
+
+\hypertarget{classTcp_a7e5cfd764f04ca5e2729924b9d537db2}{
+\index{Tcp@{Tcp}!fire\_\-data\_\-event@{fire\_\-data\_\-event}}
+\index{fire\_\-data\_\-event@{fire\_\-data\_\-event}!Tcp@{Tcp}}
+\subsubsection[{fire\_\-data\_\-event}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Tcp::fire\_\-data\_\-event (
+\begin{DoxyParamCaption}
+\item[{const string}]{data, }
+\item[{boost::shared\_\-ptr$<$ tcp::socket $>$}]{connection}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, pure virtual\mbox{]}}}}
+\label{classTcp_a7e5cfd764f04ca5e2729924b9d537db2}
+Helper to fire data event to javascript.
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & The data received \\
+\hline
+{\em connection} & The connection on which attempted to receive data. \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classTcpClient_a8085a788062b837c12040533a18aa933}{TcpClient}, and \hyperlink{classTcpServer_a49708224d7eb73b2371b53d672b626e5}{TcpServer}.
+
+
+
+Referenced by receive\_\-handler().
+
+\hypertarget{classTcp_a69d92d55403e877f252bbfbfd7c02ec2}{
+\index{Tcp@{Tcp}!fire\_\-disconnect\_\-event@{fire\_\-disconnect\_\-event}}
+\index{fire\_\-disconnect\_\-event@{fire\_\-disconnect\_\-event}!Tcp@{Tcp}}
+\subsubsection[{fire\_\-disconnect\_\-event}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Tcp::fire\_\-disconnect\_\-event (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{message}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, pure virtual\mbox{]}}}}
+\label{classTcp_a69d92d55403e877f252bbfbfd7c02ec2}
+Helper to fire an disconnect error event to javascript.
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & The error message \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classTcpClient_a279302da46c29b24b539b4e7ddf20b94}{TcpClient}, and \hyperlink{classTcpServer_aef3b4f4665d3fab448008201915f1fd5}{TcpServer}.
+
+
+
+Referenced by receive\_\-handler(), and send\_\-handler().
+
+\hypertarget{classTcp_a9798750750bc775de9a16d0f148bc002}{
+\index{Tcp@{Tcp}!fire\_\-error\_\-event@{fire\_\-error\_\-event}}
+\index{fire\_\-error\_\-event@{fire\_\-error\_\-event}!Tcp@{Tcp}}
+\subsubsection[{fire\_\-error\_\-event}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Tcp::fire\_\-error\_\-event (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{message}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, pure virtual\mbox{]}}}}
+\label{classTcp_a9798750750bc775de9a16d0f148bc002}
+Helper to fire an error event to javascript.
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & The error message \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classTcpClient_a03a3ef57b2df46a21e21640362457871}{TcpClient}, and \hyperlink{classTcpServer_a07ef4a083656e07099f615d34d3627a1}{TcpServer}.
+
+
+
+Referenced by receive\_\-handler(), and send\_\-handler().
+
+\hypertarget{classTcp_a59aee046563f221c89ab4b56146fcdc7}{
+\index{Tcp@{Tcp}!log\_\-options@{log\_\-options}}
+\index{log\_\-options@{log\_\-options}!Tcp@{Tcp}}
+\subsubsection[{log\_\-options}]{\setlength{\rightskip}{0pt plus 5cm}void Tcp::log\_\-options (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classTcp_a59aee046563f221c89ab4b56146fcdc7}
+Write to the log the options used to create this connection. 
+
+Definition at line 229 of file Tcp.cpp.
+
+
+
+References bool\_\-option\_\-to\_\-string(), do\_\-not\_\-route, host, Logger::info(), keep\_\-alive, keep\_\-alive\_\-timeout, no\_\-delay, port, and using\_\-ipv6.
+
+
+
+Referenced by TcpClient::init(), and parse\_\-args().
+
+
+\begin{DoxyCode}
+{
+    string options("These arguments were passed in: ");
+
+    options.append(bool_option_to_string(using_ipv6, "ipv6, ", "ipv4, "));
+    options.append(bool_option_to_string(do_not_route, "no routing, ", "use routi
+      ng, "));
+    options.append(bool_option_to_string(no_delay, "no delay, ", "allow delay, ")
+      );
+    options.append(bool_option_to_string(keep_alive, "keep alive", "don't keep al
+      ive"));
+    options.append(", keep alive timeout is ");
+    options.append(option_to_string<int> (keep_alive_timeout));
+
+    Logger::info(options, port, host);
+}
+\end{DoxyCode}
+\hypertarget{classTcp_a6324523a33b5830641fd22e32bab8066}{
+\index{Tcp@{Tcp}!option\_\-to\_\-string@{option\_\-to\_\-string}}
+\index{option\_\-to\_\-string@{option\_\-to\_\-string}!Tcp@{Tcp}}
+\subsubsection[{option\_\-to\_\-string}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ string Tcp::option\_\-to\_\-string (
+\begin{DoxyParamCaption}
+\item[{optional$<$ T $>$ \&}]{arg}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, protected\mbox{]}}}}
+\label{classTcp_a6324523a33b5830641fd22e32bab8066}
+Helper for logging options passed in.
+
+
+\begin{DoxyParams}{Parameters}
+{\em arg} & the optional argument \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 167 of file Tcp.cpp.
+
+
+\begin{DoxyCode}
+{
+    if (arg)
+        return boost::lexical_cast<string>(*arg);
+    return string("unset");
+}
+\end{DoxyCode}
+\hypertarget{classTcp_a65753a8c2d9bad07216abdcd5a8a1e86}{
+\index{Tcp@{Tcp}!parse\_\-args@{parse\_\-args}}
+\index{parse\_\-args@{parse\_\-args}!Tcp@{Tcp}}
+\subsubsection[{parse\_\-args}]{\setlength{\rightskip}{0pt plus 5cm}void Tcp::parse\_\-args (
+\begin{DoxyParamCaption}
+\item[{map$<$ string, string $>$}]{options}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classTcp_a65753a8c2d9bad07216abdcd5a8a1e86}
+Parses any options (like whether or use IPv6 or IPv4) from the options. Supported options currently include:
+
+ipv6 if true, use ipv6. otherwise use ipv4. keep alive allow the socket to send keep-\/alives. do not route option to force TCP to use local interfaces only, prevents routing no delay option to disable Nagle algorithm for possibly improved performance
+
+
+\begin{DoxyParams}{Parameters}
+{\em options} & A map of options to values. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 197 of file Tcp.cpp.
+
+
+
+References do\_\-not\_\-route, keep\_\-alive, keep\_\-alive\_\-timeout, log\_\-options(), no\_\-delay, parse\_\-string\_\-bool\_\-arg(), parse\_\-string\_\-int\_\-arg(), and using\_\-ipv6.
+
+
+
+Referenced by TcpClient::TcpClient(), and TcpServer::TcpServer().
+
+
+\begin{DoxyCode}
+{
+    map<string, string>::iterator it;
+    map<string, string> transformed_options;
+
+    string t("true");
+    string f("false");
+
+    // transform the entire map to lower case
+    for (it = options.begin(); it != options.end(); it++)
+    {
+        string k = it->first;
+        string v = it->second;
+
+        std::transform(k.begin(), k.end(), k.begin(), ::tolower);
+        std::transform(v.begin(), v.end(), v.begin(), ::tolower);
+
+        k.erase(std::remove_if(k.begin(), k.end(), ::isspace), k.end());
+        v.erase(std::remove_if(v.begin(), v.end(), ::isspace), v.end());
+
+        transformed_options.insert(std::pair<string, string>(k, v));
+    }
+
+    parse_string_bool_arg(transformed_options, "ipv6", using_ipv6);
+    parse_string_bool_arg(transformed_options, "donotroute", do_not_route);
+    parse_string_bool_arg(transformed_options, "keepalive", keep_alive);
+    parse_string_bool_arg(transformed_options, "nodelay", no_delay);
+    parse_string_int_arg(transformed_options, "keepalivetimeout", 
+      keep_alive_timeout);
+
+    log_options();
+}
+\end{DoxyCode}
+\hypertarget{classTcp_a5eae377b9c7c4e49a210a0372bdb9f73}{
+\index{Tcp@{Tcp}!parse\_\-string\_\-bool\_\-arg@{parse\_\-string\_\-bool\_\-arg}}
+\index{parse\_\-string\_\-bool\_\-arg@{parse\_\-string\_\-bool\_\-arg}!Tcp@{Tcp}}
+\subsubsection[{parse\_\-string\_\-bool\_\-arg}]{\setlength{\rightskip}{0pt plus 5cm}void Tcp::parse\_\-string\_\-bool\_\-arg (
+\begin{DoxyParamCaption}
+\item[{map$<$ string, string $>$ \&}]{options, }
+\item[{string}]{arg, }
+\item[{optional$<$ bool $>$ \&}]{arg\_\-value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, protected\mbox{]}}}}
+\label{classTcp_a5eae377b9c7c4e49a210a0372bdb9f73}
+Helper for parsing boolean arguments
+
+
+\begin{DoxyParams}{Parameters}
+{\em options} & A map of strings to string representing the options passed in and their values \\
+\hline
+{\em arg} & The specific option to check for \\
+\hline
+{\em arg\_\-value} & This will hold the value of the argument, if found. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 174 of file Tcp.cpp.
+
+
+
+Referenced by parse\_\-args().
+
+
+\begin{DoxyCode}
+{
+    map<string, string>::iterator it;
+
+    if ((it = options.find(arg)) != options.end())
+    {
+        if (it->second == std::string("true"))
+            arg_value.reset(true);
+        if (it->second == std::string("false"))
+            arg_value.reset(false);
+    }
+}
+\end{DoxyCode}
+\hypertarget{classTcp_a91de22f151e40c56638ae54899f1be5a}{
+\index{Tcp@{Tcp}!parse\_\-string\_\-int\_\-arg@{parse\_\-string\_\-int\_\-arg}}
+\index{parse\_\-string\_\-int\_\-arg@{parse\_\-string\_\-int\_\-arg}!Tcp@{Tcp}}
+\subsubsection[{parse\_\-string\_\-int\_\-arg}]{\setlength{\rightskip}{0pt plus 5cm}void Tcp::parse\_\-string\_\-int\_\-arg (
+\begin{DoxyParamCaption}
+\item[{map$<$ string, string $>$ \&}]{options, }
+\item[{string}]{arg, }
+\item[{optional$<$ int $>$ \&}]{arg\_\-value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, protected\mbox{]}}}}
+\label{classTcp_a91de22f151e40c56638ae54899f1be5a}
+Helper for parsing integer arguments
+
+
+\begin{DoxyParams}{Parameters}
+{\em options} & A map of strings to string representing the options passed in and their values \\
+\hline
+{\em arg} & The specific option to check for \\
+\hline
+{\em arg\_\-value} & This will hold the value of the argument, if found. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 187 of file Tcp.cpp.
+
+
+
+Referenced by parse\_\-args().
+
+
+\begin{DoxyCode}
+{
+    map<string, string>::iterator it;
+
+    if ((it = options.find(arg)) != options.end())
+    {
+        arg_value.reset(boost::lexical_cast<int>(it->second));
+    }
+}
+\end{DoxyCode}
+\hypertarget{classTcp_a96707e496b0fcef660c3f22fb6efc0fd}{
+\index{Tcp@{Tcp}!receive\_\-handler@{receive\_\-handler}}
+\index{receive\_\-handler@{receive\_\-handler}!Tcp@{Tcp}}
+\subsubsection[{receive\_\-handler}]{\setlength{\rightskip}{0pt plus 5cm}void Tcp::receive\_\-handler (
+\begin{DoxyParamCaption}
+\item[{const boost::system::error\_\-code \&}]{error\_\-code, }
+\item[{std::size\_\-t}]{bytes\_\-transferred, }
+\item[{boost::shared\_\-ptr$<$ tcp::socket $>$}]{connection, }
+\item[{string}]{host, }
+\item[{int}]{port}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classTcp_a96707e496b0fcef660c3f22fb6efc0fd}
+Handler invoked when some data has been received.
+
+
+\begin{DoxyParams}{Parameters}
+{\em error\_\-code} & The error code encountered when trying to receive data, if any occurred. On success, this value is zero, and nonzero on error. \\
+\hline
+{\em bytes\_\-transferred} & The number of bytes successfully received over the connection. \\
+\hline
+{\em connection} & The connection on which attempted to receive data. \\
+\hline
+{\em host} & The hostname for this TCP object \\
+\hline
+{\em port} & The port for this TCP object \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented in \hyperlink{classTcpServer_a99739644296c7c2647022695d0d0bdbe}{TcpServer}.
+
+
+
+Definition at line 88 of file Tcp.cpp.
+
+
+
+References disconnect\_\-errors, Logger::error(), fire\_\-data\_\-event(), fire\_\-disconnect\_\-event(), fire\_\-error\_\-event(), Logger::info(), receive\_\-buffer, and Logger::warn().
+
+
+
+Referenced by TcpClient::connect\_\-handler().
+
+
+\begin{DoxyCode}
+{
+    // Check for errors
+    if (error_code)
+    {
+        // Check for disconnection errors
+        if (disconnect_errors.find(error_code) != disconnect_errors.end())
+        {
+            if (error_code == boost::asio::error::operation_aborted)
+            {
+                Logger::info("TCP send failed, aborted", port, host);
+                return;
+            }
+            else
+            {
+                string message("TCP receive failed, disconnected, error message: 
+      '" + error_code.message() + "'");
+                Logger::info(message, port, host);
+                fire_disconnect_event(message);
+                return;
+            }
+        }
+
+        // Otherwise, this is a more serious error, fail and log the error
+        string message(
+                "TCP receive failed, error message: '" + error_code.message() + "
+      ', value '" + boost::lexical_cast<string>(
+                        error_code.value()) + "'");
+        Logger::error(message, port, host);
+        fire_error_event(message);
+
+        // Shutdown the socket we're receiving from
+        if (connection.get() && connection->is_open())
+        {
+            try
+            {
+                connection->shutdown(connection->shutdown_receive);
+            }
+            catch (...)
+            {
+                Logger::warn("TCP receive failed, shutdown improperly, proceeding
+       anyway", port, host);
+            }
+        }
+
+        return;
+    }
+
+    // Pull out the data we received, and fire a data received event
+    string data = string(receive_buffer.c_array(), bytes_transferred);
+
+    // Log success
+    string message(
+            "Successfully received all " + boost::lexical_cast<string>(bytes_tran
+      sferred) + " bytes of " + boost::lexical_cast<string>(
+                    bytes_transferred) + " total bytes. Data: '" + data + "'");
+
+    Logger::info(message, port, host);
+
+    try
+    {
+        fire_data_event(data, connection);
+    }
+    catch (const boost::bad_weak_ptr &p)
+    {
+        Logger::error("Event is going out of scope", port, host);
+    }
+
+    // Try to receive more data
+    if (connection.get())
+        connection->async_receive(boost::asio::buffer(receive_buffer),
+                boost::bind(&Tcp::receive_handler, this, _1, _2, connection, 
+      host, port));
+}
+\end{DoxyCode}
+\hypertarget{classTcp_a447cf3ccc28a073a6b871dd1f597c28d}{
+\index{Tcp@{Tcp}!send\_\-handler@{send\_\-handler}}
+\index{send\_\-handler@{send\_\-handler}!Tcp@{Tcp}}
+\subsubsection[{send\_\-handler}]{\setlength{\rightskip}{0pt plus 5cm}void Tcp::send\_\-handler (
+\begin{DoxyParamCaption}
+\item[{const boost::system::error\_\-code \&}]{error\_\-code, }
+\item[{std::size\_\-t}]{bytes\_\-transferred, }
+\item[{string}]{data, }
+\item[{string}]{host, }
+\item[{int}]{port, }
+\item[{boost::shared\_\-ptr$<$ tcp::socket $>$}]{connection}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classTcp_a447cf3ccc28a073a6b871dd1f597c28d}
+Handler invoked when the data has been sent (or sending terminated in error).
+
+
+\begin{DoxyParams}{Parameters}
+{\em error\_\-code} & The error code encountered when trying to send data, if any occurred. On success, this value is zero, and nonzero on error. \\
+\hline
+{\em bytes\_\-transferred} & The number of bytes successfully sent over the connection. \\
+\hline
+{\em data} & The data to be sent. \\
+\hline
+{\em host} & The hostname for this TCP object \\
+\hline
+{\em port} & The port for this TCP object \\
+\hline
+{\em connection} & The connection this data was sent on \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 20 of file Tcp.cpp.
+
+
+
+References active\_\-jobs, active\_\-jobs\_\-mutex, close(), disconnect\_\-errors, Logger::error(), fire\_\-disconnect\_\-event(), fire\_\-error\_\-event(), Logger::info(), waiting\_\-to\_\-shutdown, and Logger::warn().
+
+
+
+Referenced by TcpClient::flush(), TcpEvent::send(), and TcpClient::send().
+
+
+\begin{DoxyCode}
+{
+    // Check the error code
+    if (error_code)
+    {
+        // Check for disconnection errors
+        std::set<boost::system::error_code>::iterator find_result = 
+      disconnect_errors.find(error_code);
+        if (find_result != disconnect_errors.end())
+        {
+            if (error_code == boost::asio::error::operation_aborted)
+            {
+                Logger::info("TCP send failed, aborted", port, host);
+            }
+            else
+            {
+                string message("TCP send failed, disconnected, error message: '" 
+      + error_code.message() + "'");
+                Logger::info(message, port, host);
+                fire_disconnect_event(message);
+            }
+            return;
+        }
+
+        string message(
+                "TCP send failed, error message '" + error_code.message() + "', e
+      rror code '" + boost::lexical_cast<string>(
+                        error_code.value()) + "' was encountered");
+        Logger::error(message, port, host);
+        fire_error_event(message);
+        return;
+    }
+
+    if (bytes_transferred != data.size())
+    {
+        // Get the rest of the message, and try resending it
+        string rest_of_buffer(((char*) data.data()) + bytes_transferred, data.siz
+      e() - bytes_transferred);
+
+        active_jobs_mutex.lock();
+        active_jobs++;
+        active_jobs_mutex.unlock();
+
+        connection->async_send(boost::asio::buffer(rest_of_buffer.data(), rest_of
+      _buffer.size()),
+                boost::bind(&Tcp::send_handler, this, _1, _2, rest_of_buffer, 
+      host, port, connection));
+
+        // Log that we had to do this
+        // We could not send all of the message, fire an error and log it
+        string message(
+                string("TCP send failed, only ") + boost::lexical_cast<string>(by
+      tes_transferred) + " of " + boost::lexical_cast<string>(
+                        data.size()) + " total bytes were sent");
+        Logger::warn(message, port, host);
+        return;
+    }
+    else
+    {
+        string message("TCP send succeeded, sent " + boost::lexical_cast<string>(
+      bytes_transferred) + " bytes, data is: " + data);
+        Logger::info(message, port, host);
+    }
+
+    // Check to see if this is for the last send to complete, and if we're waitin
+      g to shutdown
+    active_jobs_mutex.lock();
+    active_jobs--;
+    active_jobs_mutex.unlock();
+    int current_jobs = active_jobs;
+    if (waiting_to_shutdown && current_jobs == 0)
+    {
+        close();
+    }
+}
+\end{DoxyCode}
+\hypertarget{classTcp_aea9e4a82b08f1893900dad21a1fedfb7}{
+\index{Tcp@{Tcp}!set\_\-tcp\_\-keepalive@{set\_\-tcp\_\-keepalive}}
+\index{set\_\-tcp\_\-keepalive@{set\_\-tcp\_\-keepalive}!Tcp@{Tcp}}
+\subsubsection[{set\_\-tcp\_\-keepalive}]{\setlength{\rightskip}{0pt plus 5cm}bool Tcp::set\_\-tcp\_\-keepalive (
+\begin{DoxyParamCaption}
+\item[{boost::shared\_\-ptr$<$ tcp::socket $>$}]{socket}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classTcp_aea9e4a82b08f1893900dad21a1fedfb7}
+Helper for setting tcp keep alive options (varies from platform to platform).
+
+
+\begin{DoxyParams}{Parameters}
+{\em socket} & The boost socket to set the tcp keep alive options on \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if successful, otherwise false. 
+\end{DoxyReturn}
+
+
+Definition at line 243 of file Tcp.cpp.
+
+
+
+References Logger::error(), host, keep\_\-alive\_\-timeout, and port.
+
+
+
+Referenced by TcpServer::init\_\-socket(), and TcpClient::init\_\-socket().
+
+
+\begin{DoxyCode}
+{
+#ifdef __UNIX__
+
+    // For *n*x systems
+    int native_fd = socket->native();
+    int timeout = *keep_alive_timeout;
+    int intvl = 1;
+    int probes = 10;
+    int on = 1;
+
+    int ret_keepalive = setsockopt(native_fd, SOL_SOCKET, SO_KEEPALIVE, (void*) &
+      on, sizeof(int));
+    int ret_keepidle = setsockopt(native_fd, SOL_TCP, TCP_KEEPIDLE, (void*) &time
+      out, sizeof(int));
+    int ret_keepintvl = setsockopt(native_fd, SOL_TCP, TCP_KEEPINTVL, (void*) &in
+      tvl, sizeof(int));
+    int ret_keepinit = setsockopt(native_fd, SOL_TCP, TCP_KEEPCNT, (void*) &probe
+      s, sizeof(int));
+
+    if(ret_keepalive || ret_keepidle || ret_keepintvl || ret_keepinit)
+    {
+        string message("Failed to enable keep alive on TCP client socket!");
+        Logger::error(message, port, host);
+        return false;
+    }
+
+#elif defined(__OSX__)
+
+    int native_fd = socket->native();
+    int timeout = *keep_alive_timeout;
+    int intvl = 1;
+    int on = 1;
+
+    // Set the timeout before the first keep alive message
+    int ret_sokeepalive = setsockopt(native_fd, SOL_SOCKET, SO_KEEPALIVE, (void*)
+       &on, sizeof(int));
+    int ret_tcpkeepalive = setsockopt(native_fd, IPPROTO_TCP, TCP_KEEPALIVE, (voi
+      d*) &timeout, sizeof(int));
+    int ret_tcpkeepintvl = setsockopt(native_fd, IPPROTO_TCP, TCP_CONNECTIONTIMEO
+      UT, (void*) &intvl, sizeof(int));
+
+    if(ret_sokeepalive || ret_tcpkeepalive || ret_tcpkeepintvl)
+    {
+        string message("Failed to enable keep alive on TCP client socket!");
+        Logger::error(message, port, host);
+        return false;
+    }
+
+#else
+    // Partially supported on windows
+    struct tcp_keepalive keepalive_options;
+    keepalive_options.onoff = 1;
+    keepalive_options.keepalivetime = *keep_alive_timeout * 1000;
+    keepalive_options.keepaliveinterval = 2000;
+
+    BOOL keepalive_val = true;
+    SOCKET native = socket->native();
+    DWORD bytes_returned;
+
+    int ret_keepalive = setsockopt(native, SOL_SOCKET, SO_KEEPALIVE, (const char 
+      *) &keepalive_val, sizeof(keepalive_val));
+    int ret_iotcl = WSAIoctl(native, SIO_KEEPALIVE_VALS, (LPVOID) & keepalive_opt
+      ions, (DWORD) sizeof(keepalive_options), NULL, 0,
+            (LPDWORD) & bytes_returned, NULL, NULL);
+
+    if (ret_keepalive || ret_iotcl)
+    {
+        string message("Failed to set keep alive timeout on TCP client socket!");
+      
+        Logger::error(message, port, host);
+        return false;
+    }
+#endif
+    return true;
+}
+\end{DoxyCode}
+
+
+\subsection{Friends And Related Function Documentation}
+\hypertarget{classTcp_ac01935b5a2bc7cc5ef28348f3d64ffa2}{
+\index{Tcp@{Tcp}!TcpEvent@{TcpEvent}}
+\index{TcpEvent@{TcpEvent}!Tcp@{Tcp}}
+\subsubsection[{TcpEvent}]{\setlength{\rightskip}{0pt plus 5cm}friend class {\bf TcpEvent}\hspace{0.3cm}{\ttfamily  \mbox{[}friend\mbox{]}}}}
+\label{classTcp_ac01935b5a2bc7cc5ef28348f3d64ffa2}
+
+
+Definition at line 82 of file Tcp.h.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classTcp_a4811b96fe77f74f10b14aac532036708}{
+\index{Tcp@{Tcp}!active\_\-jobs@{active\_\-jobs}}
+\index{active\_\-jobs@{active\_\-jobs}!Tcp@{Tcp}}
+\subsubsection[{active\_\-jobs}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf Tcp::active\_\-jobs}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classTcp_a4811b96fe77f74f10b14aac532036708}
+The current count of active jobs on the socket 
+
+Definition at line 254 of file Tcp.h.
+
+
+
+Referenced by TcpEvent::send(), TcpClient::send(), send\_\-handler(), TcpServer::shutdown(), and TcpClient::shutdown().
+
+\hypertarget{classTcp_adcd27ee2753e2c0c43f58efa882a3ab5}{
+\index{Tcp@{Tcp}!active\_\-jobs\_\-mutex@{active\_\-jobs\_\-mutex}}
+\index{active\_\-jobs\_\-mutex@{active\_\-jobs\_\-mutex}!Tcp@{Tcp}}
+\subsubsection[{active\_\-jobs\_\-mutex}]{\setlength{\rightskip}{0pt plus 5cm}boost::mutex {\bf Tcp::active\_\-jobs\_\-mutex}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classTcp_adcd27ee2753e2c0c43f58efa882a3ab5}
+A mutex around the current count of active jobs on the socket 
+
+Definition at line 259 of file Tcp.h.
+
+
+
+Referenced by TcpClient::send(), send\_\-handler(), and TcpClient::shutdown().
+
+\hypertarget{classTcp_a9302fa700d80ca1aed86e41e02925051}{
+\index{Tcp@{Tcp}!BUFFER\_\-SIZE@{BUFFER\_\-SIZE}}
+\index{BUFFER\_\-SIZE@{BUFFER\_\-SIZE}!Tcp@{Tcp}}
+\subsubsection[{BUFFER\_\-SIZE}]{\setlength{\rightskip}{0pt plus 5cm}const int {\bf Tcp::BUFFER\_\-SIZE} = 4096\hspace{0.3cm}{\ttfamily  \mbox{[}static, protected\mbox{]}}}}
+\label{classTcp_a9302fa700d80ca1aed86e41e02925051}
+A constant representing the size of the buffer in which to receive data. 
+
+Definition at line 203 of file Tcp.h.
+
+\hypertarget{classTcp_adcbc3e86d98f8ba37247674cf67f77fd}{
+\index{Tcp@{Tcp}!disconnect\_\-errors@{disconnect\_\-errors}}
+\index{disconnect\_\-errors@{disconnect\_\-errors}!Tcp@{Tcp}}
+\subsubsection[{disconnect\_\-errors}]{\setlength{\rightskip}{0pt plus 5cm}std::set$<$boost::system::error\_\-code$>$ {\bf Tcp::disconnect\_\-errors}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classTcp_adcbc3e86d98f8ba37247674cf67f77fd}
+The set of {\ttfamily boost::system::error\_\-code} errors considered to be 'disconnection' errors.
+
+\begin{DoxySeeAlso}{See also}
+boost::system::error\_\-code 
+\end{DoxySeeAlso}
+
+
+Definition at line 276 of file Tcp.h.
+
+
+
+Referenced by TcpServer::accept\_\-handler(), TcpClient::connect\_\-handler(), receive\_\-handler(), TcpClient::resolve\_\-handler(), send\_\-handler(), and Tcp().
+
+\hypertarget{classTcp_a6bff7fed84126b745930da36030c68c7}{
+\index{Tcp@{Tcp}!do\_\-not\_\-route@{do\_\-not\_\-route}}
+\index{do\_\-not\_\-route@{do\_\-not\_\-route}!Tcp@{Tcp}}
+\subsubsection[{do\_\-not\_\-route}]{\setlength{\rightskip}{0pt plus 5cm}optional$<$bool$>$ {\bf Tcp::do\_\-not\_\-route}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classTcp_a6bff7fed84126b745930da36030c68c7}
+Option to force TCP to use local interfaces only, prevents routing 
+
+Definition at line 239 of file Tcp.h.
+
+
+
+Referenced by TcpServer::init\_\-socket(), TcpClient::init\_\-socket(), log\_\-options(), and parse\_\-args().
+
+\hypertarget{classTcp_a9dbc59f5343aa045be1a888356ef6fbf}{
+\index{Tcp@{Tcp}!failed@{failed}}
+\index{failed@{failed}!Tcp@{Tcp}}
+\subsubsection[{failed}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf Tcp::failed}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classTcp_a9dbc59f5343aa045be1a888356ef6fbf}
+A flag that is set to true whenever this TCP client or server encounters an unrecoverable error and cannot continue. 
+
+Definition at line 281 of file Tcp.h.
+
+
+
+Referenced by TcpServer::init(), TcpClient::init(), TcpClient::resolve\_\-handler(), TcpEvent::send(), TcpClient::send(), TcpServer::shutdown(), TcpClient::shutdown(), TcpServer::start\_\-listening(), and TcpClient::TcpClient().
+
+\hypertarget{classTcp_a0e981d15f94a460b91845bce9b930c61}{
+\index{Tcp@{Tcp}!host@{host}}
+\index{host@{host}!Tcp@{Tcp}}
+\subsubsection[{host}]{\setlength{\rightskip}{0pt plus 5cm}string {\bf Tcp::host}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classTcp_a0e981d15f94a460b91845bce9b930c61}
+The hostname for this TCP object ('localhost' for servers, or the hostname of the remote host for clients) 
+
+Definition at line 264 of file Tcp.h.
+
+
+
+Referenced by TcpServer::close(), TcpClient::close(), TcpClient::connect\_\-handler(), TcpClient::flush(), TcpClient::get\_\-host(), TcpServer::init(), TcpClient::init(), log\_\-options(), TcpClient::resolve\_\-handler(), TcpClient::send(), set\_\-tcp\_\-keepalive(), TcpServer::shutdown(), TcpClient::shutdown(), and TcpServer::start\_\-listening().
+
+\hypertarget{classTcp_ad0c319a0974aa3f07e9c5ae290ea18b4}{
+\index{Tcp@{Tcp}!io\_\-service@{io\_\-service}}
+\index{io\_\-service@{io\_\-service}!Tcp@{Tcp}}
+\subsubsection[{io\_\-service}]{\setlength{\rightskip}{0pt plus 5cm}boost::asio::io\_\-service\& {\bf Tcp::io\_\-service}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classTcp_ad0c319a0974aa3f07e9c5ae290ea18b4}
+The I/O service for perform nonblocking actions 
+
+Definition at line 219 of file Tcp.h.
+
+
+
+Referenced by TcpServer::init(), and TcpServer::start\_\-listening().
+
+\hypertarget{classTcp_a5cec5af76ec94551f8dc5f98639e9953}{
+\index{Tcp@{Tcp}!keep\_\-alive@{keep\_\-alive}}
+\index{keep\_\-alive@{keep\_\-alive}!Tcp@{Tcp}}
+\subsubsection[{keep\_\-alive}]{\setlength{\rightskip}{0pt plus 5cm}optional$<$bool$>$ {\bf Tcp::keep\_\-alive}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classTcp_a5cec5af76ec94551f8dc5f98639e9953}
+Allow the socket to send keep-\/alives 
+
+Definition at line 244 of file Tcp.h.
+
+
+
+Referenced by TcpServer::init\_\-socket(), TcpClient::init\_\-socket(), log\_\-options(), and parse\_\-args().
+
+\hypertarget{classTcp_a08e171f501f01c117f5a3c04d394d137}{
+\index{Tcp@{Tcp}!keep\_\-alive\_\-timeout@{keep\_\-alive\_\-timeout}}
+\index{keep\_\-alive\_\-timeout@{keep\_\-alive\_\-timeout}!Tcp@{Tcp}}
+\subsubsection[{keep\_\-alive\_\-timeout}]{\setlength{\rightskip}{0pt plus 5cm}optional$<$int$>$ {\bf Tcp::keep\_\-alive\_\-timeout}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classTcp_a08e171f501f01c117f5a3c04d394d137}
+Allow setting the socket's keep-\/alive timeout 
+
+Definition at line 249 of file Tcp.h.
+
+
+
+Referenced by TcpServer::init\_\-socket(), TcpClient::init\_\-socket(), log\_\-options(), parse\_\-args(), and set\_\-tcp\_\-keepalive().
+
+\hypertarget{classTcp_a169a3d26315c2b5eecc02354ef44b777}{
+\index{Tcp@{Tcp}!MAX\_\-DATA\_\-SIZE@{MAX\_\-DATA\_\-SIZE}}
+\index{MAX\_\-DATA\_\-SIZE@{MAX\_\-DATA\_\-SIZE}!Tcp@{Tcp}}
+\subsubsection[{MAX\_\-DATA\_\-SIZE}]{\setlength{\rightskip}{0pt plus 5cm}const int {\bf Tcp::MAX\_\-DATA\_\-SIZE} = 65536\hspace{0.3cm}{\ttfamily  \mbox{[}static, protected\mbox{]}}}}
+\label{classTcp_a169a3d26315c2b5eecc02354ef44b777}
+A constant representing the maximum number of bytes that a TCP message can be in boost. If our message is larger than this, keep trying to send it until all successful bytes were sent. 
+
+Definition at line 209 of file Tcp.h.
+
+\hypertarget{classTcp_a00a788b6d5b91b31b340f942617b9dda}{
+\index{Tcp@{Tcp}!no\_\-delay@{no\_\-delay}}
+\index{no\_\-delay@{no\_\-delay}!Tcp@{Tcp}}
+\subsubsection[{no\_\-delay}]{\setlength{\rightskip}{0pt plus 5cm}optional$<$bool$>$ {\bf Tcp::no\_\-delay}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classTcp_a00a788b6d5b91b31b340f942617b9dda}
+Option to disable Nagle algorithm for possibly improved performance 
+
+Definition at line 234 of file Tcp.h.
+
+
+
+Referenced by TcpServer::init\_\-socket(), TcpClient::init\_\-socket(), log\_\-options(), and parse\_\-args().
+
+\hypertarget{classTcp_a7ed15f78afc9d0675404b4b41cc723ba}{
+\index{Tcp@{Tcp}!port@{port}}
+\index{port@{port}!Tcp@{Tcp}}
+\subsubsection[{port}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf Tcp::port}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classTcp_a7ed15f78afc9d0675404b4b41cc723ba}
+The port (the port bound to by servers, port on which to connect to the remote host for clients) 
+
+Definition at line 269 of file Tcp.h.
+
+
+
+Referenced by TcpServer::close(), TcpClient::close(), TcpClient::connect\_\-handler(), TcpClient::flush(), TcpServer::get\_\-port(), TcpClient::get\_\-port(), TcpServer::init(), TcpClient::init(), log\_\-options(), TcpClient::resolve\_\-handler(), TcpClient::send(), set\_\-tcp\_\-keepalive(), TcpServer::shutdown(), TcpClient::shutdown(), and TcpServer::start\_\-listening().
+
+\hypertarget{classTcp_aeb630e95d24f26852437098df5896b16}{
+\index{Tcp@{Tcp}!receive\_\-buffer@{receive\_\-buffer}}
+\index{receive\_\-buffer@{receive\_\-buffer}!Tcp@{Tcp}}
+\subsubsection[{receive\_\-buffer}]{\setlength{\rightskip}{0pt plus 5cm}boost::array$<$char, {\bf BUFFER\_\-SIZE}$>$ {\bf Tcp::receive\_\-buffer}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classTcp_aeb630e95d24f26852437098df5896b16}
+A buffer for receiving data from the remote host. 
+
+Definition at line 214 of file Tcp.h.
+
+
+
+Referenced by TcpServer::accept\_\-handler(), TcpClient::connect\_\-handler(), and receive\_\-handler().
+
+\hypertarget{classTcp_a395b2458742a84d78c1107ac8b59a7a8}{
+\index{Tcp@{Tcp}!using\_\-ipv6@{using\_\-ipv6}}
+\index{using\_\-ipv6@{using\_\-ipv6}!Tcp@{Tcp}}
+\subsubsection[{using\_\-ipv6}]{\setlength{\rightskip}{0pt plus 5cm}optional$<$bool$>$ {\bf Tcp::using\_\-ipv6}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classTcp_a395b2458742a84d78c1107ac8b59a7a8}
+Flag to say whether or not this TCP object uses IPv6 
+
+Definition at line 229 of file Tcp.h.
+
+
+
+Referenced by TcpServer::init(), TcpClient::init(), log\_\-options(), parse\_\-args(), and TcpClient::resolve\_\-handler().
+
+\hypertarget{classTcp_a96b0558a6ce522708bfd06cf1e6e45ba}{
+\index{Tcp@{Tcp}!waiting\_\-to\_\-shutdown@{waiting\_\-to\_\-shutdown}}
+\index{waiting\_\-to\_\-shutdown@{waiting\_\-to\_\-shutdown}!Tcp@{Tcp}}
+\subsubsection[{waiting\_\-to\_\-shutdown}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf Tcp::waiting\_\-to\_\-shutdown}\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
+\label{classTcp_a96b0558a6ce522708bfd06cf1e6e45ba}
+A flag to say whether or not this server is waiting to shutdown 
+
+Definition at line 224 of file Tcp.h.
+
+
+
+Referenced by TcpServer::accept\_\-handler(), TcpServer::close(), TcpClient::close(), send\_\-handler(), TcpServer::shutdown(), and TcpClient::shutdown().
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+/home/jtedesco/dev/sockit/src/tcp/\hyperlink{Tcp_8h}{Tcp.h}\item 
+/home/jtedesco/dev/sockit/src/tcp/\hyperlink{Tcp_8cpp}{Tcp.cpp}\end{DoxyCompactItemize}

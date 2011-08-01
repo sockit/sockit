@@ -1,0 +1,618 @@
+\hypertarget{classUdpServer}{
+\section{UdpServer Class Reference}
+\label{classUdpServer}\index{UdpServer@{UdpServer}}
+}
+
+
+{\ttfamily \#include $<$UdpServer.h$>$}
+
+Inheritance diagram for UdpServer:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classUdpServer}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classUdpServer_afa92e10874c8a72188a3e1016aad97dc}{UdpServer} (int \hyperlink{classUdp_af69ea781b31a1fa62e5d3012b6288dc8}{port}, boost::asio::io\_\-service \&\hyperlink{classUdp_a7e143116ab3a0f478c8461ca04af782b}{io\_\-service})
+\item 
+\hyperlink{classUdpServer_ae8a101d8343c9906e42a3fa4bf25e7eb}{UdpServer} (int \hyperlink{classUdp_af69ea781b31a1fa62e5d3012b6288dc8}{port}, boost::asio::io\_\-service \&\hyperlink{classUdp_a7e143116ab3a0f478c8461ca04af782b}{io\_\-service}, map$<$ string, string $>$ options)
+\item 
+\hyperlink{classUdpServer_aef1871384fbc46ef425242be4474af3a}{$\sim$UdpServer} ()
+\item 
+virtual void \hyperlink{classUdpServer_a55e557d344720286fdeb430ae3cb3842}{start\_\-listening} ()
+\item 
+virtual void \hyperlink{classUdpServer_ac5623ca24bc56b21d608426f5bc8ad91}{shutdown} ()
+\item 
+virtual int \hyperlink{classUdpServer_a276c64a7545b49b298ca3d9ca1a12e9d}{get\_\-port} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{classUdpServer_aa9a023a74c61ba03af476f12958385df}{fire\_\-error\_\-event} (const string \&message)
+\item 
+virtual void \hyperlink{classUdpServer_ab3bcedec1031181a7dd3affddf3d8447}{fire\_\-data\_\-event} (const string data, boost::shared\_\-ptr$<$ udp::socket $>$ \hyperlink{classUdpServer_a0d49aeb5d5e8291f45487c1d2d082cee}{socket}, boost::shared\_\-ptr$<$ udp::endpoint $>$ endpoint)
+\item 
+virtual void \hyperlink{classUdpServer_a020144da72e1f29be85ed99225372b21}{close} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classUdpServer_a61cfe5dd591450b5486225ab3524bbce}{UdpServer} (const \hyperlink{classUdpServer}{UdpServer} \&other)
+\item 
+void \hyperlink{classUdpServer_ad5e78e7f2bf29df163003de78fb1c44e}{initialize} (void)
+\item 
+virtual void \hyperlink{classUdpServer_ad1c4a040a4c510ecd85b9b9c7e61e995}{listen} (void)
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+boost::shared\_\-ptr$<$ udp::socket $>$ \hyperlink{classUdpServer_a0d49aeb5d5e8291f45487c1d2d082cee}{socket}
+\item 
+bool \hyperlink{classUdpServer_a57c16849cfe745828a022aa7346d40d7}{listening}
+\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classUdpServer_aa3db591e179836aff8d4a6d952d43101}{UdpEvent}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class represents a UDP server, which inherits basic UDP handling functionality from {\ttfamily \hyperlink{classUdp}{Udp}}, and defines additional functionality to bind to a port and accept incoming connections. 
+
+Definition at line 25 of file UdpServer.h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classUdpServer_afa92e10874c8a72188a3e1016aad97dc}{
+\index{UdpServer@{UdpServer}!UdpServer@{UdpServer}}
+\index{UdpServer@{UdpServer}!UdpServer@{UdpServer}}
+\subsubsection[{UdpServer}]{\setlength{\rightskip}{0pt plus 5cm}UdpServer::UdpServer (
+\begin{DoxyParamCaption}
+\item[{int}]{port, }
+\item[{boost::asio::io\_\-service \&}]{io\_\-service}
+\end{DoxyParamCaption}
+)}}
+\label{classUdpServer_afa92e10874c8a72188a3e1016aad97dc}
+A constructor that creates a UDP server using IPv4. There are two constructors to satisfy Boost's requirement that sockets are initialized are the initialization list, and to provide the option for using either IPv4 and IPv6. This initializes a UDP server but does not start it listening for incoming connections.
+
+
+\begin{DoxyParams}{Parameters}
+{\em port} & The port on which this UDP server should listen \\
+\hline
+{\em io\_\-service} & The I/O service to use for asynchronous I/O requests \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 11 of file UdpServer.cpp.
+
+
+
+References initialize().
+
+
+\begin{DoxyCode}
+    : Udp("SERVER", port, io_service), socket(new udp::socket(io_service))
+{
+    initialize();
+}
+\end{DoxyCode}
+\hypertarget{classUdpServer_ae8a101d8343c9906e42a3fa4bf25e7eb}{
+\index{UdpServer@{UdpServer}!UdpServer@{UdpServer}}
+\index{UdpServer@{UdpServer}!UdpServer@{UdpServer}}
+\subsubsection[{UdpServer}]{\setlength{\rightskip}{0pt plus 5cm}UdpServer::UdpServer (
+\begin{DoxyParamCaption}
+\item[{int}]{port, }
+\item[{boost::asio::io\_\-service \&}]{io\_\-service, }
+\item[{map$<$ string, string $>$}]{options}
+\end{DoxyParamCaption}
+)}}
+\label{classUdpServer_ae8a101d8343c9906e42a3fa4bf25e7eb}
+A constructor that creates a UDP server using IPv6. There are two constructors to satisfy Boost's requirement that sockets are initialized are the initialization list, and to provide the option for using either IPv4 and IPv6. This initializes a UDP server but does not start it listening for incoming connections.
+
+
+\begin{DoxyParams}{Parameters}
+{\em port} & The port on which this UDP server should listen \\
+\hline
+{\em io\_\-service} & The I/O service to use for asynchronous I/O requests \\
+\hline
+{\em options} & A map of additional options to configure this UDP server \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 18 of file UdpServer.cpp.
+
+
+
+References initialize(), and Udp::parse\_\-args().
+
+
+\begin{DoxyCode}
+    : Udp("SERVER", port, io_service), socket(new udp::socket(io_service))
+{
+    parse_args(options);
+
+    initialize();
+}
+\end{DoxyCode}
+\hypertarget{classUdpServer_aef1871384fbc46ef425242be4474af3a}{
+\index{UdpServer@{UdpServer}!$\sim$UdpServer@{$\sim$UdpServer}}
+\index{$\sim$UdpServer@{$\sim$UdpServer}!UdpServer@{UdpServer}}
+\subsubsection[{$\sim$UdpServer}]{\setlength{\rightskip}{0pt plus 5cm}UdpServer::$\sim$UdpServer (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classUdpServer_aef1871384fbc46ef425242be4474af3a}
+Deconstructs a UDP server, immediately closing the incoming socket and pending operations. 
+
+Definition at line 119 of file UdpServer.cpp.
+
+
+
+References close().
+
+
+\begin{DoxyCode}
+{
+    close();
+}
+\end{DoxyCode}
+\hypertarget{classUdpServer_a61cfe5dd591450b5486225ab3524bbce}{
+\index{UdpServer@{UdpServer}!UdpServer@{UdpServer}}
+\index{UdpServer@{UdpServer}!UdpServer@{UdpServer}}
+\subsubsection[{UdpServer}]{\setlength{\rightskip}{0pt plus 5cm}UdpServer::UdpServer (
+\begin{DoxyParamCaption}
+\item[{const {\bf UdpServer} \&}]{other}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classUdpServer_a61cfe5dd591450b5486225ab3524bbce}
+Disallows copying a UDP server. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classUdpServer_a020144da72e1f29be85ed99225372b21}{
+\index{UdpServer@{UdpServer}!close@{close}}
+\index{close@{close}!UdpServer@{UdpServer}}
+\subsubsection[{close}]{\setlength{\rightskip}{0pt plus 5cm}void UdpServer::close (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classUdpServer_a020144da72e1f29be85ed99225372b21}
+Immediately closes the incoming socket \& acceptor, and stops all pending operations. 
+
+Implements \hyperlink{classUdp_a035ec772c3af57eba9d69cf3ba9dcdda}{Udp}.
+
+
+
+Definition at line 47 of file UdpServer.cpp.
+
+
+
+References socket.
+
+
+
+Referenced by shutdown(), and $\sim$UdpServer().
+
+
+\begin{DoxyCode}
+{
+    /*
+    if (socket->is_open())
+    {
+        if(multicast && multicast_group)
+        {
+            socket->set_option(
+                    boost::asio::ip::multicast::leave_group(
+                        boost::asio::ip::address::from_string(*multicast_group)))
+      ;
+        }
+
+        socket->close();
+    }
+    */
+    if(socket->is_open())
+        socket->close();
+}
+\end{DoxyCode}
+\hypertarget{classUdpServer_ab3bcedec1031181a7dd3affddf3d8447}{
+\index{UdpServer@{UdpServer}!fire\_\-data\_\-event@{fire\_\-data\_\-event}}
+\index{fire\_\-data\_\-event@{fire\_\-data\_\-event}!UdpServer@{UdpServer}}
+\subsubsection[{fire\_\-data\_\-event}]{\setlength{\rightskip}{0pt plus 5cm}void UdpServer::fire\_\-data\_\-event (
+\begin{DoxyParamCaption}
+\item[{const string}]{data, }
+\item[{boost::shared\_\-ptr$<$ udp::socket $>$}]{socket, }
+\item[{boost::shared\_\-ptr$<$ udp::endpoint $>$}]{endpoint}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classUdpServer_ab3bcedec1031181a7dd3affddf3d8447}
+Helper to fire data event to javascript.
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & The data received \\
+\hline
+{\em socket} & The socket on which to reply to this data \\
+\hline
+{\em endpoint} & The connected endpoint to the remote host \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classUdp_a08e6e588781ce1e7a4d643b97d63dc5c}{Udp}.
+
+
+
+Definition at line 213 of file UdpServer.cpp.
+
+
+\begin{DoxyCode}
+{
+    fire_data(boost::make_shared<UdpEvent>(this, socket, endpoint, data));
+}
+\end{DoxyCode}
+\hypertarget{classUdpServer_aa9a023a74c61ba03af476f12958385df}{
+\index{UdpServer@{UdpServer}!fire\_\-error\_\-event@{fire\_\-error\_\-event}}
+\index{fire\_\-error\_\-event@{fire\_\-error\_\-event}!UdpServer@{UdpServer}}
+\subsubsection[{fire\_\-error\_\-event}]{\setlength{\rightskip}{0pt plus 5cm}void UdpServer::fire\_\-error\_\-event (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{message}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classUdpServer_aa9a023a74c61ba03af476f12958385df}
+Helper to fire an error event to javascript.
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & The error message \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classUdp_a9b79c3603ee9196623aa93b505bda1f6}{Udp}.
+
+
+
+Definition at line 207 of file UdpServer.cpp.
+
+
+\begin{DoxyCode}
+{
+    fire_error(message);
+}
+\end{DoxyCode}
+\hypertarget{classUdpServer_a276c64a7545b49b298ca3d9ca1a12e9d}{
+\index{UdpServer@{UdpServer}!get\_\-port@{get\_\-port}}
+\index{get\_\-port@{get\_\-port}!UdpServer@{UdpServer}}
+\subsubsection[{get\_\-port}]{\setlength{\rightskip}{0pt plus 5cm}int UdpServer::get\_\-port (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classUdpServer_a276c64a7545b49b298ca3d9ca1a12e9d}
+Returns the port on which this server listens 
+
+Implements \hyperlink{classServer_abd497ca7e7dc29f8ea4c6ce204839a6d}{Server}.
+
+
+
+Definition at line 201 of file UdpServer.cpp.
+
+
+
+References Udp::port.
+
+
+\begin{DoxyCode}
+{
+    return port;
+}
+\end{DoxyCode}
+\hypertarget{classUdpServer_ad5e78e7f2bf29df163003de78fb1c44e}{
+\index{UdpServer@{UdpServer}!initialize@{initialize}}
+\index{initialize@{initialize}!UdpServer@{UdpServer}}
+\subsubsection[{initialize}]{\setlength{\rightskip}{0pt plus 5cm}void UdpServer::initialize (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classUdpServer_ad5e78e7f2bf29df163003de78fb1c44e}
+Helper function to initialize this UDP server's object by exposing the {\ttfamily start\_\-listening} method to javascript as 'listen'. 
+
+Definition at line 67 of file UdpServer.cpp.
+
+
+
+References Udp::BUFFER\_\-SIZE, Udp::do\_\-not\_\-route, Logger::error(), Udp::host, listening, Udp::log\_\-options(), Udp::multicast, Udp::multicast\_\-ttl, Udp::port, Udp::reuse\_\-address, socket, start\_\-listening(), and Udp::using\_\-ipv6.
+
+
+
+Referenced by UdpServer().
+
+
+\begin{DoxyCode}
+{
+    log_options();
+
+    listening = false;
+
+    if(using_ipv6 && *using_ipv6)
+        socket->open(udp::v6());
+    else
+        socket->open(udp::v4());
+
+    if(!socket->is_open())
+    {
+        string message("UDP server failed to initialize, could not open socket");
+      
+        Logger::error(message, port, host);
+        fire_error(message);
+    }
+
+    // synchronize the buffer size of the socket with this class's buffer size
+    boost::asio::socket_base::receive_buffer_size buf_size_option(BUFFER_SIZE);
+    socket->set_option(buf_size_option);
+
+    if(do_not_route)
+    {
+        boost::asio::socket_base::do_not_route option(*do_not_route);
+        socket->set_option(option);
+    }
+
+    if(reuse_address)
+    {
+        boost::asio::socket_base::reuse_address option(*reuse_address);
+        socket->set_option(option);
+    }
+
+    if(multicast)
+    {
+        /* force this to be set */
+        boost::asio::socket_base::reuse_address option(true);
+        socket->set_option(option);
+    }
+
+    if(multicast_ttl)
+    {
+        boost::asio::ip::multicast::hops option(*multicast_ttl);
+        socket->set_option(option);
+    }
+
+    // register these methods so they can be invoked from the Javascript
+    registerMethod("listen", make_method(this, &UdpServer::start_listening));
+}
+\end{DoxyCode}
+\hypertarget{classUdpServer_ad1c4a040a4c510ecd85b9b9c7e61e995}{
+\index{UdpServer@{UdpServer}!listen@{listen}}
+\index{listen@{listen}!UdpServer@{UdpServer}}
+\subsubsection[{listen}]{\setlength{\rightskip}{0pt plus 5cm}void UdpServer::listen (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private, virtual\mbox{]}}}}
+\label{classUdpServer_ad1c4a040a4c510ecd85b9b9c7e61e995}
+Helper function to listen for new data from incoming connections. 
+
+Implements \hyperlink{classUdp_a645a7a67007362e349cacc78f9870954}{Udp}.
+
+
+
+Definition at line 190 of file UdpServer.cpp.
+
+
+
+References Udp::host, Logger::info(), Udp::port, Udp::receive\_\-buffer, Udp::receive\_\-handler(), Udp::remote\_\-endpoint, socket, and Logger::warn().
+
+
+
+Referenced by start\_\-listening().
+
+
+\begin{DoxyCode}
+{
+    Logger::info("udpserver: starting to listen", port, host);
+
+    if(remote_endpoint && remote_endpoint.get())
+        socket->async_receive_from(boost::asio::buffer(receive_buffer), *
+      remote_endpoint,
+                boost::bind(&UdpServer::receive_handler, this, _1, _2, socket, 
+      remote_endpoint, host, port));
+    else
+        Logger::warn("remote endpoint is null", port, host);
+}
+\end{DoxyCode}
+\hypertarget{classUdpServer_ac5623ca24bc56b21d608426f5bc8ad91}{
+\index{UdpServer@{UdpServer}!shutdown@{shutdown}}
+\index{shutdown@{shutdown}!UdpServer@{UdpServer}}
+\subsubsection[{shutdown}]{\setlength{\rightskip}{0pt plus 5cm}void UdpServer::shutdown (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classUdpServer_ac5623ca24bc56b21d608426f5bc8ad91}
+Gracefully shutdown this UDP server, waiting until all sends have completed before freeing all resources for this UDP server and shutting down any open connections. This function is exposed the javascript API. 
+
+Implements \hyperlink{classNetworkObject_a2f519457fd87c8a92cf265a2b2883e96}{NetworkObject}.
+
+
+
+Definition at line 27 of file UdpServer.cpp.
+
+
+
+References close(), Logger::error(), Udp::failed, Udp::host, Udp::pending\_\-sends, Udp::port, and Udp::should\_\-close.
+
+
+\begin{DoxyCode}
+{
+    if(!failed)
+    {
+        should_close = true;
+
+        if (pending_sends == 0) {
+            fire_close();
+            close();
+        }
+    }
+    else
+    {
+        // Log & fire an error
+        string message("Trying to shutdown a permanently failed UDP server!");
+        Logger::error(message, port, host);
+    }
+
+}
+\end{DoxyCode}
+\hypertarget{classUdpServer_a55e557d344720286fdeb430ae3cb3842}{
+\index{UdpServer@{UdpServer}!start\_\-listening@{start\_\-listening}}
+\index{start\_\-listening@{start\_\-listening}!UdpServer@{UdpServer}}
+\subsubsection[{start\_\-listening}]{\setlength{\rightskip}{0pt plus 5cm}void UdpServer::start\_\-listening (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classUdpServer_a55e557d344720286fdeb430ae3cb3842}
+Called to start the the server listening for the first time, fires the 'open' event, and is exposed to the javascript. This should only be called once, and starts the server listening for incoming connections. 
+
+Implements \hyperlink{classServer_ab60269481230955b94dc6405162794b0}{Server}.
+
+
+
+Definition at line 125 of file UdpServer.cpp.
+
+
+
+References Logger::error(), Udp::failed, Udp::host, Logger::info(), listen(), listening, Udp::multicast, Udp::multicast\_\-group, Udp::port, socket, and Udp::using\_\-ipv6.
+
+
+
+Referenced by initialize().
+
+
+\begin{DoxyCode}
+{
+    if(failed)
+    {
+        // Log & fire an error
+        string message("Trying to start a UDP server that has permanently failed!
+      ");
+        Logger::error(message, port, host);
+        return;
+    }
+
+    if(listening) return;
+
+    try
+    {
+        if(using_ipv6 && *using_ipv6)
+            socket->bind(udp::endpoint(udp::v6(), port));
+        else
+            socket->bind(udp::endpoint(udp::v4(), port));
+    }
+    catch (boost::system::system_error &e)
+    {
+        // Catch this error, and fail gracefully
+        string message(string("Caught error initializing UDP server: '") + e.what
+      () + "'");
+        Logger::error(message, port, host);
+
+        // Stop this server from ever doing anything again
+        failed = true;
+        return;
+    }
+
+    Logger::info("bind!", port, host);
+
+    if(multicast)
+    {
+        if(!multicast_group)
+        {
+            Logger::error("UdpServer: Multicast set, but no multicast group given
+      ", port, host);
+        }
+        else
+        {
+            // Try to join the multicast group, and fail gracefully if we can't j
+      oin it
+            try
+            {
+                socket->set_option(boost::asio::ip::multicast::join_group(
+                            boost::asio::ip::address::from_string(*
+      multicast_group)));
+            }
+            catch(boost::system::system_error & error)
+            {
+                // Catch this error, and fail gracefully
+                string message(string("Caught error initializing UDP joinging mul
+      ticast group: '") + error.what() + "'");
+                Logger::error(message, port, host);
+
+                failed = true;
+                return;
+            }
+        }
+    }
+
+    listen();
+    fire_open();
+
+    listening = true;
+}
+\end{DoxyCode}
+
+
+\subsection{Friends And Related Function Documentation}
+\hypertarget{classUdpServer_aa3db591e179836aff8d4a6d952d43101}{
+\index{UdpServer@{UdpServer}!UdpEvent@{UdpEvent}}
+\index{UdpEvent@{UdpEvent}!UdpServer@{UdpServer}}
+\subsubsection[{UdpEvent}]{\setlength{\rightskip}{0pt plus 5cm}friend class {\bf UdpEvent}\hspace{0.3cm}{\ttfamily  \mbox{[}friend\mbox{]}}}}
+\label{classUdpServer_aa3db591e179836aff8d4a6d952d43101}
+
+
+Reimplemented from \hyperlink{classUdp_aa3db591e179836aff8d4a6d952d43101}{Udp}.
+
+
+
+Definition at line 73 of file UdpServer.h.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classUdpServer_a57c16849cfe745828a022aa7346d40d7}{
+\index{UdpServer@{UdpServer}!listening@{listening}}
+\index{listening@{listening}!UdpServer@{UdpServer}}
+\subsubsection[{listening}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf UdpServer::listening}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classUdpServer_a57c16849cfe745828a022aa7346d40d7}
+A flag to indicate this object is already listening 
+
+Definition at line 122 of file UdpServer.h.
+
+
+
+Referenced by initialize(), and start\_\-listening().
+
+\hypertarget{classUdpServer_a0d49aeb5d5e8291f45487c1d2d082cee}{
+\index{UdpServer@{UdpServer}!socket@{socket}}
+\index{socket@{socket}!UdpServer@{UdpServer}}
+\subsubsection[{socket}]{\setlength{\rightskip}{0pt plus 5cm}boost::shared\_\-ptr$<$udp::socket$>$ {\bf UdpServer::socket}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classUdpServer_a0d49aeb5d5e8291f45487c1d2d082cee}
+The socket for incoming communications to this server. 
+
+Definition at line 119 of file UdpServer.h.
+
+
+
+Referenced by close(), initialize(), listen(), and start\_\-listening().
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+/home/jtedesco/dev/sockit/src/udp/\hyperlink{UdpServer_8h}{UdpServer.h}\item 
+/home/jtedesco/dev/sockit/src/udp/\hyperlink{UdpServer_8cpp}{UdpServer.cpp}\end{DoxyCompactItemize}

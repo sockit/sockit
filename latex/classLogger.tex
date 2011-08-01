@@ -1,0 +1,909 @@
+\hypertarget{classLogger}{
+\section{Logger Class Reference}
+\label{classLogger}\index{Logger@{Logger}}
+}
+
+
+{\ttfamily \#include $<$Logger.h$>$}
+
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{classLogger_adb709be72ac3e448f2af97b9cafaef2f}{error} (string msg, int port=\hyperlink{classLogger_a5ec2e368c2190d33a096925d96309b32}{NO\_\-PORT}, string host=\char`\"{}local\char`\"{})
+\item 
+static void \hyperlink{classLogger_a8c7d9b42b9a5480dceed15a21a2d57c6}{info} (string msg, int port=\hyperlink{classLogger_a5ec2e368c2190d33a096925d96309b32}{NO\_\-PORT}, string host=\char`\"{}local\char`\"{})
+\item 
+static void \hyperlink{classLogger_ae0ebb73647360cb425de15cb9790563d}{warn} (string msg, int port=\hyperlink{classLogger_a5ec2e368c2190d33a096925d96309b32}{NO\_\-PORT}, string host=\char`\"{}local\char`\"{})
+\item 
+static const bool \hyperlink{classLogger_a29dfeca29285b06316a9644347ba480b}{is\_\-enabled} ()
+\item 
+static void \hyperlink{classLogger_a9dbb809282232adfbe81a780077e587a}{shutdown} ()
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static const int \hyperlink{classLogger_a5ec2e368c2190d33a096925d96309b32}{NO\_\-PORT} = 0
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classLogger_abc41bfb031d896170c7675fa96a6b30c}{Logger} ()
+\end{DoxyCompactItemize}
+\subsection*{Static Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{classLogger_a28f4a9602314326324efe66cb080b9cd}{queue} (string host, int port, string msg, string cat)
+\item 
+static string \hyperlink{classLogger_ab029553d98fef32a959c4dd9a9d54eea}{get\_\-date} ()
+\item 
+static string \hyperlink{classLogger_a227293d7b2941454b62fbb5471711200}{get\_\-timestamp} ()
+\item 
+static string \hyperlink{classLogger_a3bbf4bde3c17ce025625efdc3651d62a}{get\_\-log\_\-base\_\-path} ()
+\item 
+static void \hyperlink{classLogger_ae784283f1de7827b7e7049641eaf0a53}{initialize} ()
+\item 
+static void \hyperlink{classLogger_af1ed54470b81ee4e42d846f0b42e8789}{log\_\-writer\_\-run} ()
+\item 
+static void \hyperlink{classLogger_a5860ff086efc6bf785ac9e62f4f5bcad}{handle\_\-write\_\-request} (string dir, string line)
+\item 
+static void \hyperlink{classLogger_a7c152c7936d69ffa5de724143ba39f58}{formatter\_\-run} ()
+\item 
+static void \hyperlink{classLogger_a8dda3deb5412352e1fea15c000318404}{handle\_\-format\_\-request} (string host, int port, string msg, string cat)
+\end{DoxyCompactItemize}
+\subsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static const int \hyperlink{classLogger_a7bd8d738b20738225377ac59e47792e5}{SLEEP\_\-TIME\_\-MS} = 50
+\item 
+static bool \hyperlink{classLogger_aef732b653322fdd9ba7b0a72e90814a4}{initialized} = false
+\item 
+static bool \hyperlink{classLogger_adaefa0ae12070af07bb69aed1a3d0b31}{enabled} = true
+\item 
+static boost::mutex \hyperlink{classLogger_a2c4c569c9b4e1d3161979e4d60545024}{log\_\-writer\_\-mtx}
+\item 
+static boost::mutex \hyperlink{classLogger_a5114b8ee8bc6f37b217aa8c36d5a342d}{formatter\_\-mtx}
+\item 
+static boost::mutex \hyperlink{classLogger_a3438c31e00d8260e58269d57e2526533}{shutdown\_\-mtx}
+\item 
+static boost::condition\_\-variable \hyperlink{classLogger_a62912b685f72e2782371d0867b2d23f7}{shutdown\_\-cvar}
+\item 
+static boost::condition\_\-variable \hyperlink{classLogger_a07fe7895664750eb3bf6b0cb39034182}{formatter\_\-cvar}
+\item 
+static boost::condition\_\-variable \hyperlink{classLogger_afbd56cc7017de01fc22be29f641be63a}{log\_\-writer\_\-cvar}
+\item 
+static std::queue$<$ pair$<$ pair$<$ string, int $>$, pair$<$ string, string $>$ $>$ $>$ \hyperlink{classLogger_aeef2780f8f49da507fb3c954a1cdae29}{raw\_\-requests}
+\item 
+static std::queue$<$ pair$<$ string, string $>$ $>$ \hyperlink{classLogger_ac6f7534f905bc9b903b35549fa526688}{write\_\-requests}
+\item 
+static string \hyperlink{classLogger_a0fe7f2c4dcb22ef87f07294f3db9d8cc}{pid}
+\item 
+static boost::thread \hyperlink{classLogger_a46e8969c902a456bee9802196044f582}{frm\_\-t}
+\item 
+static boost::thread \hyperlink{classLogger_a6214da297e928d0c9f960a249b6fcf8c}{lw\_\-t}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{Logger_8h}{Logger.h}
+
+Do not instantiate or inherit from this class.
+
+An asynchronous logger. Call by using {\ttfamily \hyperlink{classLogger_a8c7d9b42b9a5480dceed15a21a2d57c6}{Logger::info}(\char`\"{}msg\char`\"{});} or equivalent method. Designed to have the main thread do as little work as possible.
+
+Internally, there are two background threads. One formats a log request into a file directory and a log entry. The other actually writes this into the log. Hopefully, one thread can be in a system call (to get the current date or time) and the other can be doing I/O.
+
+Sadly, a bug in firebreath+boost prevents both background threads from sleeping and just periodically checking that there's work. The bug makes the sleeping thread hang indefinitely (until interrupted). Since the bug affects waiting/timed waiting on a condition variable, (which is how boost implements sleep), the main thread has to signal the formatter thread just in case the bug happened. The formatter thread then signals the log writing thread when there's work.
+
+Logs are placed in /sockit/YYYY-\/MM-\/DD/REMOTEHOST/PROCESSID/sockit-\/traffic.log.
+
+Note: \hyperlink{classLogger_a9dbb809282232adfbe81a780077e587a}{Logger::shutdown()} should only be called once, when the plugin is shutting down. After this is called, no more logging will take place. 
+
+Definition at line 60 of file Logger.h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classLogger_abc41bfb031d896170c7675fa96a6b30c}{
+\index{Logger@{Logger}!Logger@{Logger}}
+\index{Logger@{Logger}!Logger@{Logger}}
+\subsubsection[{Logger}]{\setlength{\rightskip}{0pt plus 5cm}Logger::Logger (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, private\mbox{]}}}}
+\label{classLogger_abc41bfb031d896170c7675fa96a6b30c}
+
+
+Definition at line 122 of file Logger.h.
+
+
+\begin{DoxyCode}
+        {
+        }
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classLogger_adb709be72ac3e448f2af97b9cafaef2f}{
+\index{Logger@{Logger}!error@{error}}
+\index{error@{error}!Logger@{Logger}}
+\subsubsection[{error}]{\setlength{\rightskip}{0pt plus 5cm}static void Logger::error (
+\begin{DoxyParamCaption}
+\item[{string}]{msg, }
+\item[{int}]{port = {\ttfamily {\bf NO\_\-PORT}}, }
+\item[{string}]{host = {\ttfamily \char`\"{}local\char`\"{}}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, static\mbox{]}}}}
+\label{classLogger_adb709be72ac3e448f2af97b9cafaef2f}
+Log that there is an error, along with a message.
+
+
+\begin{DoxyParams}{Parameters}
+{\em host} & Either a client's remote host or the localhost for servers \\
+\hline
+{\em port} & Either the remote host's port (for a client) or the server's local port \\
+\hline
+{\em msg} & The message to log \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 71 of file Logger.h.
+
+
+
+References is\_\-enabled(), and queue().
+
+
+
+Referenced by TcpServer::accept\_\-handler(), TcpClient::connect\_\-handler(), TcpServer::init(), TcpClient::init(), UdpClient::init\_\-socket(), UdpServer::initialize(), Udp::receive\_\-handler(), Tcp::receive\_\-handler(), UdpClient::resolve\_\-handler(), TcpClient::resolve\_\-handler(), NetworkThread::run(), UdpEvent::send(), UdpClient::send(), TcpEvent::send(), TcpClient::send(), Udp::send\_\-handler(), Tcp::send\_\-handler(), Tcp::set\_\-tcp\_\-keepalive(), UdpServer::shutdown(), TcpServer::shutdown(), TcpClient::shutdown(), socket\_\-deallocate(), UdpServer::start\_\-listening(), TcpServer::start\_\-listening(), TcpClient::TcpClient(), TcpEvent::TcpEvent(), UdpClient::UdpClient(), and UdpEvent::UdpEvent().
+
+
+\begin{DoxyCode}
+        {
+            if (Logger::is_enabled())
+                Logger::queue(host, port, msg, "ERROR :  ");
+        }
+\end{DoxyCode}
+\hypertarget{classLogger_a7c152c7936d69ffa5de724143ba39f58}{
+\index{Logger@{Logger}!formatter\_\-run@{formatter\_\-run}}
+\index{formatter\_\-run@{formatter\_\-run}!Logger@{Logger}}
+\subsubsection[{formatter\_\-run}]{\setlength{\rightskip}{0pt plus 5cm}void Logger::formatter\_\-run (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static, private\mbox{]}}}}
+\label{classLogger_a7c152c7936d69ffa5de724143ba39f58}
+Only the formatter thread should be here. Run until logging is disabled and handle formatting requests. 
+
+Definition at line 130 of file Logger.cpp.
+
+
+
+References enabled, formatter\_\-cvar, formatter\_\-mtx, handle\_\-format\_\-request(), raw\_\-requests, and SLEEP\_\-TIME\_\-MS.
+
+
+
+Referenced by initialize().
+
+
+\begin{DoxyCode}
+{
+    // needed for sleeping on a boost cvar
+    boost::unique_lock<boost::mutex> fmt_lock(formatter_mtx);
+
+    // continue as long as logging is enabled and there are still raw requests to
+       process
+    while(true)
+    {
+        while (!raw_requests.empty())
+        {
+            // handle one request
+            pair<pair<string, int> , pair<string, string> > p = raw_requests.fron
+      t();
+            raw_requests.pop();
+            fmt_lock.unlock();
+            handle_format_request(p.first.first, p.first.second, p.second.first, 
+      p.second.second);
+            fmt_lock.lock();
+        }
+       
+        if(enabled || !raw_requests.empty()) 
+        {
+            // Sigh. There's a bug with firebreath + boost::this_thread::sleep/bo
+      ost::condition_variable.timed_wait
+            // where the sleeping thread hangs forever. So this is a compromise/w
+      ork around.
+
+            // don't hold the lock across the gettime system call
+            fmt_lock.unlock();
+            boost::system_time sleep_time = boost::get_system_time() + boost::pos
+      ix_time::milliseconds(SLEEP_TIME_MS);
+            fmt_lock.lock();
+
+            // wake up periodically to check for work.
+            formatter_cvar.timed_wait(fmt_lock, sleep_time);
+        }
+        else
+        {
+            fmt_lock.unlock();
+            break;
+        }
+    }
+}
+\end{DoxyCode}
+\hypertarget{classLogger_ab029553d98fef32a959c4dd9a9d54eea}{
+\index{Logger@{Logger}!get\_\-date@{get\_\-date}}
+\index{get\_\-date@{get\_\-date}!Logger@{Logger}}
+\subsubsection[{get\_\-date}]{\setlength{\rightskip}{0pt plus 5cm}string Logger::get\_\-date (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static, private\mbox{]}}}}
+\label{classLogger_ab029553d98fef32a959c4dd9a9d54eea}
+Helper for building the directory path. Gets the current date (local time) in YYYY-\/MM-\/DD format. 
+
+Definition at line 65 of file Logger.cpp.
+
+
+
+Referenced by handle\_\-format\_\-request().
+
+
+\begin{DoxyCode}
+{
+    boost::gregorian::date d(boost::gregorian::day_clock::local_day());
+    return boost::gregorian::to_iso_extended_string(d);
+}
+\end{DoxyCode}
+\hypertarget{classLogger_a3bbf4bde3c17ce025625efdc3651d62a}{
+\index{Logger@{Logger}!get\_\-log\_\-base\_\-path@{get\_\-log\_\-base\_\-path}}
+\index{get\_\-log\_\-base\_\-path@{get\_\-log\_\-base\_\-path}!Logger@{Logger}}
+\subsubsection[{get\_\-log\_\-base\_\-path}]{\setlength{\rightskip}{0pt plus 5cm}string Logger::get\_\-log\_\-base\_\-path (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static, private\mbox{]}}}}
+\label{classLogger_a3bbf4bde3c17ce025625efdc3651d62a}
+Helper for building the directory path. Gets the base log path. 
+
+Definition at line 79 of file Logger.cpp.
+
+
+
+References PROFILE\_\-BUF\_\-LEN.
+
+
+
+Referenced by handle\_\-format\_\-request().
+
+
+\begin{DoxyCode}
+{
+#if defined (__UNIX__) || defined (__OSX__)
+
+    string path(getenv("HOME"));
+
+#else
+
+#define PROFILE_BUF_LEN 250
+    char profilepath[PROFILE_BUF_LEN];
+    ExpandEnvironmentStringsA("%USERPROFILE%", profilepath, PROFILE_BUF_LEN);
+    string path(profilepath);
+
+#endif
+    path.append("/sockit");
+    return path;
+}
+\end{DoxyCode}
+\hypertarget{classLogger_a227293d7b2941454b62fbb5471711200}{
+\index{Logger@{Logger}!get\_\-timestamp@{get\_\-timestamp}}
+\index{get\_\-timestamp@{get\_\-timestamp}!Logger@{Logger}}
+\subsubsection[{get\_\-timestamp}]{\setlength{\rightskip}{0pt plus 5cm}string Logger::get\_\-timestamp (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static, private\mbox{]}}}}
+\label{classLogger_a227293d7b2941454b62fbb5471711200}
+Helper for building the directory path. Gets the current timestamp (local time) in HH:MM:SS format 
+
+Definition at line 72 of file Logger.cpp.
+
+
+
+Referenced by handle\_\-format\_\-request().
+
+
+\begin{DoxyCode}
+{
+    boost::posix_time::ptime now = boost::posix_time::second_clock::local_time();
+      
+    return boost::posix_time::to_simple_string(now);
+}
+\end{DoxyCode}
+\hypertarget{classLogger_a8dda3deb5412352e1fea15c000318404}{
+\index{Logger@{Logger}!handle\_\-format\_\-request@{handle\_\-format\_\-request}}
+\index{handle\_\-format\_\-request@{handle\_\-format\_\-request}!Logger@{Logger}}
+\subsubsection[{handle\_\-format\_\-request}]{\setlength{\rightskip}{0pt plus 5cm}void Logger::handle\_\-format\_\-request (
+\begin{DoxyParamCaption}
+\item[{string}]{host, }
+\item[{int}]{port, }
+\item[{string}]{msg, }
+\item[{string}]{cat}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static, private\mbox{]}}}}
+\label{classLogger_a8dda3deb5412352e1fea15c000318404}
+Only the formatter thread should be here. Handles a format request. 
+
+Definition at line 170 of file Logger.cpp.
+
+
+
+References get\_\-date(), get\_\-log\_\-base\_\-path(), get\_\-timestamp(), log\_\-writer\_\-cvar, log\_\-writer\_\-mtx, NO\_\-PORT, pid, and write\_\-requests.
+
+
+
+Referenced by formatter\_\-run().
+
+
+\begin{DoxyCode}
+{
+    // used to build the log path
+    string host_str = (host == "local" ? "localhost" : host);
+    string port_str = (port == NO_PORT ? "" : boost::lexical_cast<string>(port));
+      
+
+    string day = get_date();
+    string time = get_timestamp();
+
+    // figure out the path for this message
+    string log_path(get_log_base_path() + "/" + day + "/" + host_str + "/" + pid)
+      ;
+    string entry(cat + "[" + time + "] " + "[" + host_str + (port == NO_PORT ? "]
+       " : "] [" + port_str + "] ") + msg);
+
+    // log request item
+    pair<string, string> item(log_path, entry);
+
+    // add item to log write queue
+    log_writer_mtx.lock();
+    write_requests.push(item);
+
+    // awaken log writing thread - it has work
+    log_writer_mtx.unlock();
+    log_writer_cvar.notify_one();
+}
+\end{DoxyCode}
+\hypertarget{classLogger_a5860ff086efc6bf785ac9e62f4f5bcad}{
+\index{Logger@{Logger}!handle\_\-write\_\-request@{handle\_\-write\_\-request}}
+\index{handle\_\-write\_\-request@{handle\_\-write\_\-request}!Logger@{Logger}}
+\subsubsection[{handle\_\-write\_\-request}]{\setlength{\rightskip}{0pt plus 5cm}void Logger::handle\_\-write\_\-request (
+\begin{DoxyParamCaption}
+\item[{string}]{dir, }
+\item[{string}]{line}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static, private\mbox{]}}}}
+\label{classLogger_a5860ff086efc6bf785ac9e62f4f5bcad}
+Only the log writing thread should be in this function. Handles a log write request. 
+
+Definition at line 238 of file Logger.cpp.
+
+
+
+Referenced by log\_\-writer\_\-run().
+
+
+\begin{DoxyCode}
+{
+    namespace fs = boost::filesystem;
+
+    if (!fs::exists(dir))
+    {
+        try
+        {
+            fs::create_directories(dir);
+        } catch (fs::filesystem_error &err)
+        {
+            // hope someone is listening..
+            std::cout << "Error: could not create directory " << dir << std::endl
+      ;
+            return;
+        }
+    }
+
+    string fileName(dir + "/sockit-traffic.log");
+    line.append("\n");
+
+    FILE *fp = fopen(fileName.c_str(), "a");
+
+    if(fp)
+    {
+        fwrite(line.c_str(), line.size(), 1,  fp);
+        fclose(fp);
+    }
+    else
+    {
+        std::cout << "Error: could not open file " << fileName << std::endl;
+    }
+}
+\end{DoxyCode}
+\hypertarget{classLogger_a8c7d9b42b9a5480dceed15a21a2d57c6}{
+\index{Logger@{Logger}!info@{info}}
+\index{info@{info}!Logger@{Logger}}
+\subsubsection[{info}]{\setlength{\rightskip}{0pt plus 5cm}static void Logger::info (
+\begin{DoxyParamCaption}
+\item[{string}]{msg, }
+\item[{int}]{port = {\ttfamily {\bf NO\_\-PORT}}, }
+\item[{string}]{host = {\ttfamily \char`\"{}local\char`\"{}}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, static\mbox{]}}}}
+\label{classLogger_a8c7d9b42b9a5480dceed15a21a2d57c6}
+Write low-\/priority information to the log.
+
+
+\begin{DoxyParams}{Parameters}
+{\em host} & Either a client's remote host or the localhost for servers \\
+\hline
+{\em port} & Either the remote host's port (for a client) or the server's local port \\
+\hline
+{\em msg} & The message to log \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 84 of file Logger.h.
+
+
+
+References is\_\-enabled(), and queue().
+
+
+
+Referenced by TcpServer::accept\_\-handler(), TcpClient::connect\_\-handler(), NetworkThread::create\_\-tcp\_\-client(), NetworkThread::create\_\-tcp\_\-server(), NetworkThread::create\_\-udp\_\-client(), NetworkThread::create\_\-udp\_\-server(), TcpClient::init(), UdpClient::init\_\-socket(), UdpServer::listen(), Udp::log\_\-options(), Tcp::log\_\-options(), NetworkThread::NetworkThread(), Udp::receive\_\-handler(), Tcp::receive\_\-handler(), UdpClient::resolve\_\-handler(), TcpClient::resolve\_\-handler(), UdpClient::send(), Udp::send\_\-handler(), Tcp::send\_\-handler(), UdpServer::start\_\-listening(), and TcpServer::start\_\-listening().
+
+
+\begin{DoxyCode}
+        {
+            if (Logger::is_enabled())
+                Logger::queue(host, port, msg, "INFO  :  ");
+        }
+\end{DoxyCode}
+\hypertarget{classLogger_ae784283f1de7827b7e7049641eaf0a53}{
+\index{Logger@{Logger}!initialize@{initialize}}
+\index{initialize@{initialize}!Logger@{Logger}}
+\subsubsection[{initialize}]{\setlength{\rightskip}{0pt plus 5cm}void Logger::initialize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static, private\mbox{]}}}}
+\label{classLogger_ae784283f1de7827b7e7049641eaf0a53}
+Initialize the background logging thread. Should only be called once. 
+
+Definition at line 56 of file Logger.cpp.
+
+
+
+References formatter\_\-run(), frm\_\-t, initialized, log\_\-writer\_\-run(), and lw\_\-t.
+
+
+
+Referenced by queue().
+
+
+\begin{DoxyCode}
+{
+    initialized = true;
+
+    frm_t = boost::thread(&Logger::formatter_run);
+    lw_t = boost::thread(&Logger::log_writer_run);
+}
+\end{DoxyCode}
+\hypertarget{classLogger_a29dfeca29285b06316a9644347ba480b}{
+\index{Logger@{Logger}!is\_\-enabled@{is\_\-enabled}}
+\index{is\_\-enabled@{is\_\-enabled}!Logger@{Logger}}
+\subsubsection[{is\_\-enabled}]{\setlength{\rightskip}{0pt plus 5cm}static const bool Logger::is\_\-enabled (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, static\mbox{]}}}}
+\label{classLogger_a29dfeca29285b06316a9644347ba480b}
+Returns true if logging is enabled (default). Returns false if the shutdown method has been called (and logging has been disabled). 
+
+Definition at line 107 of file Logger.h.
+
+
+
+References enabled.
+
+
+
+Referenced by error(), info(), and warn().
+
+
+\begin{DoxyCode}
+        {
+            return Logger::enabled;
+        }
+\end{DoxyCode}
+\hypertarget{classLogger_af1ed54470b81ee4e42d846f0b42e8789}{
+\index{Logger@{Logger}!log\_\-writer\_\-run@{log\_\-writer\_\-run}}
+\index{log\_\-writer\_\-run@{log\_\-writer\_\-run}!Logger@{Logger}}
+\subsubsection[{log\_\-writer\_\-run}]{\setlength{\rightskip}{0pt plus 5cm}void Logger::log\_\-writer\_\-run (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static, private\mbox{]}}}}
+\label{classLogger_af1ed54470b81ee4e42d846f0b42e8789}
+Only the log writing thread should be in this function. Run until logging is disabled and handle log writing requests. 
+
+Definition at line 197 of file Logger.cpp.
+
+
+
+References enabled, handle\_\-write\_\-request(), log\_\-writer\_\-cvar, log\_\-writer\_\-mtx, raw\_\-requests, shutdown\_\-cvar, SLEEP\_\-TIME\_\-MS, and write\_\-requests.
+
+
+
+Referenced by initialize().
+
+
+\begin{DoxyCode}
+{
+    // Needed to sleep on a boost cvar
+    boost::unique_lock<boost::mutex> lw_lock(log_writer_mtx);
+
+    // continue as long as logging is enabled and there are either
+    // raw requests to process or log writing requests to process
+    while(true)
+    {
+        while (!write_requests.empty())
+        {
+            // handle one request
+            pair<string, string> p = write_requests.front();
+            write_requests.pop();
+            log_writer_mtx.unlock();
+            handle_write_request(p.first, p.second);
+            log_writer_mtx.lock();
+        }
+
+        if(enabled || !raw_requests.empty() || !write_requests.empty())
+        {
+            // don't hold the lock across a system call
+            lw_lock.unlock();
+            boost::system_time sleep_time = boost::get_system_time() + boost::pos
+      ix_time::milliseconds(SLEEP_TIME_MS);
+            lw_lock.lock();
+
+            // wait until there's work
+            log_writer_cvar.timed_wait(lw_lock, sleep_time);
+        }
+        else
+        {
+            lw_lock.unlock();
+            break;
+        }
+    }
+
+    // notify the main thread to wake up
+    shutdown_cvar.notify_all();
+}
+\end{DoxyCode}
+\hypertarget{classLogger_a28f4a9602314326324efe66cb080b9cd}{
+\index{Logger@{Logger}!queue@{queue}}
+\index{queue@{queue}!Logger@{Logger}}
+\subsubsection[{queue}]{\setlength{\rightskip}{0pt plus 5cm}void Logger::queue (
+\begin{DoxyParamCaption}
+\item[{string}]{host, }
+\item[{int}]{port, }
+\item[{string}]{msg, }
+\item[{string}]{cat}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static, private\mbox{]}}}}
+\label{classLogger_a28f4a9602314326324efe66cb080b9cd}
+
+
+Definition at line 112 of file Logger.cpp.
+
+
+
+References formatter\_\-cvar, formatter\_\-mtx, initialize(), initialized, and raw\_\-requests.
+
+
+
+Referenced by error(), info(), and warn().
+
+
+\begin{DoxyCode}
+{
+    pair<string, int> item1(host, port);
+    pair<string, string> item2(msg, cat);
+    pair<pair<string, int> , pair<string, string> > item(item1, item2);
+
+    formatter_mtx.lock();
+
+    if (!Logger::initialized)
+        Logger::initialize();
+
+    raw_requests.push(item);
+    formatter_cvar.notify_one();
+
+    formatter_mtx.unlock();
+}
+\end{DoxyCode}
+\hypertarget{classLogger_a9dbb809282232adfbe81a780077e587a}{
+\index{Logger@{Logger}!shutdown@{shutdown}}
+\index{shutdown@{shutdown}!Logger@{Logger}}
+\subsubsection[{shutdown}]{\setlength{\rightskip}{0pt plus 5cm}void Logger::shutdown (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classLogger_a9dbb809282232adfbe81a780077e587a}
+Dangerous. Disables logging and forces the remaining logging requests to finish. Should only be called when the plugin is shutting down. 
+
+Definition at line 98 of file Logger.cpp.
+
+
+
+References enabled, initialized, shutdown\_\-cvar, and shutdown\_\-mtx.
+
+
+\begin{DoxyCode}
+{
+    // disable any more log requests and disable the background threads from slee
+      ping
+    enabled = false;
+
+    if(initialized)
+    {
+        // wait until the log writing queue is done
+        boost::unique_lock<boost::mutex> lock(shutdown_mtx);
+        shutdown_cvar.wait(lock);
+    }
+}
+\end{DoxyCode}
+\hypertarget{classLogger_ae0ebb73647360cb425de15cb9790563d}{
+\index{Logger@{Logger}!warn@{warn}}
+\index{warn@{warn}!Logger@{Logger}}
+\subsubsection[{warn}]{\setlength{\rightskip}{0pt plus 5cm}static void Logger::warn (
+\begin{DoxyParamCaption}
+\item[{string}]{msg, }
+\item[{int}]{port = {\ttfamily {\bf NO\_\-PORT}}, }
+\item[{string}]{host = {\ttfamily \char`\"{}local\char`\"{}}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, static\mbox{]}}}}
+\label{classLogger_ae0ebb73647360cb425de15cb9790563d}
+Log that there is an warning, along with a message.
+
+
+\begin{DoxyParams}{Parameters}
+{\em host} & Either a client's remote host or the localhost for servers \\
+\hline
+{\em port} & Either the remote host's port (for a client) or the server's local port \\
+\hline
+{\em msg} & The message to log \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 97 of file Logger.h.
+
+
+
+References is\_\-enabled(), and queue().
+
+
+
+Referenced by TcpServer::accept\_\-handler(), TcpServer::close(), TcpClient::close(), TcpClient::connect\_\-handler(), UdpServer::listen(), UdpClient::listen(), Tcp::receive\_\-handler(), TcpClient::resolve\_\-handler(), Tcp::send\_\-handler(), and NetworkThread::$\sim$NetworkThread().
+
+
+\begin{DoxyCode}
+        {
+            if (Logger::is_enabled())
+                Logger::queue(host, port, msg, "WARN  :  ");
+        }
+\end{DoxyCode}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classLogger_adaefa0ae12070af07bb69aed1a3d0b31}{
+\index{Logger@{Logger}!enabled@{enabled}}
+\index{enabled@{enabled}!Logger@{Logger}}
+\subsubsection[{enabled}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf Logger::enabled} = true\hspace{0.3cm}{\ttfamily  \mbox{[}static, private\mbox{]}}}}
+\label{classLogger_adaefa0ae12070af07bb69aed1a3d0b31}
+Enabled? 
+
+Definition at line 160 of file Logger.h.
+
+
+
+Referenced by formatter\_\-run(), is\_\-enabled(), log\_\-writer\_\-run(), and shutdown().
+
+\hypertarget{classLogger_a07fe7895664750eb3bf6b0cb39034182}{
+\index{Logger@{Logger}!formatter\_\-cvar@{formatter\_\-cvar}}
+\index{formatter\_\-cvar@{formatter\_\-cvar}!Logger@{Logger}}
+\subsubsection[{formatter\_\-cvar}]{\setlength{\rightskip}{0pt plus 5cm}boost::condition\_\-variable {\bf Logger::formatter\_\-cvar}\hspace{0.3cm}{\ttfamily  \mbox{[}static, private\mbox{]}}}}
+\label{classLogger_a07fe7895664750eb3bf6b0cb39034182}
+The formatter thread sleeps on this. 
+
+Definition at line 175 of file Logger.h.
+
+
+
+Referenced by formatter\_\-run(), and queue().
+
+\hypertarget{classLogger_a5114b8ee8bc6f37b217aa8c36d5a342d}{
+\index{Logger@{Logger}!formatter\_\-mtx@{formatter\_\-mtx}}
+\index{formatter\_\-mtx@{formatter\_\-mtx}!Logger@{Logger}}
+\subsubsection[{formatter\_\-mtx}]{\setlength{\rightskip}{0pt plus 5cm}boost::mutex {\bf Logger::formatter\_\-mtx}\hspace{0.3cm}{\ttfamily  \mbox{[}static, private\mbox{]}}}}
+\label{classLogger_a5114b8ee8bc6f37b217aa8c36d5a342d}
+Mutex for the formatter queue 
+
+Definition at line 166 of file Logger.h.
+
+
+
+Referenced by formatter\_\-run(), and queue().
+
+\hypertarget{classLogger_a46e8969c902a456bee9802196044f582}{
+\index{Logger@{Logger}!frm\_\-t@{frm\_\-t}}
+\index{frm\_\-t@{frm\_\-t}!Logger@{Logger}}
+\subsubsection[{frm\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}boost::thread {\bf Logger::frm\_\-t}\hspace{0.3cm}{\ttfamily  \mbox{[}static, private\mbox{]}}}}
+\label{classLogger_a46e8969c902a456bee9802196044f582}
+The formatter thread 
+
+Definition at line 190 of file Logger.h.
+
+
+
+Referenced by initialize().
+
+\hypertarget{classLogger_aef732b653322fdd9ba7b0a72e90814a4}{
+\index{Logger@{Logger}!initialized@{initialized}}
+\index{initialized@{initialized}!Logger@{Logger}}
+\subsubsection[{initialized}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf Logger::initialized} = false\hspace{0.3cm}{\ttfamily  \mbox{[}static, private\mbox{]}}}}
+\label{classLogger_aef732b653322fdd9ba7b0a72e90814a4}
+Initialized? 
+
+Definition at line 157 of file Logger.h.
+
+
+
+Referenced by initialize(), queue(), and shutdown().
+
+\hypertarget{classLogger_afbd56cc7017de01fc22be29f641be63a}{
+\index{Logger@{Logger}!log\_\-writer\_\-cvar@{log\_\-writer\_\-cvar}}
+\index{log\_\-writer\_\-cvar@{log\_\-writer\_\-cvar}!Logger@{Logger}}
+\subsubsection[{log\_\-writer\_\-cvar}]{\setlength{\rightskip}{0pt plus 5cm}boost::condition\_\-variable {\bf Logger::log\_\-writer\_\-cvar}\hspace{0.3cm}{\ttfamily  \mbox{[}static, private\mbox{]}}}}
+\label{classLogger_afbd56cc7017de01fc22be29f641be63a}
+The log writer thread sleeps on this. 
+
+Definition at line 178 of file Logger.h.
+
+
+
+Referenced by handle\_\-format\_\-request(), and log\_\-writer\_\-run().
+
+\hypertarget{classLogger_a2c4c569c9b4e1d3161979e4d60545024}{
+\index{Logger@{Logger}!log\_\-writer\_\-mtx@{log\_\-writer\_\-mtx}}
+\index{log\_\-writer\_\-mtx@{log\_\-writer\_\-mtx}!Logger@{Logger}}
+\subsubsection[{log\_\-writer\_\-mtx}]{\setlength{\rightskip}{0pt plus 5cm}boost::mutex {\bf Logger::log\_\-writer\_\-mtx}\hspace{0.3cm}{\ttfamily  \mbox{[}static, private\mbox{]}}}}
+\label{classLogger_a2c4c569c9b4e1d3161979e4d60545024}
+Mutex for the log writer queue 
+
+Definition at line 163 of file Logger.h.
+
+
+
+Referenced by handle\_\-format\_\-request(), and log\_\-writer\_\-run().
+
+\hypertarget{classLogger_a6214da297e928d0c9f960a249b6fcf8c}{
+\index{Logger@{Logger}!lw\_\-t@{lw\_\-t}}
+\index{lw\_\-t@{lw\_\-t}!Logger@{Logger}}
+\subsubsection[{lw\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}boost::thread {\bf Logger::lw\_\-t}\hspace{0.3cm}{\ttfamily  \mbox{[}static, private\mbox{]}}}}
+\label{classLogger_a6214da297e928d0c9f960a249b6fcf8c}
+The log-\/writer thread 
+
+Definition at line 193 of file Logger.h.
+
+
+
+Referenced by initialize().
+
+\hypertarget{classLogger_a5ec2e368c2190d33a096925d96309b32}{
+\index{Logger@{Logger}!NO\_\-PORT@{NO\_\-PORT}}
+\index{NO\_\-PORT@{NO\_\-PORT}!Logger@{Logger}}
+\subsubsection[{NO\_\-PORT}]{\setlength{\rightskip}{0pt plus 5cm}const int {\bf Logger::NO\_\-PORT} = 0\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classLogger_a5ec2e368c2190d33a096925d96309b32}
+no port is given 
+
+Definition at line 117 of file Logger.h.
+
+
+
+Referenced by NetworkThread::create\_\-tcp\_\-client(), NetworkThread::create\_\-tcp\_\-server(), NetworkThread::create\_\-udp\_\-client(), NetworkThread::create\_\-udp\_\-server(), handle\_\-format\_\-request(), NetworkThread::NetworkThread(), NetworkThread::run(), and NetworkThread::$\sim$NetworkThread().
+
+\hypertarget{classLogger_a0fe7f2c4dcb22ef87f07294f3db9d8cc}{
+\index{Logger@{Logger}!pid@{pid}}
+\index{pid@{pid}!Logger@{Logger}}
+\subsubsection[{pid}]{\setlength{\rightskip}{0pt plus 5cm}string {\bf Logger::pid}\hspace{0.3cm}{\ttfamily  \mbox{[}static, private\mbox{]}}}}
+\label{classLogger_a0fe7f2c4dcb22ef87f07294f3db9d8cc}
+The logger's pid 
+
+Definition at line 187 of file Logger.h.
+
+
+
+Referenced by handle\_\-format\_\-request().
+
+\hypertarget{classLogger_aeef2780f8f49da507fb3c954a1cdae29}{
+\index{Logger@{Logger}!raw\_\-requests@{raw\_\-requests}}
+\index{raw\_\-requests@{raw\_\-requests}!Logger@{Logger}}
+\subsubsection[{raw\_\-requests}]{\setlength{\rightskip}{0pt plus 5cm}std::queue$<$ pair$<$ pair$<$ string, int $>$, pair$<$ string, string $>$ $>$ $>$ {\bf Logger::raw\_\-requests}\hspace{0.3cm}{\ttfamily  \mbox{[}static, private\mbox{]}}}}
+\label{classLogger_aeef2780f8f49da507fb3c954a1cdae29}
+Queue for the raw requests 
+
+Definition at line 181 of file Logger.h.
+
+
+
+Referenced by formatter\_\-run(), log\_\-writer\_\-run(), and queue().
+
+\hypertarget{classLogger_a62912b685f72e2782371d0867b2d23f7}{
+\index{Logger@{Logger}!shutdown\_\-cvar@{shutdown\_\-cvar}}
+\index{shutdown\_\-cvar@{shutdown\_\-cvar}!Logger@{Logger}}
+\subsubsection[{shutdown\_\-cvar}]{\setlength{\rightskip}{0pt plus 5cm}boost::condition\_\-variable {\bf Logger::shutdown\_\-cvar}\hspace{0.3cm}{\ttfamily  \mbox{[}static, private\mbox{]}}}}
+\label{classLogger_a62912b685f72e2782371d0867b2d23f7}
+Cvar for shutting down (main thread uses this) 
+
+Definition at line 172 of file Logger.h.
+
+
+
+Referenced by log\_\-writer\_\-run(), and shutdown().
+
+\hypertarget{classLogger_a3438c31e00d8260e58269d57e2526533}{
+\index{Logger@{Logger}!shutdown\_\-mtx@{shutdown\_\-mtx}}
+\index{shutdown\_\-mtx@{shutdown\_\-mtx}!Logger@{Logger}}
+\subsubsection[{shutdown\_\-mtx}]{\setlength{\rightskip}{0pt plus 5cm}boost::mutex {\bf Logger::shutdown\_\-mtx}\hspace{0.3cm}{\ttfamily  \mbox{[}static, private\mbox{]}}}}
+\label{classLogger_a3438c31e00d8260e58269d57e2526533}
+Mutex for the shutdown cvar 
+
+Definition at line 169 of file Logger.h.
+
+
+
+Referenced by shutdown().
+
+\hypertarget{classLogger_a7bd8d738b20738225377ac59e47792e5}{
+\index{Logger@{Logger}!SLEEP\_\-TIME\_\-MS@{SLEEP\_\-TIME\_\-MS}}
+\index{SLEEP\_\-TIME\_\-MS@{SLEEP\_\-TIME\_\-MS}!Logger@{Logger}}
+\subsubsection[{SLEEP\_\-TIME\_\-MS}]{\setlength{\rightskip}{0pt plus 5cm}const int {\bf Logger::SLEEP\_\-TIME\_\-MS} = 50\hspace{0.3cm}{\ttfamily  \mbox{[}static, private\mbox{]}}}}
+\label{classLogger_a7bd8d738b20738225377ac59e47792e5}
+The formatter thread polls for work; this sets its sleep time. 
+
+Definition at line 127 of file Logger.h.
+
+
+
+Referenced by formatter\_\-run(), and log\_\-writer\_\-run().
+
+\hypertarget{classLogger_ac6f7534f905bc9b903b35549fa526688}{
+\index{Logger@{Logger}!write\_\-requests@{write\_\-requests}}
+\index{write\_\-requests@{write\_\-requests}!Logger@{Logger}}
+\subsubsection[{write\_\-requests}]{\setlength{\rightskip}{0pt plus 5cm}std::queue$<$ pair$<$ string, string $>$ $>$ {\bf Logger::write\_\-requests}\hspace{0.3cm}{\ttfamily  \mbox{[}static, private\mbox{]}}}}
+\label{classLogger_ac6f7534f905bc9b903b35549fa526688}
+Queue for the write requests 
+
+Definition at line 184 of file Logger.h.
+
+
+
+Referenced by handle\_\-format\_\-request(), and log\_\-writer\_\-run().
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+/home/jtedesco/dev/sockit/src/logger/\hyperlink{Logger_8h}{Logger.h}\item 
+/home/jtedesco/dev/sockit/src/logger/\hyperlink{Logger_8cpp}{Logger.cpp}\end{DoxyCompactItemize}

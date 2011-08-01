@@ -1,0 +1,245 @@
+\hypertarget{classEvent}{
+\section{Event Class Reference}
+\label{classEvent}\index{Event@{Event}}
+}
+
+
+{\ttfamily \#include $<$Event.h$>$}
+
+Inheritance diagram for Event:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classEvent}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classEvent_a5a40dd4708297f7031e29b39e039ae10}{Event} ()
+\item 
+virtual \hyperlink{classEvent_a7704ec01ce91e673885792054214b3d2}{$\sim$Event} ()
+\item 
+virtual void \hyperlink{classEvent_ac4eac8e7d44356632b59381929c8978c}{send} (const string \&data)=0
+\item 
+virtual void \hyperlink{classEvent_ac2183e14a4f65b18d046a5e082f68e71}{send\_\-bytes} (const vector$<$ \hyperlink{Event_8h_ae0aa21f6bcb621fe36c2c962aa0452fe}{byte} $>$ \&bytes)=0
+\item 
+virtual string \hyperlink{classEvent_a9e334d69556816ca38a8f21845d2a1cb}{read} () const =0
+\item 
+virtual FB::VariantList \hyperlink{classEvent_a04fa24d70fb7ec47e50e1a71bcedfe75}{read\_\-bytes} () const =0
+\item 
+virtual string \hyperlink{classEvent_ac3fe62061cb4e4552a91be17031fcc2d}{get\_\-host} ()=0
+\item 
+virtual unsigned short \hyperlink{classEvent_aa23b8454f931fcbe87ed61f1ec70b8e5}{get\_\-port} ()=0
+\item 
+\hyperlink{classEvent_ad77fd1b739e3291db3719f15dc44afb2}{FB\_\-JSAPI\_\-EVENT} (error, 1,(const string \&))
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Generic interface used to reply to data on some connection from Javascript. 
+
+Definition at line 29 of file Event.h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classEvent_a5a40dd4708297f7031e29b39e039ae10}{
+\index{Event@{Event}!Event@{Event}}
+\index{Event@{Event}!Event@{Event}}
+\subsubsection[{Event}]{\setlength{\rightskip}{0pt plus 5cm}Event::Event (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classEvent_a5a40dd4708297f7031e29b39e039ae10}
+Constructor that register the Javascript API for event objects 
+
+Definition at line 10 of file Event.cpp.
+
+
+
+References get\_\-host(), get\_\-port(), read(), read\_\-bytes(), send(), and send\_\-bytes().
+
+
+\begin{DoxyCode}
+{
+    // Expose these methods to the Javascript
+    registerMethod("send", make_method(this, &Event::send));
+    registerMethod("sendBytes", make_method(this, &Event::send_bytes));
+    registerMethod("read", make_method(this, &Event::read));
+    registerMethod("readBytes", make_method(this, &Event::read_bytes));
+    registerMethod("getHost", make_method(this, &Event::get_host));
+    registerMethod("getPort", make_method(this, &Event::get_port));
+}
+\end{DoxyCode}
+\hypertarget{classEvent_a7704ec01ce91e673885792054214b3d2}{
+\index{Event@{Event}!$\sim$Event@{$\sim$Event}}
+\index{$\sim$Event@{$\sim$Event}!Event@{Event}}
+\subsubsection[{$\sim$Event}]{\setlength{\rightskip}{0pt plus 5cm}Event::$\sim$Event (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classEvent_a7704ec01ce91e673885792054214b3d2}
+Deconstructs a event object 
+
+Definition at line 22 of file Event.cpp.
+
+
+\begin{DoxyCode}
+{
+    // Nothing to do here
+}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classEvent_ad77fd1b739e3291db3719f15dc44afb2}{
+\index{Event@{Event}!FB\_\-JSAPI\_\-EVENT@{FB\_\-JSAPI\_\-EVENT}}
+\index{FB\_\-JSAPI\_\-EVENT@{FB\_\-JSAPI\_\-EVENT}!Event@{Event}}
+\subsubsection[{FB\_\-JSAPI\_\-EVENT}]{\setlength{\rightskip}{0pt plus 5cm}Event::FB\_\-JSAPI\_\-EVENT (
+\begin{DoxyParamCaption}
+\item[{error}]{, }
+\item[{1}]{, }
+\item[{(const string \&)}]{}
+\end{DoxyParamCaption}
+)}}
+\label{classEvent_ad77fd1b739e3291db3719f15dc44afb2}
+The javascript event fired when an error occurs, which sends the error message when fired. \hypertarget{classEvent_ac3fe62061cb4e4552a91be17031fcc2d}{
+\index{Event@{Event}!get\_\-host@{get\_\-host}}
+\index{get\_\-host@{get\_\-host}!Event@{Event}}
+\subsubsection[{get\_\-host}]{\setlength{\rightskip}{0pt plus 5cm}virtual string Event::get\_\-host (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classEvent_ac3fe62061cb4e4552a91be17031fcc2d}
+Get the address, or hostname of the remote endpoint for this event. \begin{DoxyReturn}{Returns}
+The hostname of the remote endpoint for this event. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classTcpEvent_a47be6347ecf372f3fbf934ba489d90c1}{TcpEvent}, and \hyperlink{classUdpEvent_ae2484477a11197f79d46e4ef4b71b839}{UdpEvent}.
+
+
+
+Referenced by Event().
+
+\hypertarget{classEvent_aa23b8454f931fcbe87ed61f1ec70b8e5}{
+\index{Event@{Event}!get\_\-port@{get\_\-port}}
+\index{get\_\-port@{get\_\-port}!Event@{Event}}
+\subsubsection[{get\_\-port}]{\setlength{\rightskip}{0pt plus 5cm}virtual unsigned short Event::get\_\-port (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classEvent_aa23b8454f931fcbe87ed61f1ec70b8e5}
+Get the port associated with the remote endpoint of this event. \begin{DoxyReturn}{Returns}
+port The port associated with the remote endpoint of this event. 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classTcpEvent_aa14fbf8c465c3487e7eae02ec8815093}{TcpEvent}, and \hyperlink{classUdpEvent_aaad6ade41ef171993364911ed57a3185}{UdpEvent}.
+
+
+
+Referenced by Event().
+
+\hypertarget{classEvent_a9e334d69556816ca38a8f21845d2a1cb}{
+\index{Event@{Event}!read@{read}}
+\index{read@{read}!Event@{Event}}
+\subsubsection[{read}]{\setlength{\rightskip}{0pt plus 5cm}virtual string Event::read (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classEvent_a9e334d69556816ca38a8f21845d2a1cb}
+Reads the string data that belongs to this event.
+
+\begin{DoxyReturn}{Returns}
+The string data received when this event was fired 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classTcpEvent_abc8541d2f0e5b0fbf15191392fbb4a20}{TcpEvent}, and \hyperlink{classUdpEvent_a860ceb7a3a8bb6fcd7cb1342d8b7f5c7}{UdpEvent}.
+
+
+
+Referenced by Event().
+
+\hypertarget{classEvent_a04fa24d70fb7ec47e50e1a71bcedfe75}{
+\index{Event@{Event}!read\_\-bytes@{read\_\-bytes}}
+\index{read\_\-bytes@{read\_\-bytes}!Event@{Event}}
+\subsubsection[{read\_\-bytes}]{\setlength{\rightskip}{0pt plus 5cm}virtual FB::VariantList Event::read\_\-bytes (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classEvent_a04fa24d70fb7ec47e50e1a71bcedfe75}
+Reads the byte data that belongs to this event
+
+\begin{DoxyReturn}{Returns}
+The byte data received when this event was fired 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classTcpEvent_adcbbf4231886db58d1df95357b249a26}{TcpEvent}, and \hyperlink{classUdpEvent_ad315a9d5969bc5d38f3d592119cac9ca}{UdpEvent}.
+
+
+
+Referenced by Event().
+
+\hypertarget{classEvent_ac4eac8e7d44356632b59381929c8978c}{
+\index{Event@{Event}!send@{send}}
+\index{send@{send}!Event@{Event}}
+\subsubsection[{send}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Event::send (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{data}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classEvent_ac4eac8e7d44356632b59381929c8978c}
+Reply on this {\ttfamily \hyperlink{classEvent}{Event}}'s connection with some data.
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & The data to send \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classTcpEvent_ac9e73ac6ebadc8712d3edfec5e4b1dc9}{TcpEvent}, and \hyperlink{classUdpEvent_a1f88c17a020ccf73a61a40d18b3728a0}{UdpEvent}.
+
+
+
+Referenced by Event().
+
+\hypertarget{classEvent_ac2183e14a4f65b18d046a5e082f68e71}{
+\index{Event@{Event}!send\_\-bytes@{send\_\-bytes}}
+\index{send\_\-bytes@{send\_\-bytes}!Event@{Event}}
+\subsubsection[{send\_\-bytes}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Event::send\_\-bytes (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf byte} $>$ \&}]{bytes}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classEvent_ac2183e14a4f65b18d046a5e082f68e71}
+Reply on this {\ttfamily \hyperlink{classEvent}{Event}}'s connection with some data, given as bytes.
+
+
+\begin{DoxyParams}{Parameters}
+{\em bytes} & The bytes of data with which to reply \\
+\hline
+\end{DoxyParams}
+
+
+Implemented in \hyperlink{classTcpEvent_ab6741ad9135b421c220e7601939ea925}{TcpEvent}, and \hyperlink{classUdpEvent_ac44fcd996dd22e49d7dd7721198f7550}{UdpEvent}.
+
+
+
+Referenced by Event().
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+/home/jtedesco/dev/sockit/src/common/\hyperlink{Event_8h}{Event.h}\item 
+/home/jtedesco/dev/sockit/src/common/\hyperlink{Event_8cpp}{Event.cpp}\end{DoxyCompactItemize}

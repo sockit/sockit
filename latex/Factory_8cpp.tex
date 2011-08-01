@@ -1,0 +1,45 @@
+\hypertarget{Factory_8cpp}{
+\section{/home/jtedesco/dev/sockit/src/plugin/Factory.cpp File Reference}
+\label{Factory_8cpp}\index{/home/jtedesco/dev/sockit/src/plugin/Factory.cpp@{/home/jtedesco/dev/sockit/src/plugin/Factory.cpp}}
+}
+{\ttfamily \#include \char`\"{}FactoryBase.h\char`\"{}}\par
+{\ttfamily \#include \char`\"{}SockIt.h\char`\"{}}\par
+{\ttfamily \#include $<$boost/make\_\-shared.hpp$>$}\par
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classPluginFactory}{PluginFactory}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+FB::FactoryBasePtr \hyperlink{Factory_8cpp_a0c0e10db1382088eb360b06c1c839c69}{getFactoryInstance} ()
+\begin{DoxyCompactList}\small\item\em Returns the factory instance for this plugin module. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{Factory_8cpp_a0c0e10db1382088eb360b06c1c839c69}{
+\index{Factory.cpp@{Factory.cpp}!getFactoryInstance@{getFactoryInstance}}
+\index{getFactoryInstance@{getFactoryInstance}!Factory.cpp@{Factory.cpp}}
+\subsubsection[{getFactoryInstance}]{\setlength{\rightskip}{0pt plus 5cm}getFactoryInstance (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{Factory_8cpp_a0c0e10db1382088eb360b06c1c839c69}
+
+
+Returns the factory instance for this plugin module. 
+
+
+
+Definition at line 54 of file Factory.cpp.
+
+
+\begin{DoxyCode}
+{
+    static boost::shared_ptr<PluginFactory> factory = boost::make_shared<PluginFa
+      ctory>();
+    return factory;
+}
+\end{DoxyCode}

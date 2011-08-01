@@ -1,0 +1,132 @@
+\hypertarget{classServer}{
+\section{Server Class Reference}
+\label{classServer}\index{Server@{Server}}
+}
+
+
+{\ttfamily \#include $<$Server.h$>$}
+
+Inheritance diagram for Server:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classServer}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classServer_ad5ec9462b520e59f7ea831e157ee5e59}{Server} ()
+\item 
+virtual \hyperlink{classServer_a263268c249dbe6f49627fd50d496a37f}{$\sim$Server} ()
+\item 
+virtual void \hyperlink{classServer_ab60269481230955b94dc6405162794b0}{start\_\-listening} ()=0
+\item 
+virtual int \hyperlink{classServer_abd497ca7e7dc29f8ea4c6ce204839a6d}{get\_\-port} ()=0
+\item 
+\hyperlink{classServer_a1f501aef583a26270ba174202c7f24e5}{FB\_\-JSAPI\_\-EVENT} (open, 0,())
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+An abstract interface for a server object. This registers the generic server-\/specific events to javascript, and registers the 'start\_\-listening' method to the javascript API. 
+
+Definition at line 17 of file Server.h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classServer_ad5ec9462b520e59f7ea831e157ee5e59}{
+\index{Server@{Server}!Server@{Server}}
+\index{Server@{Server}!Server@{Server}}
+\subsubsection[{Server}]{\setlength{\rightskip}{0pt plus 5cm}Server::Server (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{classServer_ad5ec9462b520e59f7ea831e157ee5e59}
+Default constructor for a server object, which registers the 'start\_\-listening' function to the javascript API. 
+
+Definition at line 10 of file Server.cpp.
+
+
+
+References get\_\-port(), and start\_\-listening().
+
+
+\begin{DoxyCode}
+{
+    registerMethod("listen", make_method(this, &Server::start_listening));
+    registerMethod("getPort", make_method(this, &Server::get_port));
+}
+\end{DoxyCode}
+\hypertarget{classServer_a263268c249dbe6f49627fd50d496a37f}{
+\index{Server@{Server}!$\sim$Server@{$\sim$Server}}
+\index{$\sim$Server@{$\sim$Server}!Server@{Server}}
+\subsubsection[{$\sim$Server}]{\setlength{\rightskip}{0pt plus 5cm}virtual Server::$\sim$Server (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{classServer_a263268c249dbe6f49627fd50d496a37f}
+Deconstructs a server object 
+
+Definition at line 29 of file Server.h.
+
+
+\begin{DoxyCode}
+{}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classServer_a1f501aef583a26270ba174202c7f24e5}{
+\index{Server@{Server}!FB\_\-JSAPI\_\-EVENT@{FB\_\-JSAPI\_\-EVENT}}
+\index{FB\_\-JSAPI\_\-EVENT@{FB\_\-JSAPI\_\-EVENT}!Server@{Server}}
+\subsubsection[{FB\_\-JSAPI\_\-EVENT}]{\setlength{\rightskip}{0pt plus 5cm}Server::FB\_\-JSAPI\_\-EVENT (
+\begin{DoxyParamCaption}
+\item[{open}]{, }
+\item[{0}]{, }
+\item[{()}]{}
+\end{DoxyParamCaption}
+)}}
+\label{classServer_a1f501aef583a26270ba174202c7f24e5}
+A javascript event to be fired when the server has started listening for incoming connections successfully. \hypertarget{classServer_abd497ca7e7dc29f8ea4c6ce204839a6d}{
+\index{Server@{Server}!get\_\-port@{get\_\-port}}
+\index{get\_\-port@{get\_\-port}!Server@{Server}}
+\subsubsection[{get\_\-port}]{\setlength{\rightskip}{0pt plus 5cm}virtual int Server::get\_\-port (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classServer_abd497ca7e7dc29f8ea4c6ce204839a6d}
+Returns the port on which this server listens 
+
+Implemented in \hyperlink{classTcpServer_a65be01f9466447530de3112d538267b4}{TcpServer}, and \hyperlink{classUdpServer_a276c64a7545b49b298ca3d9ca1a12e9d}{UdpServer}.
+
+
+
+Referenced by Server().
+
+\hypertarget{classServer_ab60269481230955b94dc6405162794b0}{
+\index{Server@{Server}!start\_\-listening@{start\_\-listening}}
+\index{start\_\-listening@{start\_\-listening}!Server@{Server}}
+\subsubsection[{start\_\-listening}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Server::start\_\-listening (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classServer_ab60269481230955b94dc6405162794b0}
+Called to start the the server listening for the first time, fires the 'open' event, and is exposed to the javascript. This should only be called once, and starts the server listening for incoming connections. 
+
+Implemented in \hyperlink{classTcpServer_ad16f797335dd9c54eaec93c35d158569}{TcpServer}, and \hyperlink{classUdpServer_a55e557d344720286fdeb430ae3cb3842}{UdpServer}.
+
+
+
+Referenced by Server().
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+/home/jtedesco/dev/sockit/src/common/\hyperlink{Server_8h}{Server.h}\item 
+/home/jtedesco/dev/sockit/src/common/\hyperlink{Server_8cpp}{Server.cpp}\end{DoxyCompactItemize}

@@ -1,0 +1,1080 @@
+\hypertarget{classTcpClient}{
+\section{TcpClient Class Reference}
+\label{classTcpClient}\index{TcpClient@{TcpClient}}
+}
+
+
+{\ttfamily \#include $<$TcpClient.h$>$}
+
+Inheritance diagram for TcpClient:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classTcpClient}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classTcpClient_aa1e96bd9ed563f3eaf022cc4e90f91c2}{TcpClient} (const string \&\hyperlink{classTcp_a0e981d15f94a460b91845bce9b930c61}{host}, int \hyperlink{classTcp_a7ed15f78afc9d0675404b4b41cc723ba}{port}, boost::asio::io\_\-service \&\hyperlink{classTcp_ad0c319a0974aa3f07e9c5ae290ea18b4}{io\_\-service})
+\item 
+\hyperlink{classTcpClient_a1d42085cbb76326fd3698e6924cfbe55}{TcpClient} (const string \&\hyperlink{classTcp_a0e981d15f94a460b91845bce9b930c61}{host}, int \hyperlink{classTcp_a7ed15f78afc9d0675404b4b41cc723ba}{port}, boost::asio::io\_\-service \&\hyperlink{classTcp_ad0c319a0974aa3f07e9c5ae290ea18b4}{io\_\-service}, map$<$ string, string $>$ options)
+\item 
+virtual \hyperlink{classTcpClient_a125d2277f401cbdebadb9689a5933e18}{$\sim$TcpClient} ()
+\item 
+virtual void \hyperlink{classTcpClient_a139cffd600eaf851c3560d73a1ba3a54}{send} (const string \&data)
+\item 
+virtual void \hyperlink{classTcpClient_a1d749cbc2e255d8d3204dfd2d2c58d5f}{send\_\-bytes} (const vector$<$ \hyperlink{Event_8h_ae0aa21f6bcb621fe36c2c962aa0452fe}{byte} $>$ \&bytes)
+\item 
+virtual void \hyperlink{classTcpClient_a1f0ae8f7c7c12530bc481b77ed984790}{shutdown} ()
+\item 
+virtual int \hyperlink{classTcpClient_a9caf99246bc1f36dcc69773077ddece8}{get\_\-port} ()
+\item 
+virtual string \hyperlink{classTcpClient_a4c1ecfdba951d559456c4066a73c8bf6}{get\_\-host} ()
+\item 
+\hyperlink{classTcpClient_a5275d221f99f3d9702841b461e36108c}{FB\_\-JSAPI\_\-EVENT} (disconnect, 1,(const string \&))
+\item 
+\hyperlink{classTcpClient_a651d1d61f19169b5755e1716b159eeb8}{FB\_\-JSAPI\_\-EVENT} (connect, 0,())
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{classTcpClient_a03a3ef57b2df46a21e21640362457871}{fire\_\-error\_\-event} (const string \&message)
+\item 
+virtual void \hyperlink{classTcpClient_a279302da46c29b24b539b4e7ddf20b94}{fire\_\-disconnect\_\-event} (const string \&message)
+\item 
+virtual void \hyperlink{classTcpClient_a8085a788062b837c12040533a18aa933}{fire\_\-data\_\-event} (const string data, boost::shared\_\-ptr$<$ tcp::socket $>$ \hyperlink{classTcpClient_add183a7de092c7c13ae6ab90766c9881}{connection})
+\item 
+virtual void \hyperlink{classTcpClient_a1ee082bbca3927811bbe2c0aa75386c4}{close} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classTcpClient_a430902765fe325faf409fce8aa3374d2}{TcpClient} (const \hyperlink{classTcpClient}{TcpClient} \&other)
+\item 
+void \hyperlink{classTcpClient_aeac8e51b95f1ced1141a02ac934bc46d}{init} ()
+\item 
+void \hyperlink{classTcpClient_a1f9f4dc2af0e396f2c3a46a1e47b68d7}{init\_\-socket} ()
+\item 
+void \hyperlink{classTcpClient_a4bdf8c1ccee6d9cdb9a2220a95814f0e}{resolve\_\-handler} (const boost::system::error\_\-code \&error\_\-code, tcp::resolver::iterator endpoint\_\-iterator)
+\item 
+void \hyperlink{classTcpClient_a95419f512dec781b141a4beeea05c9a5}{connect\_\-handler} (const boost::system::error\_\-code \&error\_\-code, tcp::resolver::iterator endpoint\_\-iterator)
+\item 
+void \hyperlink{classTcpClient_a22407ce44587c805c32009fffe79a95f}{listen} ()
+\item 
+void \hyperlink{classTcpClient_a8272c8570d9f57b40230ff17b3a42156}{flush} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+boost::shared\_\-ptr$<$ tcp::socket $>$ \hyperlink{classTcpClient_add183a7de092c7c13ae6ab90766c9881}{connection}
+\item 
+boost::shared\_\-ptr$<$ tcp::resolver $>$ \hyperlink{classTcpClient_af3244fcf0139e5a07bd7b85f3e7bb6c9}{resolver}
+\item 
+bool \hyperlink{classTcpClient_aaceab0b8199fff1898b9c9301748733d}{connected}
+\item 
+boost::mutex \hyperlink{classTcpClient_a96d0c8fe68ec52f42a1d287356027adb}{connected\_\-mutex}
+\item 
+queue$<$ string $>$ \hyperlink{classTcpClient_a1ed777da769d6f064d9f908adabf2284}{data\_\-queue}
+\item 
+boost::mutex \hyperlink{classTcpClient_a158c145cba5559a4e728772b044fbbb8}{data\_\-queue\_\-mutex}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class represents a TCP client, which inherits basic TCP handling functionality from {\ttfamily \hyperlink{classTcp}{Tcp}}, and defines additional functionality to resolve and connect to a remote host. 
+
+Definition at line 26 of file TcpClient.h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classTcpClient_aa1e96bd9ed563f3eaf022cc4e90f91c2}{
+\index{TcpClient@{TcpClient}!TcpClient@{TcpClient}}
+\index{TcpClient@{TcpClient}!TcpClient@{TcpClient}}
+\subsubsection[{TcpClient}]{\setlength{\rightskip}{0pt plus 5cm}TcpClient::TcpClient (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{host, }
+\item[{int}]{port, }
+\item[{boost::asio::io\_\-service \&}]{io\_\-service}
+\end{DoxyParamCaption}
+)}}
+\label{classTcpClient_aa1e96bd9ed563f3eaf022cc4e90f91c2}
+Builds a TCP client to connect to a specified remote host and port, and begins asynchronously resolving and connecting to the remote host, given an I/O service to asynchronously perform I/O requests.
+
+
+\begin{DoxyParams}{Parameters}
+{\em host} & The hostname of the remote host to which this client will connect \\
+\hline
+{\em port} & The port of the remote host to which this client will connect \\
+\hline
+{\em io\_\-service} & The I/O service to use to perform asynchronous I/O requests \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 10 of file TcpClient.cpp.
+
+
+
+References connection, Logger::error(), Tcp::failed, init(), and resolver.
+
+
+\begin{DoxyCode}
+                                                                                 
+         :
+    Tcp(host, port, io_service), resolver(new tcp::resolver(io_service)), 
+      connection(new tcp::socket(io_service))
+{
+    // Check that the connection and resolver are valid, and fail gracefully if t
+      hey are not
+    if (!resolver.get() || !connection.get())
+    {
+        failed = true;
+        string message("Failed to initialize TCP client, failed to initialize pro
+      perly");
+        Logger::error(message, port, host);
+        fire_error(message);
+        return;
+    }
+
+    init();
+}
+\end{DoxyCode}
+\hypertarget{classTcpClient_a1d42085cbb76326fd3698e6924cfbe55}{
+\index{TcpClient@{TcpClient}!TcpClient@{TcpClient}}
+\index{TcpClient@{TcpClient}!TcpClient@{TcpClient}}
+\subsubsection[{TcpClient}]{\setlength{\rightskip}{0pt plus 5cm}TcpClient::TcpClient (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{host, }
+\item[{int}]{port, }
+\item[{boost::asio::io\_\-service \&}]{io\_\-service, }
+\item[{map$<$ string, string $>$}]{options}
+\end{DoxyParamCaption}
+)}}
+\label{classTcpClient_a1d42085cbb76326fd3698e6924cfbe55}
+Builds a TCP client to connect to a specified remote host and port, and begins asynchronously resolving and connecting to the remote host, given an I/O service to asynchronously perform I/O requests.
+
+
+\begin{DoxyParams}{Parameters}
+{\em host} & The hostname of the remote host to which this client will connect \\
+\hline
+{\em port} & The port of the remote host to which this client will connect \\
+\hline
+{\em io\_\-service} & The I/O service to use to perform asynchronous I/O requests \\
+\hline
+{\em options} & A map of options specifying the behavior of the socket \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 26 of file TcpClient.cpp.
+
+
+
+References connection, Logger::error(), Tcp::failed, init(), Tcp::parse\_\-args(), and resolver.
+
+
+\begin{DoxyCode}
+                                                                                 
+                                      :
+    Tcp(host, port, io_service), resolver(new tcp::resolver(io_service)), 
+      connection(new tcp::socket(io_service))
+{
+    // Check that the connection and resolver are valid, and fail gracefully if t
+      hey are not
+    if (!resolver.get() || !connection.get())
+    {
+        failed = true;
+        string message("Failed to initialize TCP client, failed to initialize pro
+      perly");
+        Logger::error(message, port, host);
+        fire_error(message);
+        return;
+    }
+
+    parse_args(options);
+
+    init();
+}
+\end{DoxyCode}
+\hypertarget{classTcpClient_a125d2277f401cbdebadb9689a5933e18}{
+\index{TcpClient@{TcpClient}!$\sim$TcpClient@{$\sim$TcpClient}}
+\index{$\sim$TcpClient@{$\sim$TcpClient}!TcpClient@{TcpClient}}
+\subsubsection[{$\sim$TcpClient}]{\setlength{\rightskip}{0pt plus 5cm}TcpClient::$\sim$TcpClient (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classTcpClient_a125d2277f401cbdebadb9689a5933e18}
+Deconstructs a TCP client, immediately calling {\ttfamily close} to shutdown this client's socket and stop listening for responses. 
+
+Definition at line 114 of file TcpClient.cpp.
+
+
+
+References close().
+
+
+\begin{DoxyCode}
+{
+    close();
+}
+\end{DoxyCode}
+\hypertarget{classTcpClient_a430902765fe325faf409fce8aa3374d2}{
+\index{TcpClient@{TcpClient}!TcpClient@{TcpClient}}
+\index{TcpClient@{TcpClient}!TcpClient@{TcpClient}}
+\subsubsection[{TcpClient}]{\setlength{\rightskip}{0pt plus 5cm}TcpClient::TcpClient (
+\begin{DoxyParamCaption}
+\item[{const {\bf TcpClient} \&}]{other}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classTcpClient_a430902765fe325faf409fce8aa3374d2}
+Disallows copying a TCP client 
+
+\subsection{Member Function Documentation}
+\hypertarget{classTcpClient_a1ee082bbca3927811bbe2c0aa75386c4}{
+\index{TcpClient@{TcpClient}!close@{close}}
+\index{close@{close}!TcpClient@{TcpClient}}
+\subsubsection[{close}]{\setlength{\rightskip}{0pt plus 5cm}void TcpClient::close (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classTcpClient_a1ee082bbca3927811bbe2c0aa75386c4}
+Immediately cancels any pending operations and closes this client's socket. 
+
+Implements \hyperlink{classTcp_a48b0192669ab99dc953ab3feae5c1b1c}{Tcp}.
+
+
+
+Definition at line 119 of file TcpClient.cpp.
+
+
+
+References connection, Tcp::host, Tcp::port, resolver, Tcp::waiting\_\-to\_\-shutdown, and Logger::warn().
+
+
+
+Referenced by shutdown(), and $\sim$TcpClient().
+
+
+\begin{DoxyCode}
+{
+    waiting_to_shutdown = true;
+    resolver->cancel();
+
+    // Shutdown the IO service, cancel any transfers on the socket, and close the
+       socket
+    if (connection->is_open())
+    {
+        try
+        {
+            connection->shutdown(connection->shutdown_both);
+        }
+        catch (...)
+        {
+            Logger::warn("Socket shutdown improperly, proceeding anyway", port, 
+      host);
+        }
+
+        connection->close();
+    }
+    else
+    {
+        Logger::warn("Failed to cleanly shutdown TCP client connection, continuin
+      g anyways", port, host);
+    }
+}
+\end{DoxyCode}
+\hypertarget{classTcpClient_a95419f512dec781b141a4beeea05c9a5}{
+\index{TcpClient@{TcpClient}!connect\_\-handler@{connect\_\-handler}}
+\index{connect\_\-handler@{connect\_\-handler}!TcpClient@{TcpClient}}
+\subsubsection[{connect\_\-handler}]{\setlength{\rightskip}{0pt plus 5cm}void TcpClient::connect\_\-handler (
+\begin{DoxyParamCaption}
+\item[{const boost::system::error\_\-code \&}]{error\_\-code, }
+\item[{tcp::resolver::iterator}]{endpoint\_\-iterator}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classTcpClient_a95419f512dec781b141a4beeea05c9a5}
+I/O handler invoked when this client has attempted to connect to its remote host. If the connection failed, this handler will reattempt the connection by using another resolver if possible, and otherwise fail permanently.
+
+
+\begin{DoxyParams}{Parameters}
+{\em error\_\-code} & The error code encountered when trying to receive data, if any occurred. On success, this value is zero, and nonzero on error. \\
+\hline
+{\em endpoint\_\-iterator} & Allows the client to iterate through resolvers to retry the connection if it initially fails to connect. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 278 of file TcpClient.cpp.
+
+
+
+References connected, connected\_\-mutex, connection, Tcp::disconnect\_\-errors, Logger::error(), flush(), Tcp::host, Logger::info(), Tcp::port, Tcp::receive\_\-buffer, Tcp::receive\_\-handler(), resolve\_\-handler(), resolver, and Logger::warn().
+
+
+
+Referenced by resolve\_\-handler().
+
+
+\begin{DoxyCode}
+{
+    // If there was an error to connect, log the error and abort connection
+    if (error_code)
+    {
+        // Check for disconnection errors
+        std::set<boost::system::error_code>::iterator find_result = 
+      disconnect_errors.find(error_code);
+        if (find_result != disconnect_errors.end())
+        {
+            if (error_code == boost::asio::error::operation_aborted)
+            {
+                Logger::warn("TCP connect was aborted");
+                return;
+            }
+            else
+            {
+                string message("TCP connect failed, disconnected: '" + error_code
+      .message() + "'");
+                Logger::warn(message, port, host);
+                fire_disconnect(message);
+                return;
+            }
+        }
+
+        // Check if this was not the last possible connection in the iterator
+        tcp::resolver::iterator end;
+        if (endpoint_iterator != end && error_code == boost::asio::error::host_no
+      t_found)
+        {
+            // Create a query to resolve this host & port
+            tcp::resolver::query query(host, boost::lexical_cast<string>(port));
+
+            // Try the next possible endpoint
+            resolver->async_resolve(query, boost::bind(&
+      TcpClient::resolve_handler, this, _1, endpoint_iterator++));
+        }
+        else
+        {
+            // If we've tried every possible endpoint, fail permanently
+            string message("Failed to connect to host, with message: '" + error_c
+      ode.message() + "'");
+            Logger::error(message, port, host);
+            fire_error(message);
+            return;
+        }
+    }
+
+    // Log success, and record that we are now connected
+    Logger::info("Connection established to host", port, host);
+    fire_connect();
+
+    // Start receiving data on this connection
+    connection->async_receive(boost::asio::buffer(receive_buffer),
+            boost::bind(&TcpClient::receive_handler, this, _1, _2, connection, 
+      host, port));
+
+    // Flush data from the queue if necessary
+    flush();
+
+    connected_mutex.lock();
+
+    connected = true;
+    connected_mutex.unlock();
+}
+\end{DoxyCode}
+\hypertarget{classTcpClient_a5275d221f99f3d9702841b461e36108c}{
+\index{TcpClient@{TcpClient}!FB\_\-JSAPI\_\-EVENT@{FB\_\-JSAPI\_\-EVENT}}
+\index{FB\_\-JSAPI\_\-EVENT@{FB\_\-JSAPI\_\-EVENT}!TcpClient@{TcpClient}}
+\subsubsection[{FB\_\-JSAPI\_\-EVENT}]{\setlength{\rightskip}{0pt plus 5cm}TcpClient::FB\_\-JSAPI\_\-EVENT (
+\begin{DoxyParamCaption}
+\item[{disconnect}]{, }
+\item[{1}]{, }
+\item[{(const string \&)}]{}
+\end{DoxyParamCaption}
+)}}
+\label{classTcpClient_a5275d221f99f3d9702841b461e36108c}
+The javascript event fired on a disconnect-\/type network error. This is fired on the following {\ttfamily boost} errors: 
+\begin{DoxyItemize}
+\item {\ttfamily boost::asio::error::connection\_\-reset} 
+\item {\ttfamily boost::asio::error::eof} 
+\item {\ttfamily boost::asio::error::connection\_\-aborted} 
+\item {\ttfamily boost::asio::error::operation\_\-aborted} 
+\end{DoxyItemize}\hypertarget{classTcpClient_a651d1d61f19169b5755e1716b159eeb8}{
+\index{TcpClient@{TcpClient}!FB\_\-JSAPI\_\-EVENT@{FB\_\-JSAPI\_\-EVENT}}
+\index{FB\_\-JSAPI\_\-EVENT@{FB\_\-JSAPI\_\-EVENT}!TcpClient@{TcpClient}}
+\subsubsection[{FB\_\-JSAPI\_\-EVENT}]{\setlength{\rightskip}{0pt plus 5cm}TcpClient::FB\_\-JSAPI\_\-EVENT (
+\begin{DoxyParamCaption}
+\item[{connect}]{, }
+\item[{0}]{, }
+\item[{()}]{}
+\end{DoxyParamCaption}
+)}}
+\label{classTcpClient_a651d1d61f19169b5755e1716b159eeb8}
+The javascript event fired once a client has connected to its remote endpoint, or once a server has accepted a connection successfully (but has not yet receieved data), in this class, the former. \hypertarget{classTcpClient_a8085a788062b837c12040533a18aa933}{
+\index{TcpClient@{TcpClient}!fire\_\-data\_\-event@{fire\_\-data\_\-event}}
+\index{fire\_\-data\_\-event@{fire\_\-data\_\-event}!TcpClient@{TcpClient}}
+\subsubsection[{fire\_\-data\_\-event}]{\setlength{\rightskip}{0pt plus 5cm}void TcpClient::fire\_\-data\_\-event (
+\begin{DoxyParamCaption}
+\item[{const string}]{data, }
+\item[{boost::shared\_\-ptr$<$ tcp::socket $>$}]{connection}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classTcpClient_a8085a788062b837c12040533a18aa933}
+Helper to fire data event to javascript.
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & The data received \\
+\hline
+{\em connection} & The connection on which to reply to the data \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classTcp_a7e5cfd764f04ca5e2729924b9d537db2}{Tcp}.
+
+
+
+Definition at line 378 of file TcpClient.cpp.
+
+
+\begin{DoxyCode}
+{
+    fire_data(boost::make_shared<TcpEvent>(this, connection, data));
+}
+\end{DoxyCode}
+\hypertarget{classTcpClient_a279302da46c29b24b539b4e7ddf20b94}{
+\index{TcpClient@{TcpClient}!fire\_\-disconnect\_\-event@{fire\_\-disconnect\_\-event}}
+\index{fire\_\-disconnect\_\-event@{fire\_\-disconnect\_\-event}!TcpClient@{TcpClient}}
+\subsubsection[{fire\_\-disconnect\_\-event}]{\setlength{\rightskip}{0pt plus 5cm}void TcpClient::fire\_\-disconnect\_\-event (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{message}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classTcpClient_a279302da46c29b24b539b4e7ddf20b94}
+Helper to fire an disconnect error event to javascript.
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & The error message \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classTcp_a69d92d55403e877f252bbfbfd7c02ec2}{Tcp}.
+
+
+
+Definition at line 373 of file TcpClient.cpp.
+
+
+\begin{DoxyCode}
+{
+    fire_disconnect(message);
+}
+\end{DoxyCode}
+\hypertarget{classTcpClient_a03a3ef57b2df46a21e21640362457871}{
+\index{TcpClient@{TcpClient}!fire\_\-error\_\-event@{fire\_\-error\_\-event}}
+\index{fire\_\-error\_\-event@{fire\_\-error\_\-event}!TcpClient@{TcpClient}}
+\subsubsection[{fire\_\-error\_\-event}]{\setlength{\rightskip}{0pt plus 5cm}void TcpClient::fire\_\-error\_\-event (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{message}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classTcpClient_a03a3ef57b2df46a21e21640362457871}
+Helper to fire an error event to javascript.
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & The error message \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classTcp_a9798750750bc775de9a16d0f148bc002}{Tcp}.
+
+
+
+Definition at line 368 of file TcpClient.cpp.
+
+
+\begin{DoxyCode}
+{
+    fire_error(message);
+}
+\end{DoxyCode}
+\hypertarget{classTcpClient_a8272c8570d9f57b40230ff17b3a42156}{
+\index{TcpClient@{TcpClient}!flush@{flush}}
+\index{flush@{flush}!TcpClient@{TcpClient}}
+\subsubsection[{flush}]{\setlength{\rightskip}{0pt plus 5cm}void TcpClient::flush (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classTcpClient_a8272c8570d9f57b40230ff17b3a42156}
+Helper function to flush the queue of data if sends are requested before the client is connected 
+
+Definition at line 338 of file TcpClient.cpp.
+
+
+
+References connection, TcpEvent::data, data\_\-queue, data\_\-queue\_\-mutex, Tcp::host, Tcp::port, and Tcp::send\_\-handler().
+
+
+
+Referenced by connect\_\-handler(), and send().
+
+
+\begin{DoxyCode}
+{
+    data_queue_mutex.lock();
+    while (!data_queue.empty())
+    {
+        data_queue_mutex.unlock();
+
+        // Pull the next data chunk to be sent off the queue
+        data_queue_mutex.lock();
+        string data = data_queue.front();
+        data_queue.pop();
+        data_queue_mutex.unlock();
+
+        // Asynchronously send the data across the connection
+        connection->async_send(boost::asio::buffer(data.data(), data.size()),
+                boost::bind(&TcpClient::send_handler, this, _1, _2, data, host, 
+      port, connection));
+    }
+    data_queue_mutex.unlock();
+}
+\end{DoxyCode}
+\hypertarget{classTcpClient_a4c1ecfdba951d559456c4066a73c8bf6}{
+\index{TcpClient@{TcpClient}!get\_\-host@{get\_\-host}}
+\index{get\_\-host@{get\_\-host}!TcpClient@{TcpClient}}
+\subsubsection[{get\_\-host}]{\setlength{\rightskip}{0pt plus 5cm}string TcpClient::get\_\-host (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classTcpClient_a4c1ecfdba951d559456c4066a73c8bf6}
+Returns the host to which this client connects 
+
+Implements \hyperlink{classClient_a01e5ea1bae012b2a46e8abd6b0bab704}{Client}.
+
+
+
+Definition at line 363 of file TcpClient.cpp.
+
+
+
+References Tcp::host.
+
+
+\begin{DoxyCode}
+{
+    return host;
+}
+\end{DoxyCode}
+\hypertarget{classTcpClient_a9caf99246bc1f36dcc69773077ddece8}{
+\index{TcpClient@{TcpClient}!get\_\-port@{get\_\-port}}
+\index{get\_\-port@{get\_\-port}!TcpClient@{TcpClient}}
+\subsubsection[{get\_\-port}]{\setlength{\rightskip}{0pt plus 5cm}int TcpClient::get\_\-port (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classTcpClient_a9caf99246bc1f36dcc69773077ddece8}
+Returns the port of the remote host on which this client connects 
+
+Implements \hyperlink{classClient_ac9e4f13eef6b9a776b2bb6cca9d4f78b}{Client}.
+
+
+
+Definition at line 358 of file TcpClient.cpp.
+
+
+
+References Tcp::port.
+
+
+\begin{DoxyCode}
+{
+    return port;
+}
+\end{DoxyCode}
+\hypertarget{classTcpClient_aeac8e51b95f1ced1141a02ac934bc46d}{
+\index{TcpClient@{TcpClient}!init@{init}}
+\index{init@{init}!TcpClient@{TcpClient}}
+\subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}void TcpClient::init (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classTcpClient_aeac8e51b95f1ced1141a02ac934bc46d}
+Helper function to initialize this client 
+
+Definition at line 44 of file TcpClient.cpp.
+
+
+
+References connected, Logger::error(), Tcp::failed, Tcp::host, Logger::info(), Tcp::log\_\-options(), Tcp::port, resolve\_\-handler(), resolver, and Tcp::using\_\-ipv6.
+
+
+
+Referenced by TcpClient().
+
+
+\begin{DoxyCode}
+{
+    connected = false;
+
+    Logger::info(
+            "Initializing TCP client to host '" + boost::lexical_cast<string>(
+      host) + "' on port " + boost::lexical_cast<string>(port),
+            port, host);
+    log_options();
+    Logger::info(
+            "Trying to resolve DNS information for host " + boost::lexical_cast<s
+      tring>(host) + "', port " + boost::lexical_cast<string>(
+                    port), port, host);
+
+    // Create a query to resolve this host & port
+    if (using_ipv6 && *using_ipv6)
+    {
+        // Asynchronously resolve the remote host, and once the host is resolved,
+       create a connection
+        tcp::resolver::query query(tcp::v6(), host, boost::lexical_cast<string>(
+      port),
+                boost::asio::ip::resolver_query_base::numeric_service);
+        if (resolver.get())
+            resolver->async_resolve(query, boost::bind(&
+      TcpClient::resolve_handler, this, _1, _2));
+        else
+        {
+            failed = true;
+            string message("TCP client failed to resolve, invalid resolver");
+            Logger::error(message, port, host);
+            fire_error(message);
+        }
+    }
+    else
+    {
+        // Asynchronously resolve the remote host, and once the host is resolved,
+       create a connection
+        tcp::resolver::query query(tcp::v4(), host, boost::lexical_cast<string>(
+      port),
+                boost::asio::ip::resolver_query_base::numeric_service);
+        if (resolver.get())
+            resolver->async_resolve(query, boost::bind(&
+      TcpClient::resolve_handler, this, _1, _2));
+        else
+        {
+            failed = true;
+            string message("TCP client failed to resolve, invalid resolver");
+            Logger::error(message, port, host);
+            fire_error(message);
+        }
+    }
+}
+\end{DoxyCode}
+\hypertarget{classTcpClient_a1f9f4dc2af0e396f2c3a46a1e47b68d7}{
+\index{TcpClient@{TcpClient}!init\_\-socket@{init\_\-socket}}
+\index{init\_\-socket@{init\_\-socket}!TcpClient@{TcpClient}}
+\subsubsection[{init\_\-socket}]{\setlength{\rightskip}{0pt plus 5cm}void TcpClient::init\_\-socket (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classTcpClient_a1f9f4dc2af0e396f2c3a46a1e47b68d7}
+Initialize the properties of this socket 
+
+Definition at line 89 of file TcpClient.cpp.
+
+
+
+References connection, Tcp::do\_\-not\_\-route, Tcp::keep\_\-alive, Tcp::keep\_\-alive\_\-timeout, Tcp::no\_\-delay, and Tcp::set\_\-tcp\_\-keepalive().
+
+
+
+Referenced by resolve\_\-handler().
+
+
+\begin{DoxyCode}
+{
+    // Set the socket options for this client's TCP socket
+    if (do_not_route)
+    {
+        boost::asio::socket_base::do_not_route option(*do_not_route);
+        connection->set_option(option);
+    }
+    if (keep_alive)
+    {
+        boost::asio::socket_base::keep_alive option(*keep_alive);
+        connection->set_option(option);
+    }
+    if (no_delay)
+    {
+        boost::asio::ip::tcp::no_delay option(*no_delay);
+        connection->set_option(option);
+    }
+    if (keep_alive_timeout)
+    {
+        // Set the TCP keep-alive timeout - ignores return value
+        set_tcp_keepalive(connection);
+    }
+}
+\end{DoxyCode}
+\hypertarget{classTcpClient_a22407ce44587c805c32009fffe79a95f}{
+\index{TcpClient@{TcpClient}!listen@{listen}}
+\index{listen@{listen}!TcpClient@{TcpClient}}
+\subsubsection[{listen}]{\setlength{\rightskip}{0pt plus 5cm}void TcpClient::listen (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classTcpClient_a22407ce44587c805c32009fffe79a95f}
+Helper function that will listen for incoming data on the TCP connection for the client, specifically responses to data already sent. \hypertarget{classTcpClient_a4bdf8c1ccee6d9cdb9a2220a95814f0e}{
+\index{TcpClient@{TcpClient}!resolve\_\-handler@{resolve\_\-handler}}
+\index{resolve\_\-handler@{resolve\_\-handler}!TcpClient@{TcpClient}}
+\subsubsection[{resolve\_\-handler}]{\setlength{\rightskip}{0pt plus 5cm}void TcpClient::resolve\_\-handler (
+\begin{DoxyParamCaption}
+\item[{const boost::system::error\_\-code \&}]{error\_\-code, }
+\item[{tcp::resolver::iterator}]{endpoint\_\-iterator}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classTcpClient_a4bdf8c1ccee6d9cdb9a2220a95814f0e}
+I/O handler invoked when the remote host is resolved. This handler attempts to asynchronously establish a TCP connection with the remote host.
+
+
+\begin{DoxyParams}{Parameters}
+{\em error\_\-code} & The error code encountered when trying to receive data, if any occurred. On success, this value is zero, and nonzero on error. \\
+\hline
+{\em endpoint\_\-iterator} & Allows the client to iterate through resolvers to retry the connection if it initially fails to connect. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 215 of file TcpClient.cpp.
+
+
+
+References connect\_\-handler(), connection, Tcp::disconnect\_\-errors, Logger::error(), Tcp::failed, Tcp::host, Logger::info(), init\_\-socket(), Tcp::port, Tcp::using\_\-ipv6, and Logger::warn().
+
+
+
+Referenced by connect\_\-handler(), and init().
+
+
+\begin{DoxyCode}
+{
+    // If we encountered an error
+    if (error_code)
+    {
+        // Check for disconnection errors
+        std::set<boost::system::error_code>::iterator find_result = 
+      disconnect_errors.find(error_code);
+        if (find_result != disconnect_errors.end())
+        {
+            if (error_code == boost::asio::error::operation_aborted)
+            {
+                Logger::warn("TCP resolve was aborted");
+                return;
+            }
+            else
+            {
+                string message("TCP resolve failed, disconnected: '" + error_code
+      .message() + "'");
+                Logger::warn(message, port, host);
+                fire_disconnect(message);
+                return;
+            }
+        }
+
+        // We failed permanently, fail permanently and log it
+        string message("Failed to resolve host with error: " + error_code.message
+      ());
+        Logger::error(message, port, host);
+        fire_error(message);
+        return;
+    }
+
+    if (connection.get())
+    {
+        // Attempt to connect to the endpoint, using IPv6 if specified
+        tcp::endpoint receiver_endpoint = *endpoint_iterator;
+        if (using_ipv6 && *using_ipv6)
+        {
+            connection->open(tcp::v6());
+        }
+        else
+        {
+            connection->open(tcp::v4());
+        }
+
+        // Initialize the socket if it's open
+        if (!connection->is_open())
+            init_socket();
+
+        // Log success
+        Logger::info("Host has been resolved, attempting to connect to host", 
+      port, host);
+        fire_resolve();
+
+        // Try to asynchronously establish a connection to the host
+        connection->async_connect(receiver_endpoint, boost::bind(&
+      TcpClient::connect_handler, this, _1, endpoint_iterator));
+    }
+    else
+    {
+        failed = true;
+        string message("TCP client failed to resolve, invalid connection");
+        Logger::error(message, port, host);
+        fire_error(message);
+    }
+}
+\end{DoxyCode}
+\hypertarget{classTcpClient_a139cffd600eaf851c3560d73a1ba3a54}{
+\index{TcpClient@{TcpClient}!send@{send}}
+\index{send@{send}!TcpClient@{TcpClient}}
+\subsubsection[{send}]{\setlength{\rightskip}{0pt plus 5cm}void TcpClient::send (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{data}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classTcpClient_a139cffd600eaf851c3560d73a1ba3a54}
+Asynchronously sends data to the remote host to which this client is connected.
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & The data to send across the wire \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classClient_ae02f1c7ffac49b7543244da28fbb58aa}{Client}.
+
+
+
+Definition at line 177 of file TcpClient.cpp.
+
+
+
+References Tcp::active\_\-jobs, Tcp::active\_\-jobs\_\-mutex, connected, connected\_\-mutex, connection, data\_\-queue, data\_\-queue\_\-mutex, Logger::error(), Tcp::failed, flush(), Tcp::host, Tcp::port, and Tcp::send\_\-handler().
+
+
+
+Referenced by send\_\-bytes().
+
+
+\begin{DoxyCode}
+{
+    if (failed)
+    {
+        // Log & fire an error
+        string message("Trying to send data on a TCP client that has permanently 
+      failed!");
+        Logger::error(message, port, host);
+        return;
+    }
+
+    // If we're not already connected, then queue this data to be send
+    connected_mutex.lock();
+    bool connected_now = connected;
+    connected_mutex.unlock();
+
+    if (!connected_now)
+    {
+        active_jobs_mutex.lock();
+        active_jobs++;
+        active_jobs_mutex.unlock();
+        data_queue_mutex.lock();
+        data_queue.push(data);
+        data_queue_mutex.unlock();
+    }
+    else
+    {
+        // Check if the queue needs to be flushed, and if so, flush it
+        flush();
+
+        // Send the data, and record that we've started a new send job
+        active_jobs_mutex.lock();
+        active_jobs++;
+        active_jobs_mutex.unlock();
+        connection->async_send(boost::asio::buffer(data.data(), data.size()),
+                boost::bind(&TcpClient::send_handler, this, _1, _2, data, host, 
+      port, connection));
+    }
+}
+\end{DoxyCode}
+\hypertarget{classTcpClient_a1d749cbc2e255d8d3204dfd2d2c58d5f}{
+\index{TcpClient@{TcpClient}!send\_\-bytes@{send\_\-bytes}}
+\index{send\_\-bytes@{send\_\-bytes}!TcpClient@{TcpClient}}
+\subsubsection[{send\_\-bytes}]{\setlength{\rightskip}{0pt plus 5cm}void TcpClient::send\_\-bytes (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf byte} $>$ \&}]{bytes}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classTcpClient_a1d749cbc2e255d8d3204dfd2d2c58d5f}
+Asynchronously sends bytes to the remote host to which this client is connected.
+
+
+\begin{DoxyParams}{Parameters}
+{\em bytes} & The bytes of data to send across the wire \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classClient_a6d77759bc7022e45a3e4326757bd6b8b}{Client}.
+
+
+
+Definition at line 165 of file TcpClient.cpp.
+
+
+
+References TcpEvent::data, and send().
+
+
+\begin{DoxyCode}
+{
+    string data;
+
+    for (int i = 0; i < bytes.size(); i++)
+    {
+        data.push_back((unsigned char) bytes[i]);
+    }
+
+    send(data);
+}
+\end{DoxyCode}
+\hypertarget{classTcpClient_a1f0ae8f7c7c12530bc481b77ed984790}{
+\index{TcpClient@{TcpClient}!shutdown@{shutdown}}
+\index{shutdown@{shutdown}!TcpClient@{TcpClient}}
+\subsubsection[{shutdown}]{\setlength{\rightskip}{0pt plus 5cm}void TcpClient::shutdown (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classTcpClient_a1f0ae8f7c7c12530bc481b77ed984790}
+Gracefully shutdown this TCP client, waiting until all sends have completed before freeing all resources for this TCP client and shutting down any open connections. This function is exposed the javascript API. 
+
+Implements \hyperlink{classNetworkObject_a2f519457fd87c8a92cf265a2b2883e96}{NetworkObject}.
+
+
+
+Definition at line 144 of file TcpClient.cpp.
+
+
+
+References Tcp::active\_\-jobs, Tcp::active\_\-jobs\_\-mutex, close(), Logger::error(), Tcp::failed, Tcp::host, Tcp::port, and Tcp::waiting\_\-to\_\-shutdown.
+
+
+\begin{DoxyCode}
+{
+    if (!failed)
+    {
+        active_jobs_mutex.lock();
+        int current_jobs = active_jobs;
+        active_jobs_mutex.unlock();
+        waiting_to_shutdown = true;
+        if (current_jobs == 0)
+        {
+            fire_close();
+            close();
+        }
+    }
+    else
+    {
+        // Log & fire an error
+        Logger::error("Trying to start the server listening, but the server has p
+      ermanently failed!", port, host);
+    }
+}
+\end{DoxyCode}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classTcpClient_aaceab0b8199fff1898b9c9301748733d}{
+\index{TcpClient@{TcpClient}!connected@{connected}}
+\index{connected@{connected}!TcpClient@{TcpClient}}
+\subsubsection[{connected}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf TcpClient::connected}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classTcpClient_aaceab0b8199fff1898b9c9301748733d}
+A flag recording whether this client is connected yet or not, used to queue send requests made before this client is connected if necessary. 
+
+Definition at line 197 of file TcpClient.h.
+
+
+
+Referenced by connect\_\-handler(), init(), and send().
+
+\hypertarget{classTcpClient_a96d0c8fe68ec52f42a1d287356027adb}{
+\index{TcpClient@{TcpClient}!connected\_\-mutex@{connected\_\-mutex}}
+\index{connected\_\-mutex@{connected\_\-mutex}!TcpClient@{TcpClient}}
+\subsubsection[{connected\_\-mutex}]{\setlength{\rightskip}{0pt plus 5cm}boost::mutex {\bf TcpClient::connected\_\-mutex}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classTcpClient_a96d0c8fe68ec52f42a1d287356027adb}
+A mutex used to access the queue for pending jobs 
+
+Definition at line 202 of file TcpClient.h.
+
+
+
+Referenced by connect\_\-handler(), and send().
+
+\hypertarget{classTcpClient_add183a7de092c7c13ae6ab90766c9881}{
+\index{TcpClient@{TcpClient}!connection@{connection}}
+\index{connection@{connection}!TcpClient@{TcpClient}}
+\subsubsection[{connection}]{\setlength{\rightskip}{0pt plus 5cm}boost::shared\_\-ptr$<$tcp::socket$>$ {\bf TcpClient::connection}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classTcpClient_add183a7de092c7c13ae6ab90766c9881}
+A shared reference to the socket used to connect to the remote host 
+
+Definition at line 186 of file TcpClient.h.
+
+
+
+Referenced by close(), connect\_\-handler(), flush(), init\_\-socket(), resolve\_\-handler(), send(), and TcpClient().
+
+\hypertarget{classTcpClient_a1ed777da769d6f064d9f908adabf2284}{
+\index{TcpClient@{TcpClient}!data\_\-queue@{data\_\-queue}}
+\index{data\_\-queue@{data\_\-queue}!TcpClient@{TcpClient}}
+\subsubsection[{data\_\-queue}]{\setlength{\rightskip}{0pt plus 5cm}queue$<$string$>$ {\bf TcpClient::data\_\-queue}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classTcpClient_a1ed777da769d6f064d9f908adabf2284}
+A queue of data to be sent, which fills as 'send' or 'send\_\-bytes' commands occur before the client is connected 
+
+Definition at line 207 of file TcpClient.h.
+
+
+
+Referenced by flush(), and send().
+
+\hypertarget{classTcpClient_a158c145cba5559a4e728772b044fbbb8}{
+\index{TcpClient@{TcpClient}!data\_\-queue\_\-mutex@{data\_\-queue\_\-mutex}}
+\index{data\_\-queue\_\-mutex@{data\_\-queue\_\-mutex}!TcpClient@{TcpClient}}
+\subsubsection[{data\_\-queue\_\-mutex}]{\setlength{\rightskip}{0pt plus 5cm}boost::mutex {\bf TcpClient::data\_\-queue\_\-mutex}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classTcpClient_a158c145cba5559a4e728772b044fbbb8}
+A mutex used to access the queue for pending jobs 
+
+Definition at line 212 of file TcpClient.h.
+
+
+
+Referenced by flush(), and send().
+
+\hypertarget{classTcpClient_af3244fcf0139e5a07bd7b85f3e7bb6c9}{
+\index{TcpClient@{TcpClient}!resolver@{resolver}}
+\index{resolver@{resolver}!TcpClient@{TcpClient}}
+\subsubsection[{resolver}]{\setlength{\rightskip}{0pt plus 5cm}boost::shared\_\-ptr$<$tcp::resolver$>$ {\bf TcpClient::resolver}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classTcpClient_af3244fcf0139e5a07bd7b85f3e7bb6c9}
+Resolver object provided by {\ttfamily boost} to resolve the remote hostname and port 
+
+Definition at line 191 of file TcpClient.h.
+
+
+
+Referenced by close(), connect\_\-handler(), init(), and TcpClient().
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+/home/jtedesco/dev/sockit/src/tcp/\hyperlink{TcpClient_8h}{TcpClient.h}\item 
+/home/jtedesco/dev/sockit/src/tcp/\hyperlink{TcpClient_8cpp}{TcpClient.cpp}\end{DoxyCompactItemize}

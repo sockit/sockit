@@ -1,0 +1,798 @@
+\hypertarget{classTcpServer}{
+\section{TcpServer Class Reference}
+\label{classTcpServer}\index{TcpServer@{TcpServer}}
+}
+
+
+{\ttfamily \#include $<$TcpServer.h$>$}
+
+Inheritance diagram for TcpServer:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classTcpServer}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classTcpServer_a6c573fc4b33ec7c841afb400a061a08f}{TcpServer} (int \hyperlink{classTcp_a7ed15f78afc9d0675404b4b41cc723ba}{port}, boost::asio::io\_\-service \&\hyperlink{classTcp_ad0c319a0974aa3f07e9c5ae290ea18b4}{io\_\-service})
+\item 
+\hyperlink{classTcpServer_a7b8c4471aba48774b338b5bc5c4cb310}{TcpServer} (int \hyperlink{classTcp_a7ed15f78afc9d0675404b4b41cc723ba}{port}, boost::asio::io\_\-service \&\hyperlink{classTcp_ad0c319a0974aa3f07e9c5ae290ea18b4}{io\_\-service}, map$<$ string, string $>$ options)
+\item 
+virtual \hyperlink{classTcpServer_a728a9e31c53cf86887f1f6149b1c46dd}{$\sim$TcpServer} ()
+\item 
+virtual void \hyperlink{classTcpServer_ad16f797335dd9c54eaec93c35d158569}{start\_\-listening} ()
+\item 
+virtual void \hyperlink{classTcpServer_a918898ee7b13d776a2f7ea8968168669}{shutdown} ()
+\item 
+virtual int \hyperlink{classTcpServer_a65be01f9466447530de3112d538267b4}{get\_\-port} ()
+\item 
+\hyperlink{classTcpServer_afb381d332f0169ac7b1dc3d97de93239}{FB\_\-JSAPI\_\-EVENT} (disconnect, 1,(const string \&))
+\item 
+\hyperlink{classTcpServer_a0ef55e7e09a51df56c4d1a76e4bda573}{FB\_\-JSAPI\_\-EVENT} (connect, 0,())
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classTcpServer_a99739644296c7c2647022695d0d0bdbe}{receive\_\-handler} (const boost::system::error\_\-code \&error\_\-code, std::size\_\-t bytesTransferred, boost::shared\_\-ptr$<$ tcp::socket $>$ connection, string \hyperlink{classTcp_a0e981d15f94a460b91845bce9b930c61}{host}, int \hyperlink{classTcp_a7ed15f78afc9d0675404b4b41cc723ba}{port})
+\item 
+virtual void \hyperlink{classTcpServer_a07ef4a083656e07099f615d34d3627a1}{fire\_\-error\_\-event} (const string \&message)
+\item 
+virtual void \hyperlink{classTcpServer_aef3b4f4665d3fab448008201915f1fd5}{fire\_\-disconnect\_\-event} (const string \&message)
+\item 
+virtual void \hyperlink{classTcpServer_a49708224d7eb73b2371b53d672b626e5}{fire\_\-data\_\-event} (const string data, boost::shared\_\-ptr$<$ tcp::socket $>$ connection)
+\item 
+virtual void \hyperlink{classTcpServer_a6e94bd28e3d3d506609df98afb94c879}{close} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classTcpServer_a64291f0ad4b590f32414ca93fffd13f0}{init} ()
+\item 
+void \hyperlink{classTcpServer_a6906e0426ba0dc59b4103478a886be46}{init\_\-socket} (boost::shared\_\-ptr$<$ tcp::socket $>$ connection)
+\item 
+\hyperlink{classTcpServer_abf9de49e9fca80c26eb5143bea332eaa}{TcpServer} (const \hyperlink{classTcpServer}{TcpServer} \&other)
+\item 
+void \hyperlink{classTcpServer_ac07bb7a42599e9f90f67a11bcba2285e}{accept\_\-handler} (const boost::system::error\_\-code \&error\_\-code, boost::shared\_\-ptr$<$ tcp::socket $>$ connection, string \hyperlink{classTcp_a0e981d15f94a460b91845bce9b930c61}{host}, int \hyperlink{classTcp_a7ed15f78afc9d0675404b4b41cc723ba}{port})
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+boost::shared\_\-ptr$<$ tcp::acceptor $>$ \hyperlink{classTcpServer_aa6b754f18b1c444bf6f1af263be18f33}{acceptor}
+\item 
+set$<$ boost::shared\_\-ptr$<$ tcp::socket $>$ $>$ \hyperlink{classTcpServer_a1beafdc19eb3f4e18fb811057afe5f6d}{connections}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class represents a TCP server, which inherits basic TCP handling functionality from {\ttfamily \hyperlink{classTcp}{Tcp}}, and defines additional functionality to bind to a port and accept incoming connections. 
+
+Definition at line 24 of file TcpServer.h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classTcpServer_a6c573fc4b33ec7c841afb400a061a08f}{
+\index{TcpServer@{TcpServer}!TcpServer@{TcpServer}}
+\index{TcpServer@{TcpServer}!TcpServer@{TcpServer}}
+\subsubsection[{TcpServer}]{\setlength{\rightskip}{0pt plus 5cm}TcpServer::TcpServer (
+\begin{DoxyParamCaption}
+\item[{int}]{port, }
+\item[{boost::asio::io\_\-service \&}]{io\_\-service}
+\end{DoxyParamCaption}
+)}}
+\label{classTcpServer_a6c573fc4b33ec7c841afb400a061a08f}
+Builds a TCP server to listen on the specified port, but does not start the server listening on it. Using this constructor uses IPv4, given an I/O service to use for asynchronous I/O.
+
+
+\begin{DoxyParams}{Parameters}
+{\em port} & The port on which the server should listen \\
+\hline
+{\em io\_\-service} & The I/O service to use for background I/O requests \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 10 of file TcpServer.cpp.
+
+
+
+References init().
+
+
+\begin{DoxyCode}
+                                                               :
+    Tcp("SERVER", port, io_service)
+{
+    init();
+}
+\end{DoxyCode}
+\hypertarget{classTcpServer_a7b8c4471aba48774b338b5bc5c4cb310}{
+\index{TcpServer@{TcpServer}!TcpServer@{TcpServer}}
+\index{TcpServer@{TcpServer}!TcpServer@{TcpServer}}
+\subsubsection[{TcpServer}]{\setlength{\rightskip}{0pt plus 5cm}TcpServer::TcpServer (
+\begin{DoxyParamCaption}
+\item[{int}]{port, }
+\item[{boost::asio::io\_\-service \&}]{io\_\-service, }
+\item[{map$<$ string, string $>$}]{options}
+\end{DoxyParamCaption}
+)}}
+\label{classTcpServer_a7b8c4471aba48774b338b5bc5c4cb310}
+Builds a TCP server to listen on the specified port, but does not start the server listening on it. Using this constructor creates a server using IPv6, given an I/O service to use for asynchronous I/O.
+
+
+\begin{DoxyParams}{Parameters}
+{\em port} & The port on which the server should listen \\
+\hline
+{\em io\_\-service} & The I/O service to use for background I/O requests \\
+\hline
+{\em options} & A map of options specifying the behavior of the socket \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 16 of file TcpServer.cpp.
+
+
+
+References init(), and Tcp::parse\_\-args().
+
+
+\begin{DoxyCode}
+                                                                                 
+                 :
+    Tcp("SERVER", port, io_service)
+{
+    parse_args(options);
+    init();
+}
+\end{DoxyCode}
+\hypertarget{classTcpServer_a728a9e31c53cf86887f1f6149b1c46dd}{
+\index{TcpServer@{TcpServer}!$\sim$TcpServer@{$\sim$TcpServer}}
+\index{$\sim$TcpServer@{$\sim$TcpServer}!TcpServer@{TcpServer}}
+\subsubsection[{$\sim$TcpServer}]{\setlength{\rightskip}{0pt plus 5cm}TcpServer::$\sim$TcpServer (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classTcpServer_a728a9e31c53cf86887f1f6149b1c46dd}
+Deconstructs this TCP server, by immediately ceasing to accept incoming connections, shutdown all necessary resources. 
+
+Definition at line 23 of file TcpServer.cpp.
+
+
+
+References close().
+
+
+\begin{DoxyCode}
+{
+    close();
+}
+\end{DoxyCode}
+\hypertarget{classTcpServer_abf9de49e9fca80c26eb5143bea332eaa}{
+\index{TcpServer@{TcpServer}!TcpServer@{TcpServer}}
+\index{TcpServer@{TcpServer}!TcpServer@{TcpServer}}
+\subsubsection[{TcpServer}]{\setlength{\rightskip}{0pt plus 5cm}TcpServer::TcpServer (
+\begin{DoxyParamCaption}
+\item[{const {\bf TcpServer} \&}]{other}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classTcpServer_abf9de49e9fca80c26eb5143bea332eaa}
+Disallows copying a TCP server 
+
+\subsection{Member Function Documentation}
+\hypertarget{classTcpServer_ac07bb7a42599e9f90f67a11bcba2285e}{
+\index{TcpServer@{TcpServer}!accept\_\-handler@{accept\_\-handler}}
+\index{accept\_\-handler@{accept\_\-handler}!TcpServer@{TcpServer}}
+\subsubsection[{accept\_\-handler}]{\setlength{\rightskip}{0pt plus 5cm}void TcpServer::accept\_\-handler (
+\begin{DoxyParamCaption}
+\item[{const boost::system::error\_\-code \&}]{error\_\-code, }
+\item[{boost::shared\_\-ptr$<$ tcp::socket $>$}]{connection, }
+\item[{string}]{host, }
+\item[{int}]{port}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classTcpServer_ac07bb7a42599e9f90f67a11bcba2285e}
+Handler invoked when a new connection is made to this server. This handler tries to start receiving data from the new incoming connection if there was no error accepting the connection.
+
+
+\begin{DoxyParams}{Parameters}
+{\em error\_\-code} & The error code encountered when trying to receive data, if any occurred. On success, this value is zero, and nonzero on error. \\
+\hline
+{\em connection} & The new connection created by this accept, from which this function will attempt to receive data. \\
+\hline
+{\em host} & The host from which this accept was attempted \\
+\hline
+{\em port} & The port from which this accept was attempted \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 218 of file TcpServer.cpp.
+
+
+
+References Tcp::disconnect\_\-errors, Logger::error(), Logger::info(), init\_\-socket(), Tcp::receive\_\-buffer, receive\_\-handler(), start\_\-listening(), Tcp::waiting\_\-to\_\-shutdown, and Logger::warn().
+
+
+
+Referenced by start\_\-listening().
+
+
+\begin{DoxyCode}
+{
+    // Log error & return if there is an error
+    if (error_code)
+    {
+        // Check for disconnection errors
+        std::set<boost::system::error_code>::iterator find_result = 
+      disconnect_errors.find(error_code);
+        if (find_result != disconnect_errors.end())
+        {
+            if (error_code == boost::asio::error::operation_aborted)
+            {
+                // If we're waiting to shutdown, this is part of the normal proce
+      ss
+                if(waiting_to_shutdown)
+                {
+                    Logger::info("TCP server stopped listening for new connection
+      s", port, host);
+                }
+                else
+                {
+                    Logger::warn("TCP accept was aborted", port, host);
+                }
+            }
+            else
+            {
+                string message("TCP accept failed, disconnected: '" + error_code.
+      message() + "'");
+                Logger::warn(message, port, host);
+                fire_disconnect(message);
+            }
+            return;
+        }
+
+        string message("Error accepting incoming connection: '" + error_code.mess
+      age() + "'");
+        Logger::error(message, port, host);
+        fire_error(message);
+        return;
+    }
+
+    // Initialize the socket options before we start using it
+    init_socket(connection);
+
+    // Log that we've successfully accepted a new connection, and fire the 'oncon
+      nect' event
+    string message("TCP server accepted new connection from " + connection->remot
+      e_endpoint().address().to_string() + " port "
+            + boost::lexical_cast<string>(connection->remote_endpoint().port()));
+      
+    Logger::info(message, port, host);
+    fire_connect();
+
+    if (connection.get())
+        connection->async_receive(boost::asio::buffer(receive_buffer),
+                boost::bind(&TcpServer::receive_handler, this, _1, _2, connection
+      , host, port));
+
+    // Start listening for new connections, if we're not waiting to close
+    if (!waiting_to_shutdown)
+    {
+        start_listening();
+    }
+}
+\end{DoxyCode}
+\hypertarget{classTcpServer_a6e94bd28e3d3d506609df98afb94c879}{
+\index{TcpServer@{TcpServer}!close@{close}}
+\index{close@{close}!TcpServer@{TcpServer}}
+\subsubsection[{close}]{\setlength{\rightskip}{0pt plus 5cm}void TcpServer::close (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classTcpServer_a6e94bd28e3d3d506609df98afb94c879}
+Closes down this TCP server immediately, by immediately ceasing to accept incoming connections, shutdown all necessary resources. 
+
+Implements \hyperlink{classTcp_a48b0192669ab99dc953ab3feae5c1b1c}{Tcp}.
+
+
+
+Definition at line 28 of file TcpServer.cpp.
+
+
+
+References acceptor, connections, Tcp::host, Tcp::port, Tcp::waiting\_\-to\_\-shutdown, and Logger::warn().
+
+
+
+Referenced by shutdown(), and $\sim$TcpServer().
+
+
+\begin{DoxyCode}
+{
+    // Shutdown the IO service, cancel any transfers on the socket, and close the
+       socket
+    waiting_to_shutdown = true;
+
+    set<boost::shared_ptr<tcp::socket> >::iterator it;
+    for(it = connections.begin(); it != connections.end(); it++)
+    {
+        try
+        {
+            if((*it) && (*it).get() && (*it)->is_open())
+            {
+                (*it)->close();
+            }
+        }
+        catch(boost::system::error_code &e)
+        {
+            Logger::warn("Error in TcpServer deconstructor: " + e.message(), 
+      port, host);
+        }
+        catch(std::exception &er)
+        {
+            Logger::warn("Error in TcpServer deconstructor: " + std::string(er.wh
+      at()), port, host);
+        }
+        catch(...)
+        {
+            Logger::warn("Error occured that could not be caught");
+        }
+    }
+
+    connections.clear();
+
+    if (acceptor && acceptor->is_open())
+    {
+        acceptor->close();
+    }
+    else
+    {
+        // Don't fire an error, otherwise the plugin will crash
+        string message("Could not cleanly shut down acceptor in TCP server, desct
+      ructing anyways");
+        Logger::warn(message, port, host);
+    }
+}
+\end{DoxyCode}
+\hypertarget{classTcpServer_afb381d332f0169ac7b1dc3d97de93239}{
+\index{TcpServer@{TcpServer}!FB\_\-JSAPI\_\-EVENT@{FB\_\-JSAPI\_\-EVENT}}
+\index{FB\_\-JSAPI\_\-EVENT@{FB\_\-JSAPI\_\-EVENT}!TcpServer@{TcpServer}}
+\subsubsection[{FB\_\-JSAPI\_\-EVENT}]{\setlength{\rightskip}{0pt plus 5cm}TcpServer::FB\_\-JSAPI\_\-EVENT (
+\begin{DoxyParamCaption}
+\item[{disconnect}]{, }
+\item[{1}]{, }
+\item[{(const string \&)}]{}
+\end{DoxyParamCaption}
+)}}
+\label{classTcpServer_afb381d332f0169ac7b1dc3d97de93239}
+The javascript event fired on a disconnect-\/type network error. This is fired on the following {\ttfamily boost} errors: 
+\begin{DoxyItemize}
+\item {\ttfamily boost::asio::error::connection\_\-reset} 
+\item {\ttfamily boost::asio::error::eof} 
+\item {\ttfamily boost::asio::error::connection\_\-aborted} 
+\item {\ttfamily boost::asio::error::operation\_\-aborted} 
+\end{DoxyItemize}\hypertarget{classTcpServer_a0ef55e7e09a51df56c4d1a76e4bda573}{
+\index{TcpServer@{TcpServer}!FB\_\-JSAPI\_\-EVENT@{FB\_\-JSAPI\_\-EVENT}}
+\index{FB\_\-JSAPI\_\-EVENT@{FB\_\-JSAPI\_\-EVENT}!TcpServer@{TcpServer}}
+\subsubsection[{FB\_\-JSAPI\_\-EVENT}]{\setlength{\rightskip}{0pt plus 5cm}TcpServer::FB\_\-JSAPI\_\-EVENT (
+\begin{DoxyParamCaption}
+\item[{connect}]{, }
+\item[{0}]{, }
+\item[{()}]{}
+\end{DoxyParamCaption}
+)}}
+\label{classTcpServer_a0ef55e7e09a51df56c4d1a76e4bda573}
+The javascript event fired once a client has connected to its remote endpoint, or once a server has accepted a connection successfully (but has not yet receieved data), in this class, the former. \hypertarget{classTcpServer_a49708224d7eb73b2371b53d672b626e5}{
+\index{TcpServer@{TcpServer}!fire\_\-data\_\-event@{fire\_\-data\_\-event}}
+\index{fire\_\-data\_\-event@{fire\_\-data\_\-event}!TcpServer@{TcpServer}}
+\subsubsection[{fire\_\-data\_\-event}]{\setlength{\rightskip}{0pt plus 5cm}void TcpServer::fire\_\-data\_\-event (
+\begin{DoxyParamCaption}
+\item[{const string}]{data, }
+\item[{boost::shared\_\-ptr$<$ tcp::socket $>$}]{connection}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classTcpServer_a49708224d7eb73b2371b53d672b626e5}
+Helper to fire data event to javascript.
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & The data received \\
+\hline
+{\em connection} & The connection on which to reply to the data \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classTcp_a7e5cfd764f04ca5e2729924b9d537db2}{Tcp}.
+
+
+
+Definition at line 299 of file TcpServer.cpp.
+
+
+\begin{DoxyCode}
+{
+    fire_data(boost::make_shared<TcpEvent>(this, connection, data));
+}
+\end{DoxyCode}
+\hypertarget{classTcpServer_aef3b4f4665d3fab448008201915f1fd5}{
+\index{TcpServer@{TcpServer}!fire\_\-disconnect\_\-event@{fire\_\-disconnect\_\-event}}
+\index{fire\_\-disconnect\_\-event@{fire\_\-disconnect\_\-event}!TcpServer@{TcpServer}}
+\subsubsection[{fire\_\-disconnect\_\-event}]{\setlength{\rightskip}{0pt plus 5cm}void TcpServer::fire\_\-disconnect\_\-event (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{message}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classTcpServer_aef3b4f4665d3fab448008201915f1fd5}
+Helper to fire an disconnect error event to javascript.
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & The error message \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classTcp_a69d92d55403e877f252bbfbfd7c02ec2}{Tcp}.
+
+
+
+Definition at line 294 of file TcpServer.cpp.
+
+
+\begin{DoxyCode}
+{
+    fire_disconnect(message);
+}
+\end{DoxyCode}
+\hypertarget{classTcpServer_a07ef4a083656e07099f615d34d3627a1}{
+\index{TcpServer@{TcpServer}!fire\_\-error\_\-event@{fire\_\-error\_\-event}}
+\index{fire\_\-error\_\-event@{fire\_\-error\_\-event}!TcpServer@{TcpServer}}
+\subsubsection[{fire\_\-error\_\-event}]{\setlength{\rightskip}{0pt plus 5cm}void TcpServer::fire\_\-error\_\-event (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{message}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classTcpServer_a07ef4a083656e07099f615d34d3627a1}
+Helper to fire an error event to javascript.
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & The error message \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classTcp_a9798750750bc775de9a16d0f148bc002}{Tcp}.
+
+
+
+Definition at line 289 of file TcpServer.cpp.
+
+
+\begin{DoxyCode}
+{
+    fire_error(message);
+}
+\end{DoxyCode}
+\hypertarget{classTcpServer_a65be01f9466447530de3112d538267b4}{
+\index{TcpServer@{TcpServer}!get\_\-port@{get\_\-port}}
+\index{get\_\-port@{get\_\-port}!TcpServer@{TcpServer}}
+\subsubsection[{get\_\-port}]{\setlength{\rightskip}{0pt plus 5cm}int TcpServer::get\_\-port (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classTcpServer_a65be01f9466447530de3112d538267b4}
+Returns the port on which this server listens 
+
+Implements \hyperlink{classServer_abd497ca7e7dc29f8ea4c6ce204839a6d}{Server}.
+
+
+
+Definition at line 284 of file TcpServer.cpp.
+
+
+
+References Tcp::port.
+
+
+\begin{DoxyCode}
+{
+    return port;
+}
+\end{DoxyCode}
+\hypertarget{classTcpServer_a64291f0ad4b590f32414ca93fffd13f0}{
+\index{TcpServer@{TcpServer}!init@{init}}
+\index{init@{init}!TcpServer@{TcpServer}}
+\subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}void TcpServer::init (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classTcpServer_a64291f0ad4b590f32414ca93fffd13f0}
+Helper function to initialize the acceptor. If this was not successfully initialized, {\ttfamily fail} is true. 
+
+Definition at line 71 of file TcpServer.cpp.
+
+
+
+References acceptor, Logger::error(), Tcp::failed, Tcp::host, Tcp::io\_\-service, Tcp::port, and Tcp::using\_\-ipv6.
+
+
+
+Referenced by TcpServer().
+
+
+\begin{DoxyCode}
+{
+    // Bind the acceptor to the correct port & set the options on this acceptor
+    try
+    {
+        if (using_ipv6 && *using_ipv6)
+        {
+            acceptor = boost::shared_ptr<tcp::acceptor>(new tcp::acceptor(
+      io_service, tcp::endpoint(tcp::v6(), port)));
+        }
+        else
+        {
+            acceptor = boost::shared_ptr<tcp::acceptor>(new tcp::acceptor(
+      io_service, tcp::endpoint(tcp::v4(), port)));
+        }
+    }
+    catch (boost::system::system_error &e)
+    {
+        // Catch this error, and fail gracefully
+        string message(string("Caught error initializing TCP server: '") + e.what
+      () + "'");
+        Logger::error(message, port, host);
+
+        // Stop this server from ever doing anything again
+        failed = true;
+    }
+
+    // Check that acceptor was created successfully
+    if (!acceptor.get())
+    {
+        // Fail gracefully and stop this server from ever doing anything again
+        string message("Failed to initialized TCP server acceptor");
+        Logger::error(message, port, host);
+        failed = true;
+    }
+}
+\end{DoxyCode}
+\hypertarget{classTcpServer_a6906e0426ba0dc59b4103478a886be46}{
+\index{TcpServer@{TcpServer}!init\_\-socket@{init\_\-socket}}
+\index{init\_\-socket@{init\_\-socket}!TcpServer@{TcpServer}}
+\subsubsection[{init\_\-socket}]{\setlength{\rightskip}{0pt plus 5cm}void TcpServer::init\_\-socket (
+\begin{DoxyParamCaption}
+\item[{boost::shared\_\-ptr$<$ tcp::socket $>$}]{connection}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classTcpServer_a6906e0426ba0dc59b4103478a886be46}
+Initialize the properties of this socket 
+
+Definition at line 105 of file TcpServer.cpp.
+
+
+
+References Tcp::do\_\-not\_\-route, Tcp::keep\_\-alive, Tcp::keep\_\-alive\_\-timeout, Tcp::no\_\-delay, and Tcp::set\_\-tcp\_\-keepalive().
+
+
+
+Referenced by accept\_\-handler().
+
+
+\begin{DoxyCode}
+{
+    // Set the socket options for this client's TCP socket
+    if (do_not_route)
+    {
+        boost::asio::socket_base::do_not_route option(*do_not_route);
+        connection->set_option(option);
+    }
+
+    // Toggle keep alive (enabled/disabled)
+    if (keep_alive)
+    {
+        boost::asio::socket_base::keep_alive option(*keep_alive);
+        connection->set_option(option);
+    }
+    if (no_delay)
+    {
+        boost::asio::ip::tcp::no_delay option(*no_delay);
+        connection->set_option(option);
+    }
+
+    if (keep_alive_timeout)
+    {
+        // Set the TCP keep-alive timeout - ignores return value
+        set_tcp_keepalive(connection);
+    }
+}
+\end{DoxyCode}
+\hypertarget{classTcpServer_a99739644296c7c2647022695d0d0bdbe}{
+\index{TcpServer@{TcpServer}!receive\_\-handler@{receive\_\-handler}}
+\index{receive\_\-handler@{receive\_\-handler}!TcpServer@{TcpServer}}
+\subsubsection[{receive\_\-handler}]{\setlength{\rightskip}{0pt plus 5cm}void TcpServer::receive\_\-handler (
+\begin{DoxyParamCaption}
+\item[{const boost::system::error\_\-code \&}]{error\_\-code, }
+\item[{std::size\_\-t}]{bytesTransferred, }
+\item[{boost::shared\_\-ptr$<$ tcp::socket $>$}]{connection, }
+\item[{string}]{host, }
+\item[{int}]{port}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}protected, virtual\mbox{]}}}}
+\label{classTcpServer_a99739644296c7c2647022695d0d0bdbe}
+Inherited from \hyperlink{classTcp}{Tcp}. Handler invoked when the data has been sent (or sending terminated in error). 
+
+Reimplemented from \hyperlink{classTcp_a96707e496b0fcef660c3f22fb6efc0fd}{Tcp}.
+
+
+
+Definition at line 275 of file TcpServer.cpp.
+
+
+
+References connections.
+
+
+
+Referenced by accept\_\-handler().
+
+
+\begin{DoxyCode}
+{
+    Tcp::receive_handler(error_code, bytesTransferred, connection, host, port);
+
+    if(connection && connection.get() && !connection->is_open())
+        connections.erase(connection);
+}
+\end{DoxyCode}
+\hypertarget{classTcpServer_a918898ee7b13d776a2f7ea8968168669}{
+\index{TcpServer@{TcpServer}!shutdown@{shutdown}}
+\index{shutdown@{shutdown}!TcpServer@{TcpServer}}
+\subsubsection[{shutdown}]{\setlength{\rightskip}{0pt plus 5cm}void TcpServer::shutdown (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classTcpServer_a918898ee7b13d776a2f7ea8968168669}
+Gracefully shutdown this TCP server, waiting until all sends have completed before freeing all resources for this TCP server and shutting down any open connections. This function is exposed the javascript API. 
+
+Implements \hyperlink{classNetworkObject_a2f519457fd87c8a92cf265a2b2883e96}{NetworkObject}.
+
+
+
+Definition at line 199 of file TcpServer.cpp.
+
+
+
+References Tcp::active\_\-jobs, close(), Logger::error(), Tcp::failed, Tcp::host, Tcp::port, and Tcp::waiting\_\-to\_\-shutdown.
+
+
+\begin{DoxyCode}
+{
+    if(!failed)
+    {
+        waiting_to_shutdown = true;
+        if (active_jobs == 0)
+        {
+            fire_close();
+            close();
+        }
+    }
+    else
+    {
+        // Log & fire an error
+        string message("Trying to shutdown the TCP server, but the server has per
+      manently failed!");
+        Logger::error(message, port, host);
+    }
+}
+\end{DoxyCode}
+\hypertarget{classTcpServer_ad16f797335dd9c54eaec93c35d158569}{
+\index{TcpServer@{TcpServer}!start\_\-listening@{start\_\-listening}}
+\index{start\_\-listening@{start\_\-listening}!TcpServer@{TcpServer}}
+\subsubsection[{start\_\-listening}]{\setlength{\rightskip}{0pt plus 5cm}void TcpServer::start\_\-listening (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classTcpServer_ad16f797335dd9c54eaec93c35d158569}
+Called to start the the server listening for the first time, fires the 'open' event, and is exposed to the javascript. This should only be called once, and starts the server listening for incoming connections. 
+
+Implements \hyperlink{classServer_ab60269481230955b94dc6405162794b0}{Server}.
+
+
+
+Definition at line 164 of file TcpServer.cpp.
+
+
+
+References accept\_\-handler(), acceptor, connections, Logger::error(), Tcp::failed, Tcp::host, Logger::info(), Tcp::io\_\-service, Tcp::port, and socket\_\-deallocate().
+
+
+
+Referenced by accept\_\-handler().
+
+
+\begin{DoxyCode}
+{
+    if(failed)
+    {
+        // Log & fire an error
+        string message("Trying to start the server listening, but the server has 
+      permanently failed!");
+        Logger::error(message, port, host);
+    }
+
+    // Log listening
+    Logger::info("TCP server about to start listening for incoming connections on
+       port "
+            + boost::lexical_cast<string>(port), port, host);
+
+    // Prepare to accept a new connection and asynchronously accept new incoming 
+      connections
+    boost::shared_ptr < tcp::socket > connection(new tcp::socket(io_service), 
+      socket_deallocate);
+    connections.insert(connection);
+
+    // Try to accept any new connection
+    if(acceptor.get())
+    {
+        acceptor->async_accept(*connection, boost::bind(&
+      TcpServer::accept_handler, this, _1, connection, host, port));
+    }
+    else
+    {
+        // Fail gracefully and stop this server from ever doing anything again
+        string message("TCP server failed to accept, acceptor invalid");
+        Logger::error(message, port, host);
+        failed = true;
+        return;
+    }
+
+    // Callback acknowledging that the server has opened
+    fire_open();
+}
+\end{DoxyCode}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classTcpServer_aa6b754f18b1c444bf6f1af263be18f33}{
+\index{TcpServer@{TcpServer}!acceptor@{acceptor}}
+\index{acceptor@{acceptor}!TcpServer@{TcpServer}}
+\subsubsection[{acceptor}]{\setlength{\rightskip}{0pt plus 5cm}boost::shared\_\-ptr$<$tcp::acceptor$>$ {\bf TcpServer::acceptor}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classTcpServer_aa6b754f18b1c444bf6f1af263be18f33}
+The acceptor for incoming connections for this server 
+
+Definition at line 159 of file TcpServer.h.
+
+
+
+Referenced by close(), init(), and start\_\-listening().
+
+\hypertarget{classTcpServer_a1beafdc19eb3f4e18fb811057afe5f6d}{
+\index{TcpServer@{TcpServer}!connections@{connections}}
+\index{connections@{connections}!TcpServer@{TcpServer}}
+\subsubsection[{connections}]{\setlength{\rightskip}{0pt plus 5cm}set$<$boost::shared\_\-ptr$<$tcp::socket$>$ $>$ {\bf TcpServer::connections}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classTcpServer_a1beafdc19eb3f4e18fb811057afe5f6d}
+A set of established connections. 
+
+Definition at line 162 of file TcpServer.h.
+
+
+
+Referenced by close(), receive\_\-handler(), and start\_\-listening().
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+/home/jtedesco/dev/sockit/src/tcp/\hyperlink{TcpServer_8h}{TcpServer.h}\item 
+/home/jtedesco/dev/sockit/src/tcp/\hyperlink{TcpServer_8cpp}{TcpServer.cpp}\end{DoxyCompactItemize}

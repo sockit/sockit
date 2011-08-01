@@ -1,0 +1,464 @@
+\hypertarget{classTcpEvent}{
+\section{TcpEvent Class Reference}
+\label{classTcpEvent}\index{TcpEvent@{TcpEvent}}
+}
+
+
+{\ttfamily \#include $<$TcpEvent.h$>$}
+
+Inheritance diagram for TcpEvent:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classTcpEvent}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classTcpEvent_a83e2a8e7a05da24e41bfd957f6699959}{TcpEvent} (\hyperlink{classTcp}{Tcp} $\ast$tcp, boost::shared\_\-ptr$<$ tcp::socket $>$ \hyperlink{classTcpEvent_a0cb428ee778cb7c867360b13617011c8}{connection}, string \hyperlink{classTcpEvent_ade7277f4c6339286ea9551183630ee4c}{data})
+\item 
+virtual \hyperlink{classTcpEvent_a43d6c207a513f1e0e9b917df277a248b}{$\sim$TcpEvent} ()
+\item 
+virtual void \hyperlink{classTcpEvent_ac9e73ac6ebadc8712d3edfec5e4b1dc9}{send} (const string \&\hyperlink{classTcpEvent_ade7277f4c6339286ea9551183630ee4c}{data})
+\item 
+virtual void \hyperlink{classTcpEvent_ab6741ad9135b421c220e7601939ea925}{send\_\-bytes} (const vector$<$ \hyperlink{Event_8h_ae0aa21f6bcb621fe36c2c962aa0452fe}{byte} $>$ \&bytes)
+\item 
+virtual string \hyperlink{classTcpEvent_abc8541d2f0e5b0fbf15191392fbb4a20}{read} () const 
+\item 
+virtual FB::VariantList \hyperlink{classTcpEvent_adcbbf4231886db58d1df95357b249a26}{read\_\-bytes} () const 
+\item 
+virtual string \hyperlink{classTcpEvent_a47be6347ecf372f3fbf934ba489d90c1}{get\_\-host} ()
+\item 
+virtual unsigned short \hyperlink{classTcpEvent_aa14fbf8c465c3487e7eae02ec8815093}{get\_\-port} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+string \hyperlink{classTcpEvent_ade7277f4c6339286ea9551183630ee4c}{data}
+\item 
+bool \hyperlink{classTcpEvent_a80a093f4eab107723fbb0d45414f0a58}{failed}
+\item 
+\hyperlink{classTcp}{Tcp} $\ast$ \hyperlink{classTcpEvent_ade4fbb5b8a07ec56098fb3301f5ac7a1}{tcp\_\-object}
+\item 
+string \hyperlink{classTcpEvent_a64ff43fff8e7488f4c4c7bccebbf2d0d}{host}
+\item 
+int \hyperlink{classTcpEvent_a32b592e6367f3a43a6a66884d94c3d9c}{port}
+\item 
+boost::shared\_\-ptr$<$ tcp::socket $>$ \hyperlink{classTcpEvent_a0cb428ee778cb7c867360b13617011c8}{connection}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A TCP implementation of a event to allow javascript to respond to data on a TCP connection.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classEvent}{Event} 
+\end{DoxySeeAlso}
+
+
+Definition at line 25 of file TcpEvent.h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classTcpEvent_a83e2a8e7a05da24e41bfd957f6699959}{
+\index{TcpEvent@{TcpEvent}!TcpEvent@{TcpEvent}}
+\index{TcpEvent@{TcpEvent}!TcpEvent@{TcpEvent}}
+\subsubsection[{TcpEvent}]{\setlength{\rightskip}{0pt plus 5cm}TcpEvent::TcpEvent (
+\begin{DoxyParamCaption}
+\item[{{\bf Tcp} $\ast$}]{tcp, }
+\item[{boost::shared\_\-ptr$<$ tcp::socket $>$}]{connection, }
+\item[{string}]{data}
+\end{DoxyParamCaption}
+)}}
+\label{classTcpEvent_a83e2a8e7a05da24e41bfd957f6699959}
+Constructs a new {\ttfamily \hyperlink{classTcpEvent}{TcpEvent}} object containing the TCP connection on which to reply.
+
+
+\begin{DoxyParams}{Parameters}
+{\em tcp} & The TCP server or client associated with this event \\
+\hline
+{\em connection} & The TCP connection on which to reply \\
+\hline
+{\em data} & The data received when this event was fired \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 12 of file TcpEvent.cpp.
+
+
+
+References Logger::error(), failed, host, and port.
+
+
+\begin{DoxyCode}
+                                                                                 
+            :
+    tcp_object(tcp_object), connection(connection), failed(false), data(data)
+{
+    // Check to see if any the parameters are null, and log and fail if this occu
+      rs
+    if(tcp_object && connection)
+    {
+        // Initialize only if it's safe
+        port = connection->remote_endpoint().port();
+        host = connection->remote_endpoint().address().to_string();
+    }
+    else
+    {
+        // Fail permanently and log it
+        failed = true;
+
+        string message("TCP event was not properly initialized, permanently faile
+      d.");
+        Logger::error(message, port, host);
+        fire_error(message);
+    }
+}
+\end{DoxyCode}
+\hypertarget{classTcpEvent_a43d6c207a513f1e0e9b917df277a248b}{
+\index{TcpEvent@{TcpEvent}!$\sim$TcpEvent@{$\sim$TcpEvent}}
+\index{$\sim$TcpEvent@{$\sim$TcpEvent}!TcpEvent@{TcpEvent}}
+\subsubsection[{$\sim$TcpEvent}]{\setlength{\rightskip}{0pt plus 5cm}TcpEvent::$\sim$TcpEvent (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classTcpEvent_a43d6c207a513f1e0e9b917df277a248b}
+Deconstructs the TCP event object, after a single reply. 
+
+Definition at line 33 of file TcpEvent.cpp.
+
+
+\begin{DoxyCode}
+{
+    // do not free socket, endpoint or tcp here
+}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classTcpEvent_a47be6347ecf372f3fbf934ba489d90c1}{
+\index{TcpEvent@{TcpEvent}!get\_\-host@{get\_\-host}}
+\index{get\_\-host@{get\_\-host}!TcpEvent@{TcpEvent}}
+\subsubsection[{get\_\-host}]{\setlength{\rightskip}{0pt plus 5cm}string TcpEvent::get\_\-host (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classTcpEvent_a47be6347ecf372f3fbf934ba489d90c1}
+Gets the hostname of the remote endpoint of the TCP connection for this {\ttfamily \hyperlink{classTcpEvent}{TcpEvent}}.
+
+\begin{DoxyReturn}{Returns}
+The remote hostname of the TCP connection for this {\ttfamily \hyperlink{classTcpEvent}{TcpEvent}} 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classEvent_ac3fe62061cb4e4552a91be17031fcc2d}{Event}.
+
+
+
+Definition at line 91 of file TcpEvent.cpp.
+
+
+
+References host.
+
+
+\begin{DoxyCode}
+{
+    return host;
+}
+\end{DoxyCode}
+\hypertarget{classTcpEvent_aa14fbf8c465c3487e7eae02ec8815093}{
+\index{TcpEvent@{TcpEvent}!get\_\-port@{get\_\-port}}
+\index{get\_\-port@{get\_\-port}!TcpEvent@{TcpEvent}}
+\subsubsection[{get\_\-port}]{\setlength{\rightskip}{0pt plus 5cm}unsigned short TcpEvent::get\_\-port (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classTcpEvent_aa14fbf8c465c3487e7eae02ec8815093}
+Gets the port of the remote endpoint of the TCP connection for this {\ttfamily \hyperlink{classTcpEvent}{TcpEvent}}.
+
+\begin{DoxyReturn}{Returns}
+The remote port of the TCP connection for this {\ttfamily \hyperlink{classTcpEvent}{TcpEvent}} 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classEvent_aa23b8454f931fcbe87ed61f1ec70b8e5}{Event}.
+
+
+
+Definition at line 96 of file TcpEvent.cpp.
+
+
+
+References port.
+
+
+\begin{DoxyCode}
+{
+    return port;
+}
+\end{DoxyCode}
+\hypertarget{classTcpEvent_abc8541d2f0e5b0fbf15191392fbb4a20}{
+\index{TcpEvent@{TcpEvent}!read@{read}}
+\index{read@{read}!TcpEvent@{TcpEvent}}
+\subsubsection[{read}]{\setlength{\rightskip}{0pt plus 5cm}string TcpEvent::read (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classTcpEvent_abc8541d2f0e5b0fbf15191392fbb4a20}
+Reads the string data that belongs to this event.
+
+\begin{DoxyReturn}{Returns}
+The string data received when this event was fired 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classEvent_a9e334d69556816ca38a8f21845d2a1cb}{Event}.
+
+
+
+Definition at line 74 of file TcpEvent.cpp.
+
+
+
+References data.
+
+
+\begin{DoxyCode}
+{
+    return data;
+}
+\end{DoxyCode}
+\hypertarget{classTcpEvent_adcbbf4231886db58d1df95357b249a26}{
+\index{TcpEvent@{TcpEvent}!read\_\-bytes@{read\_\-bytes}}
+\index{read\_\-bytes@{read\_\-bytes}!TcpEvent@{TcpEvent}}
+\subsubsection[{read\_\-bytes}]{\setlength{\rightskip}{0pt plus 5cm}FB::VariantList TcpEvent::read\_\-bytes (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classTcpEvent_adcbbf4231886db58d1df95357b249a26}
+Reads the byte data that belongs to this event
+
+\begin{DoxyReturn}{Returns}
+The byte data received when this event was fired 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classEvent_a04fa24d70fb7ec47e50e1a71bcedfe75}{Event}.
+
+
+
+Definition at line 79 of file TcpEvent.cpp.
+
+
+
+References data.
+
+
+\begin{DoxyCode}
+{
+    FB::VariantList fb_bytes;
+
+    for (int i = 0; i < data.size(); i++)
+    {
+        fb_bytes.push_back((unsigned char) (data.data())[i]);
+    }
+
+    return fb_bytes;
+}
+\end{DoxyCode}
+\hypertarget{classTcpEvent_ac9e73ac6ebadc8712d3edfec5e4b1dc9}{
+\index{TcpEvent@{TcpEvent}!send@{send}}
+\index{send@{send}!TcpEvent@{TcpEvent}}
+\subsubsection[{send}]{\setlength{\rightskip}{0pt plus 5cm}void TcpEvent::send (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{data}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classTcpEvent_ac9e73ac6ebadc8712d3edfec5e4b1dc9}
+Replies on the TCP connection with some data.
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & The data with which to reply \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classEvent_ac4eac8e7d44356632b59381929c8978c}{Event}.
+
+
+
+Definition at line 50 of file TcpEvent.cpp.
+
+
+
+References Tcp::active\_\-jobs, connection, Logger::error(), Tcp::failed, failed, host, port, Tcp::send\_\-handler(), and tcp\_\-object.
+
+
+
+Referenced by send\_\-bytes().
+
+
+\begin{DoxyCode}
+{
+    // Don't send if we've permanently failed
+    if(failed)
+    {
+        string message("TCP event failed to send, event already failed permanentl
+      y");
+        Logger::error(message, port, host);
+        fire_error(message);
+    }
+
+    if(!tcp_object->failed)
+    {
+        tcp_object->active_jobs++;
+        connection->async_send(boost::asio::buffer(data.data(), data.size()),
+                boost::bind(&Tcp::send_handler, tcp_object, _1, _2, data, host, 
+      port, connection));
+    }
+    else
+    {
+        string message("TCP event failed trying to reply on a permanently failed 
+      TCP object");
+        Logger::error(message, port, host);
+        fire_error(message);
+    }
+}
+\end{DoxyCode}
+\hypertarget{classTcpEvent_ab6741ad9135b421c220e7601939ea925}{
+\index{TcpEvent@{TcpEvent}!send\_\-bytes@{send\_\-bytes}}
+\index{send\_\-bytes@{send\_\-bytes}!TcpEvent@{TcpEvent}}
+\subsubsection[{send\_\-bytes}]{\setlength{\rightskip}{0pt plus 5cm}void TcpEvent::send\_\-bytes (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ {\bf byte} $>$ \&}]{bytes}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classTcpEvent_ab6741ad9135b421c220e7601939ea925}
+Replies on the TCP connection with some data.
+
+
+\begin{DoxyParams}{Parameters}
+{\em bytes} & The bytes of data with which to reply \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classEvent_ac2183e14a4f65b18d046a5e082f68e71}{Event}.
+
+
+
+Definition at line 38 of file TcpEvent.cpp.
+
+
+
+References data, and send().
+
+
+\begin{DoxyCode}
+{
+    string data;
+
+    for (int i = 0; i < bytes.size(); i++)
+    {
+        data.push_back((unsigned char) bytes[i]);
+    }
+
+    send(data);
+}
+\end{DoxyCode}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classTcpEvent_a0cb428ee778cb7c867360b13617011c8}{
+\index{TcpEvent@{TcpEvent}!connection@{connection}}
+\index{connection@{connection}!TcpEvent@{TcpEvent}}
+\subsubsection[{connection}]{\setlength{\rightskip}{0pt plus 5cm}boost::shared\_\-ptr$<$tcp::socket$>$ {\bf TcpEvent::connection}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classTcpEvent_a0cb428ee778cb7c867360b13617011c8}
+The TCP connection on which to reply 
+
+Definition at line 115 of file TcpEvent.h.
+
+
+
+Referenced by send().
+
+\hypertarget{classTcpEvent_ade7277f4c6339286ea9551183630ee4c}{
+\index{TcpEvent@{TcpEvent}!data@{data}}
+\index{data@{data}!TcpEvent@{TcpEvent}}
+\subsubsection[{data}]{\setlength{\rightskip}{0pt plus 5cm}string {\bf TcpEvent::data}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classTcpEvent_ade7277f4c6339286ea9551183630ee4c}
+The data received when this event was fired 
+
+Definition at line 90 of file TcpEvent.h.
+
+
+
+Referenced by TcpClient::flush(), read(), read\_\-bytes(), send\_\-bytes(), and TcpClient::send\_\-bytes().
+
+\hypertarget{classTcpEvent_a80a093f4eab107723fbb0d45414f0a58}{
+\index{TcpEvent@{TcpEvent}!failed@{failed}}
+\index{failed@{failed}!TcpEvent@{TcpEvent}}
+\subsubsection[{failed}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf TcpEvent::failed}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classTcpEvent_a80a093f4eab107723fbb0d45414f0a58}
+A flag to prevent this event from blowing up if was initialized improperly 
+
+Definition at line 95 of file TcpEvent.h.
+
+
+
+Referenced by send(), and TcpEvent().
+
+\hypertarget{classTcpEvent_a64ff43fff8e7488f4c4c7bccebbf2d0d}{
+\index{TcpEvent@{TcpEvent}!host@{host}}
+\index{host@{host}!TcpEvent@{TcpEvent}}
+\subsubsection[{host}]{\setlength{\rightskip}{0pt plus 5cm}string {\bf TcpEvent::host}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classTcpEvent_a64ff43fff8e7488f4c4c7bccebbf2d0d}
+The remote hostname of the TCP connection for this {\ttfamily \hyperlink{classTcpEvent}{TcpEvent}} 
+
+Definition at line 105 of file TcpEvent.h.
+
+
+
+Referenced by get\_\-host(), send(), and TcpEvent().
+
+\hypertarget{classTcpEvent_a32b592e6367f3a43a6a66884d94c3d9c}{
+\index{TcpEvent@{TcpEvent}!port@{port}}
+\index{port@{port}!TcpEvent@{TcpEvent}}
+\subsubsection[{port}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf TcpEvent::port}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classTcpEvent_a32b592e6367f3a43a6a66884d94c3d9c}
+The remote port of the TCP connection for this {\ttfamily \hyperlink{classTcpEvent}{TcpEvent}}. 
+
+Definition at line 110 of file TcpEvent.h.
+
+
+
+Referenced by get\_\-port(), send(), and TcpEvent().
+
+\hypertarget{classTcpEvent_ade4fbb5b8a07ec56098fb3301f5ac7a1}{
+\index{TcpEvent@{TcpEvent}!tcp\_\-object@{tcp\_\-object}}
+\index{tcp\_\-object@{tcp\_\-object}!TcpEvent@{TcpEvent}}
+\subsubsection[{tcp\_\-object}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Tcp}$\ast$ {\bf TcpEvent::tcp\_\-object}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}
+\label{classTcpEvent_ade4fbb5b8a07ec56098fb3301f5ac7a1}
+The TCP server or client associated with this event 
+
+Definition at line 100 of file TcpEvent.h.
+
+
+
+Referenced by send().
+
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+/home/jtedesco/dev/sockit/src/tcp/\hyperlink{TcpEvent_8h}{TcpEvent.h}\item 
+/home/jtedesco/dev/sockit/src/tcp/\hyperlink{TcpEvent_8cpp}{TcpEvent.cpp}\end{DoxyCompactItemize}
