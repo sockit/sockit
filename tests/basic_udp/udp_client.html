@@ -1,0 +1,42 @@
+<html> 
+<head> 
+    <title>Udp client</title> 
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> 
+    <script src="../../scripts/sockit.js"></script>
+    <script src="../../scripts/common.js"></script>
+
+	<style>
+
+		#out
+		{
+			padding: 5px;
+			width: 900px;
+			height: 500px;
+			margin: 0 auto;
+			background-color: #eeeeee;
+			overflow: auto;
+		}
+
+	</style>
+
+</head> 
+<body> 
+    <div id="out"> 
+    </div> 
+
+	<script type="text/javascript">
+
+        var sockit = loadSockitPlugin();
+
+        //var client1 = sockit.createUdpClient("ip6-localhost", 8818, {"IPv6":"true"});
+        var client1 = sockit.createUdpClient("127.0.0.1", 8818);
+        client1.addEventListener('ondata', output);
+        client1.addEventListener('onerror', output);
+
+        client1.send("AHAHA");
+
+	</script>
+
+
+</body>
+</html> 

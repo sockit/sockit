@@ -1,0 +1,40 @@
+<html> 
+<head> 
+    <title>Keepalive client</title> 
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> 
+    <script src="../../scripts/sockit.js"></script>
+    <script src="../../scripts/common.js"></script>
+
+	<style>
+
+		#out
+		{
+			padding: 5px;
+			width: 900px;
+			height: 500px;
+			margin: 0 auto;
+			background-color: #eeeeee;
+			overflow: auto;
+		}
+
+	</style>
+
+</head> 
+<body> 
+    <div id="out"> 
+    </div> 
+
+	<script type="text/javascript">
+
+        var sockit = loadSockitPlugin();
+        var client = sockit.createTcpClient("127.0.0.1", 8549, {"keepalive":"true", "keepalive timeout":"10"});
+        client.addEventListener('ondata', output);
+	client.addEventListener('onerror', output);
+	client.addEventListener('ondisconnect', output);
+	client.send("hello!");
+
+	</script>
+
+
+</body>
+</html> 

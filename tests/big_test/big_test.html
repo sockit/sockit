@@ -1,0 +1,299 @@
+<html> 
+<head> 
+    <title>Big Test</title> 
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> 
+    <script src="../../scripts/sockit.js"></script>
+    <script src="../../scripts/common.js"></script>
+
+	<style>
+
+		#out
+		{
+			padding: 5px;
+			width: 900px;
+			height: 500px;
+			margin: 0 auto;
+			background-color: #eeeeee;
+			overflow: auto;
+		}
+
+	</style>
+
+</head> 
+<body> 
+    <div id="out">
+    </div> 
+
+	<script type="text/javascript">
+
+        Array.prototype.equals = (function(t) {
+            if (this.length != t.length) { return false; }
+            var a = this.sort(),
+                b = t.sort();
+            for (var i = 0; t[i]; i++) {
+                if (a[i] !== b[i]) { 
+                        return false;
+                }
+            }
+            return true;
+        });
+
+
+        var test = "Nothing";
+        var results = new Array();
+        var expected = new Array();
+
+        function checker(x, t)
+        {
+            expected.push(x);
+            return function(event)
+            {
+                if( x != event.read() )
+                {
+                    output("Failure on " + t);
+                    output("Got " + event.read());
+                    results.push(event.read());
+                }
+                else
+                {
+                    output("Success on " + t);
+                    results.push(event.read());
+                }
+            };
+        }
+
+        function binaryChecker(x, t)
+        {
+            expected.push(x);
+            return function(event)
+            {
+                var bytes = event.readBytes();
+                var text = event.read();
+                if(text != sockit.toBinary(bytes) || !bytes.equals(sockit.fromBinary(text)) || text != "Success6")
+                {
+                    output("Failure on " + t);
+                    output("Got " + event.read());
+                    results.push(event.read());
+                }
+                else
+                {
+                    output("Success on " + t);
+                    results.push(event.read());
+                }
+            };
+        }
+
+        function arrayChecker(arr, t) 
+        {
+            expected.push(arr);
+            return function(event)
+            {
+                var bytes = event.readBytes();
+                console.log(bytes);
+                console.log(arr);
+                if(!bytes.equals(arr))
+                {
+                    output("Failure on " + t);
+                    output("Got " + event.readBytes());
+                    results.push(event.readBytes());
+                }
+                else
+                {
+                    output("Success on " + t);
+                    results.push(event.readBytes());
+                }
+            };
+        }
+    
+        var sockit = loadSockitPlugin();
+        var port = 53000;
+
+        // Test 1 - TCP/IPv6
+        test = "1: TCP/IPv6";
+        var server_tcp_ipv6 = sockit.createTcpServer(port, {"ipv6":"true"});
+        server_tcp_ipv6.addEventListener('data', checker("Success1", test));
+        server_tcp_ipv6.addEventListener('error', output);
+        server_tcp_ipv6.listen();
+
+        var client_tcp_ipv6 = sockit.createTcpClient("::1", port, {"ipv6":"true"});
+        client_tcp_ipv6.addEventListener('error', output);
+        client_tcp_ipv6.send("Success1");
+        port++;
+
+        // Test 2 - Simple TCP
+        test = "2: Simple TCP";
+        var server_tcp = sockit.createTcpServer(port);
+        server_tcp.addEventListener('data', checker("Success2", test));
+        server_tcp.addEventListener('error', output);
+        server_tcp.listen();
+
+        var client_tcp = sockit.createTcpClient("127.0.0.1", port);
+        client_tcp.addEventListener('error', output);
+        client_tcp.send("Success2");
+        port++;
+
+        //Test 3 - UDP/IPv6
+        test = "3: UDP/IPV6";
+        var server_udp_ipv6 = sockit.createUdpServer(port, {"ipv6":"true"});
+        server_udp_ipv6.addEventListener('data', checker("Success3", test));
+        server_udp_ipv6.addEventListener('error', output);
+        server_udp_ipv6.listen();
+
+        var client_udp_ipv6 = sockit.createUdpClient("::1", port, {"ipv6":"true"});
+        client_udp_ipv6.addEventListener('error', output);
+        client_udp_ipv6.send("Success3");
+        port++;
+
+        //Test 4 - Simple UDP
+        test = "4: Simple UDP";
+        var server_udp = sockit.createUdpServer(port);
+        server_udp.addEventListener('data', checker("Success4", test));
+        server_udp.addEventListener('error', output);
+        server_udp.listen();
+
+        var client_udp = sockit.createUdpClient("localhost", port);
+        client_udp.addEventListener('error', output);
+        client_udp.send("Success4");
+        port++;
+
+        function reply_test(test, pass, fail)
+        {
+            expected.push(pass);
+            return function(event)
+            {
+                if(event.read() == test)
+                    event.send(pass);
+                else
+                    event.send(fail);
+            };
+        }
+
+        function reply_check(event)
+        {
+            results.push(event.read());
+            output(event.read());
+        }
+
+        test = "5: UDP Binary Data";
+        var server_udp_binary = sockit.createUdpServer(port);
+        server_udp_binary.addEventListener('data', checker("Success5", test));
+        server_udp_binary.addEventListener('error', output);
+        server_udp_binary.listen();
+
+        var client_udp_binary = sockit.createUdpClient("localhost", port);
+        client_udp_binary.addEventListener('error', output);
+        client_udp_binary.send("Success5");
+        port++;
+
+        test = "6: TCP Binary Data";
+        var server_tcp_binary = sockit.createTcpServer(port);
+        server_tcp_binary.addEventListener('data', checker("Success6", test));
+        server_tcp_binary.addEventListener('error', output);
+        server_tcp_binary.listen();
+
+        var client_tcp_binary = sockit.createTcpClient("localhost", port);
+        client_tcp_binary.addEventListener('error', output);
+        client_tcp_binary.send("Success6");
+        port++;
+
+        test = "7: Binary Conversion";
+        var server_tcp_conv = sockit.createTcpServer(port);
+        server_tcp_conv.addEventListener('data', arrayChecker([0x00, 0xFF, 0xFF], test));
+        server_tcp_conv.addEventListener('error', output);
+        server_tcp_conv.listen();
+
+        var client_tcp_conv = sockit.createTcpClient("localhost", port);
+        client_tcp_conv.sendBytes([0x00, 0xFF, 0xFFFF]);
+        port++;
+
+        test = "8: Multicast UDP / UDP Replying";
+        var multicast_args = {"multicast group":"239.8.128.28", "multicast":"true"}
+        var server_udp_multicast = sockit.createUdpServer(9999, multicast_args);
+        server_udp_multicast.addEventListener('data', checker("Success8", test));
+        server_udp_multicast.addEventListener('data', 
+                reply_test("Success8", "Success: UDP Replying", "Failure: UDP Replying"));
+        server_udp_multicast.addEventListener('error', output);
+        server_udp_multicast.listen();
+
+        var server_udp_multicast2 = sockit.createUdpServer(9999, multicast_args);
+        server_udp_multicast2.addEventListener('data', checker("Success8", test));
+        server_udp_multicast2.addEventListener('error', output);
+        server_udp_multicast2.listen();
+
+        var client_udp_multicast = sockit.createUdpClient("239.8.128.28", 9999);
+        client_udp_multicast.addEventListener('data', reply_check);
+        client_udp_multicast.addEventListener('error', output);
+        client_udp_multicast.send("Success8");
+
+        test = "9: TCP Replying";
+        var server_tcp_replying = sockit.createTcpServer(port);
+        server_tcp_replying.addEventListener('data', 
+                reply_test("Success9", "Success: TCP Replying", "Failure: TCP Replying"));
+        server_tcp_replying.addEventListener('error', output);
+        server_tcp_replying.addEventListener('disconnect', output);
+        server_tcp_replying.listen();
+
+        var client_tcp_replying = sockit.createTcpClient("127.0.0.1", port);
+        client_tcp_replying.addEventListener('data', reply_check);
+        client_tcp_replying.addEventListener('disconnect', output);
+        client_tcp_replying.addEventListener('error', output);
+        client_tcp_replying.send("Success9");
+        port++;
+
+
+        function contains(arr, elem)
+        {
+            for(var i in arr)
+            {
+                if(arr[i] == elem)
+                    return true;
+                else
+                {
+                    try
+                    {
+                        if (arr[i].equals(elem))
+                            return true;
+                    }
+                    catch (error)
+                    {
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        function verify()
+        {
+            var pass = true;
+            for(var i in expected)
+            {
+                if(!contains(results, expected[i]))
+                {
+                     output("Failure: didn't get " + expected[i]);
+                     pass = false;
+                }
+            }
+
+            for(var i in results)
+            {
+                if(!contains(expected, results[i]))
+                {
+                    output("Failure: got extra message " + results[i]);
+                    pass = false;
+                }
+            }
+
+            if(pass)
+                output("-----> PASS <-----");
+            else
+                output("-----> FAIL <-----");
+        }
+
+        setTimeout(verify, 200);
+
+	</script>
+
+
+</body>
+</html> 

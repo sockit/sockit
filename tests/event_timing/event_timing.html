@@ -1,0 +1,79 @@
+<html>
+<head>
+    <title>Empty Page</title>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> 
+    <script src="../../scripts/sockit.js"></script>
+    <script src="../../scripts/common.js"></script>
+
+    <style>
+        #statusbox
+        {
+            border: 3px solid gray;
+            background-color: #eeeeee;
+            width: 750px;
+            height: 800px;
+            margin: 0px auto;
+            padding: 5px;
+            overflow: auto;
+            text-align: left
+        }
+    </style>
+
+
+</head>
+<body>
+<center>
+    <h2>Testing Event Timing</h2>
+</center>
+
+<script type="text/javascript">
+
+    var sockit = loadSockitPlugin();
+    //sockit.addEventListener("test", incr);
+
+    var count = 0;
+    var testCount = 10000;
+
+    var beforeMillis = 0;
+    var afterMillis = 0;
+
+    function incr()
+    {
+
+        if (count == testCount)
+        {
+            afterMillis = mils();
+            var time = afterMillis - beforeMillis;
+
+            $("#statusbox").html($("#statusbox").html() + "Took "  + (time/1000.0) + " seconds to fire " + testCount + " events, about " + testCount/(time/1000) + " events per second.<br><br>");
+        }
+        else
+        {
+            count++
+        }
+    }
+
+    function start()
+    {
+        beforeMillis = mils();
+        var i = 0;
+        while(i <= testCount)
+        {
+            //sockit.test();
+            i++;
+        }
+    }
+</script>
+
+<center>
+<div id="statusbox">
+</div>
+</center>
+
+<script>
+    $("#statusbox").html("Starting test...<br><br>");
+    start();
+</script>
+
+</body>
+</html> 
