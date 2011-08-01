@@ -14,7 +14,7 @@
  *
  * \section tutorial_sec Tutorial
  *
- * <p>To see a quick example of our plugin, see our <a href="http://sockit.github.com/sockit/tutorial.html">Hello World tutorial</a> or our <a href="http://sockit.github.com/sockit/tutorial/full_tutorial.html">full tutorial</a>.</p>
+ * <p>To see a quick example of our plugin, see our <a href="http://sockit.github.com/sockit/tutorial.html">quick tutorial</a> or our <a href="http://sockit.github.com/sockit/tutorial/full_tutorial.html">full tutorial</a>.</p>
  * <p>To learn about everything that our plugin can do, see our <a href="http://sockit.github.com/sockit/api_documentation.html">API documentation</a>.</p>
  *
  * \section install_sec Building from Source
