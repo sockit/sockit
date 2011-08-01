@@ -6,7 +6,7 @@
  *
  * \section install_sec Installation
  *
- * Our plugin is currently packaged for 64-bit Chrome and Firefox on both Windows and Linux. To install our plugin, visit our <a href="http://sockit.github.com/sockit/downloads.html">downloads</a> page.
+ * Our plugin is currently packaged for 64-bit Chrome and Firefox on both Windows and Linux. To install our plugin, visit our <a href="http://sockit.github.com/downloads.html">downloads</a> page.
  *
  * \section features_sec Features
  *
@@ -14,8 +14,8 @@
  *
  * \section tutorial_sec Tutorial
  *
- * <p>To see a quick example of our plugin, see our <a href="http://sockit.github.com/sockit/tutorial.html">quick tutorial</a> or our <a href="http://sockit.github.com/sockit/tutorial/full_tutorial.html">full tutorial</a>.</p>
- * <p>To learn about everything that our plugin can do, see our <a href="http://sockit.github.com/sockit/api_documentation.html">API documentation</a>.</p>
+ * <p>To see a quick example of our plugin, see our <a href="http://sockit.github.com/tutorial.html">quick tutorial</a> or our <a href="http://sockit.github.com/tutorial/full_tutorial.html">full tutorial</a>.</p>
+ * <p>To learn about everything that our plugin can do, see our <a href="http://sockit.github.com/api_documentation.html">API documentation</a>.</p>
  *
  * \section install_sec Building from Source
  * To get familiar with our code, browse this full source documentation.
