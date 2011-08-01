@@ -1,4 +1,4 @@
-Read Before Pulling
+Installation
 =====================
 
 Don't just clone the repo. This project needs to be located in
