@@ -20,7 +20,8 @@ To do this:
 
 Or, all at once now:
 
-    git clone git://github.com/firebreath/FireBreath.git firebreath-dev && mkdir firebreath-dev/projects && git clone git@github.com:sockit/sockit.git firebreath-dev/projects/sockit && cd firebreath-dev/projects/sockit
+    git clone git://github.com/firebreath/FireBreath.git firebreath-dev && mkdir firebreath-dev/projects && 
+    git clone git@github.com:sockit/sockit.git firebreath-dev/projects/sockit && cd firebreath-dev/projects/sockit
 
 ================================== END ==================================
 
