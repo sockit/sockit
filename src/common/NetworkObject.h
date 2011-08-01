@@ -2,11 +2,11 @@
  *
  * \section intro_sec Introduction
  *
- * SockIt is a Chrome plugin that allows Javascript to perform asynchronous, low-level networking functions. Our API allows web developers to create servers and clients which perform asynchronous network I/O by using Javascript events to perform callbacks. The API provides access to both TCP and UDP protocols, as well as basic concurrency control for tweaking performance.
+ * SockIt is an NPAPI plugin that allows Javascript to perform asynchronous, low-level networking functions. Our API allows web developers to create servers and clients which perform asynchronous network I/O by using Javascript events to perform callbacks. The API provides access to both TCP and UDP protocols, as well as basic concurrency control for tweaking performance.
  *
  * \section install_sec Installation
  *
- * Our plugin is currently packaged for 64-bit Chrome and Firefox on both Windows and Linux. To install our plugin, visit our <a href="http://extensions/chrome/sockit/tutorial/downloads.html">downloads</a> page.
+ * Our plugin is currently packaged for 64-bit Chrome and Firefox on both Windows and Linux. To install our plugin, visit our <a href="http://sockit.github.com/sockit/downloads.html">downloads</a> page.
  *
  * \section features_sec Features
  *
@@ -14,8 +14,8 @@
  *
  * \section tutorial_sec Tutorial
  *
- * <p>To see a quick example of our plugin, see our <a href="http://extensions/chrome/sockit/tutorial/tutorial.html">Hello World tutorial</a> or our <a href="http://extensions/chrome/sockit/tutorial/full_tutorial.html">full tutorial</a>.</p>
- * <p>To learn about everything that our plugin can do, see our <a href="http://extensions/chrome/sockit/tutorial/api_documentation.html">API documentation</a>.</p>
+ * <p>To see a quick example of our plugin, see our <a href="http://sockit.github.com/sockit/tutorial.html">Hello World tutorial</a> or our <a href="http://sockit.github.com/sockit/tutorial/full_tutorial.html">full tutorial</a>.</p>
+ * <p>To learn about everything that our plugin can do, see our <a href="http://sockit.github.com/sockit/api_documentation.html">API documentation</a>.</p>
  *
  * \section install_sec Building from Source
  * To get familiar with our code, browse this full source documentation.
