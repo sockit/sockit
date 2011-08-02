@@ -14,6 +14,14 @@ else
 fi
 
 cd ../../build
-
 CORES=lscpu | grep "Core(s) per socket" | awk '{ print $4 }'
 make -j $CORES --no-print-directory
+cd -
+
+mkdir -p bin/linux
+if [ $# -gt 0 ] && [ $1 -eq 32 ]
+then
+    cp ../../build/SockIt/npSockIt.so bin/linux/npSockIt32.so
+else
+    cp ../../build/SockIt/npSockIt.so bin/linux/npSockIt64.so
+fi

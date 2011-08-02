@@ -8,3 +8,10 @@ cd ../..
 ./prepmac.sh -DCMAKE_BUILD_TYPE="Debug" -DCMAKE_CXX_FLAGS="-D__OSX__"
 cd build
 xcodebuild __OSX__="true"
+
+# NOTE: You will need to update this 'sockit' path to be the path of the directory into
+#   which you cloned the sockit repo, if it is not the default
+cd ../projects/sockit
+
+mkdir -p bin/mac
+cp -a ../../build/SockIt/Debug/SockIt.plugin bin/mac/
