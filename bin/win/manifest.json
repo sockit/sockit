@@ -5,7 +5,7 @@
     "plugins":[ {"path": "npSockIt.dll", "public": true} ],
     "permissions": ["http://<all_urls>, https://<all_urls>, file://<all_urls>"],
     "browser_action": {
-        "default_title": ""
+        "default_title": "",
         "default_icon": "",
         "default_popup": ""
     }
