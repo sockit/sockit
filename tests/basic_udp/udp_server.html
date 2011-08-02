@@ -29,8 +29,8 @@
 		var x = mils();
 
 		var server = sockit.createUdpServer(8818);
-		server.addEventListener('ondata', output);
-		server.addEventListener('onerror', output);
+		server.addEventListener('data', event_out);
+		server.addEventListener('error', output);
 
 		output("loading the thread + server took " + (mils() - x) + " ms");
 
