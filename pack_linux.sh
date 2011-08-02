@@ -1,7 +1,5 @@
 #!/bin/bash
 
-cp bin/linux/np
-
 # Again, takes an argument, 32 or 64
 if [ "$1" = "32" ]
 then
@@ -11,14 +9,15 @@ else
 fi
 
 
-google-chrome --pack-extension=bin/linux/linux
+google-chrome --pack-extension=bin/linux
 rm bin/linux/npSockIt.so
 
 
 # Again, takes an argument, 32 or 64
+rm bin/linux.pem
 if [ "$1" = "32" ]
 then
-    mv bin/linux/linux.crx bin/linux/sockit_linux_32.crx
+    mv bin/linux.crx bin/linux/sockit_linux_32.crx
 else
-    mv bin/linux/linux.crx bin/linux/sockit_linux_64.crx
+    mv bin/linux.crx bin/linux/sockit_linux_64.crx
 fi

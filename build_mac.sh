@@ -14,4 +14,4 @@ xcodebuild __OSX__="true"
 cd ../projects/sockit
 
 mkdir -p bin/mac
-cp -a ../../build/SockIt/Debug/SockIt.plugin bin/mac/
+cp -a ../../build/bin/SockIt/Debug/SockIt.plugin bin/mac/

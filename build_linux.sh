@@ -21,7 +21,7 @@ cd -
 mkdir -p bin/linux
 if [ $# -gt 0 ] && [ $1 -eq 32 ]
 then
-    cp ../../build/SockIt/npSockIt.so bin/linux/npSockIt32.so
+    cp ../../build/bin/SockIt/npSockIt.so bin/linux/npSockIt32.so
 else
-    cp ../../build/SockIt/npSockIt.so bin/linux/npSockIt64.so
+    cp ../../build/bin/SockIt/npSockIt.so bin/linux/npSockIt64.so
 fi
