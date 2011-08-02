@@ -1,8 +1,10 @@
 #!/bin/bash
 
-# ./build.sh will build the sockit project for your platform.
-# ./build.sh 32 will attempt to make it for 32-bit platforms; 
-# ./build.sh 64 will do the same for 64-bit platforms.
+# ./build_linux.sh will build the sockit project for your platform.
+# ./build_linux.sh 32 will attempt to make it for 32-bit platforms; 
+# ./build_linux.sh 64 will do the same for 64-bit platforms.
+# ./build_linux.sh clean - clean before building
+# ./build_linux.sh 64 clean - clean before building 64-bit.
 
 if [ $# -gt 0 ] && [ $1 -eq 32 ]
 then
@@ -15,6 +17,15 @@ fi
 
 cd ../../build
 CORES=lscpu | grep "Core(s) per socket" | awk '{ print $4 }'
+
+if [ $# -gt 0 ]
+then
+    if [ "$1" -eq "clean" ] || [ "$2" -eq "clean"]
+    then
+        make clean
+    fi
+fi
+
 make -j $CORES --no-print-directory
 cd -
 
