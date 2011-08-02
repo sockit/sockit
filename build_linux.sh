@@ -30,7 +30,7 @@ make -j $CORES --no-print-directory
 cd -
 
 mkdir -p bin/linux
-if [ $# -gt 0 ] && [ $1 -eq 32 ]
+if [ $# -gt 0 ] && [ "$1" == "32" ]
 then
     cp ../../build/bin/SockIt/npSockIt.so bin/linux/npSockIt32.so
 else
