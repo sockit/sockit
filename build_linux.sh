@@ -6,7 +6,7 @@
 # ./build_linux.sh clean - clean before building
 # ./build_linux.sh 64 clean - clean before building 64-bit.
 
-if [ $# -gt 0 ] && [ $1 -eq 32 ]
+if [ $# -gt 0 ] && [ "$1" == "32" ]
 then
     export CFLAGS="-m32"
     export CXXFLAGS="-m32"
@@ -16,16 +16,16 @@ else
 fi
 
 cd ../../build
-CORES=lscpu | grep "Core(s) per socket" | awk '{ print $4 }'
 
-if [ $# -gt 0 ]
+if [ $# -gt 0 ] && [ "$1" == "clean" ]
 then
-    if [ "$1" -eq "clean" ] || [ "$2" -eq "clean"]
-    then
-        make clean
-    fi
+    make clean
+elif [ $# -gt 1 ] && [ "$2" == "clean" ]
+then
+    make clean
 fi
 
+CORES=lscpu | grep "Core(s) per socket" | awk '{ print $4 }'
 make -j $CORES --no-print-directory
 cd -
 
