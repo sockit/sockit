@@ -8,9 +8,9 @@ if [ $# -gt 0 ] && [ $1 -eq 32 ]
 then
     export CFLAGS="-m32"
     export CXXFLAGS="-m32"
-    ../../prepmake.sh -DCMAKE_BUILD_TYPE="Debug" -DCMAKE_C_CFLAGS="-m32" -DCMAKE_CXX_FLAGS="-m32 -D__UNIX__"
+    ../../prepmake.sh -DCMAKE_BUILD_TYPE="Release" -DCMAKE_C_CFLAGS="-m32" -DCMAKE_CXX_FLAGS="-m32 -D__UNIX__"
 else
-    ../../prepmake.sh -DCMAKE_BUILD_TYPE="Debug" -DCMAKE_CXX_FLAGS="-D__UNIX__"
+    ../../prepmake.sh -DCMAKE_BUILD_TYPE="Release" -DCMAKE_CXX_FLAGS="-D__UNIX__"
 fi
 
 cd ../../build
