@@ -1,45 +1,44 @@
 <html> 
-<head> 
-    <title>Keepalive server</title> 
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> 
-    <script src="../../scripts/sockit.js"></script>
-    <script src="../../scripts/common.js"></script>
+    <head> 
+        <title>Keepalive server</title> 
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> 
+        <script src="../../scripts/sockit.js"></script>
+        <script src="../../scripts/common.js"></script>
 
-	<style>
+	    <style>
 
-		#out
-		{
-			padding: 5px;
-			width: 900px;
-			height: 500px;
-			margin: 0 auto;
-			background-color: #eeeeee;
-			overflow: auto;
-		}
+		    #out
+		    {
+			    padding: 5px;
+			    width: 900px;
+			    height: 500px;
+			    margin: 0 auto;
+			    background-color: #eeeeee;
+			    overflow: auto;
+		    }
 
-	</style>
-</head> 
-<body> 
-    <div id="out"> 
-    </div> 
+	    </style>
+    </head> 
+    <body> 
+        <div id="out"> 
+        </div> 
 
-	<script type="text/javascript">
+	    <script type="text/javascript">
 
-        var sockit = loadSockitPlugin();
-	var x = mils();
+            var sockit = loadSockitPlugin();
+	        var x = mils();
 
-	var server = sockit.createTcpServer(8549, {"keepalive":"true", "keepalive timeout":"10"});
-	server.addEventListener('ondata', output);
-	server.addEventListener('onerror', output);
-	server.addEventListener('ondisconnect', output);
+	        var server = sockit.createTcpServer(8549, {"keepalive":"true", "keepalive timeout":"10"});
+	        server.addEventListener('data', event_out);
+	        server.addEventListener('error', output);
+	        server.addEventListener('disconnect', output);
 
-	output("loading the thread + server took " + (mils() - x) + " ms");
-		
-	server.listen();
-	output("Started!");
+	        output("loading the thread + server took " + (mils() - x) + " ms");
 
-	</script>
+	        server.listen();
+	        output("Started!");
 
+	    </script>
 
-</body>
+    </body>
 </html> 

@@ -28,13 +28,13 @@
 
         var sockit = loadSockitPlugin();
         var client = sockit.createTcpClient("0::", 8888, {"IPv6":"true"});
-        client.addEventListener('ondata', output);
-	    client.addEventListener('ondisconnect', console.log);
+        client.addEventListener('data', event_out);
+	    client.addEventListener('disconnect', console.log);
         client.send("Test 1 of 2 passed!");
 
         var client = sockit.createTcpClient("::1", 8888, {"ipv6":"true"});
-        client.addEventListener('ondata', output);
-        client.addEventListener('ondisconnect', console.log);
+        client.addEventListener('data', event_out);
+        client.addEventListener('disconnect', console.log);
         client.send("Test 2 of 2 passed!");
 
 	</script>

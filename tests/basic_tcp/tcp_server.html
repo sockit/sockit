@@ -29,8 +29,8 @@
 		var x = mils();
 
 		var server = sockit.createTcpServer(8888, {"ipv6":"true"});
-		server.addEventListener('ondata', output);
-		server.addEventListener('onerror', output);
+		server.addEventListener('data', event_out);
+		server.addEventListener('error', event_out);
 
 		output("loading the thread + server took " + (mils() - x) + " ms");
 

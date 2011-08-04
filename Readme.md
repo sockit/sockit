@@ -6,16 +6,18 @@ a firebreath/projects directory, as it uses the Firebreath framework.
 
 To do this:
 
-    # clone the firebreath repo, dev branch. its pretty stable.
+    # Clone the firebreath repo, dev branch. Its pretty stable. If this branch proves to be unstable,
+    # try one of the firebreath-1.x branches. This plugin was originally developed on the firebreath-1.5
+    # branch, so that one should work.
     git clone git://github.com/firebreath/FireBreath.git firebreath-dev
 
-    # make the subdirectory for sockit
+    # Make the subdirectory for sockit
     mkdir firebreath-dev/projects
 
-    # clone the sockit repo
+    # Clone the sockit repo
     git clone git@github.com:sockit/sockit.git firebreath-dev/projects/sockit
 
-    # do some stuff here (you can build from here too).
+    # Do some development here (you can build and package the project from here).
     cd firebreath-dev/projects/sockit
 
 Or, all at once now:

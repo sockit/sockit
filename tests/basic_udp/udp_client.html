@@ -28,10 +28,9 @@
 
         var sockit = loadSockitPlugin();
 
-        //var client1 = sockit.createUdpClient("ip6-localhost", 8818, {"IPv6":"true"});
         var client1 = sockit.createUdpClient("127.0.0.1", 8818);
-        client1.addEventListener('ondata', output);
-        client1.addEventListener('onerror', output);
+        client1.addEventListener('data', event_out);
+        client1.addEventListener('error', output);
 
         client1.send("AHAHA");
 
