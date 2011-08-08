@@ -26,9 +26,10 @@ Or, all at once now:
     git clone git@github.com:sockit/sockit.git firebreath-dev/projects/sockit && cd firebreath-dev/projects/sockit
 
 
-See sockit.github.com and firebreath.org for information about the plugin, and how to build it yourself.
+Building
+====================
 
-For the impatient, run the appropriate build script for your platform. The resulting
-binaries can be found in ../../build/projects/sockit/<buildtype>/
+See sockit.github.com and firebreath.org for information about the plugin, and how to build it yourself. Extensive documentation on 
+building and packaging the project can be found at <a href="http://sockit.github.com/developers.html">http://sockit.github.com/developers.html.
 
-where <buildtype> is DEBUG by default.
+Run the appropriate build script for your platform. The resulting binaries can be found in <code>bin\\<platform></code> 
