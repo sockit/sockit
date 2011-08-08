@@ -10,9 +10,12 @@ if [ $# -gt 0 ] && [ "$1" == "32" ]
 then
     export CFLAGS="-m32"
     export CXXFLAGS="-m32"
-    ../../prepmake.sh -DCMAKE_BUILD_TYPE="Debug" -DCMAKE_C_CFLAGS="-m32" -DCMAKE_CXX_FLAGS="-m32 -D__UNIX__"
+    ../../prepmake.sh -DCMAKE_BUILD_TYPE="Debug" -DCMAKE_C_CFLAGS="-m32 -O3" -DCMAKE_CXX_FLAGS="-m32 -D__UNIX__ -O3"
+elif [ $# -gt 0 ] && [ "$1" == "64" ]
+then
+    ../../prepmake.sh -DCMAKE_BUILD_TYPE="Debug" -DCMAKE_C_CFLAGS="-m64 -O3" -DCMAKE_CXX_FLAGS="-m64 -D__UNIX__ -O3"
 else
-    ../../prepmake.sh -DCMAKE_BUILD_TYPE="Debug" -DCMAKE_CXX_FLAGS="-D__UNIX__"
+    ../../prepmake.sh -DCMAKE_BUILD_TYPE="Debug" -DCMAKE_C_CFLAGS="-mtune=native -O3" -DCMAKE_CXX_FLAGS="-mtune=native -O3 -D__UNIX__"
 fi
 
 cd ../../build
