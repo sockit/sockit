@@ -36,6 +36,11 @@ mkdir -p bin/linux
 if [ $# -gt 0 ] && [ "$1" == "32" ]
 then
     cp ../../build/bin/SockIt/npSockIt.so bin/linux/npSockIt32.so
-else
+elif [ $# -gt 0 ] && [ "$1" == "64" ]
+then
     cp ../../build/bin/SockIt/npSockIt.so bin/linux/npSockIt64.so
+else
+    cp ../../build/bin/SockIt/npSockIt.so bin/linux/npSockIt.so
 fi
+
+cp bin/linux/*.so ~/.mozilla/plugins
