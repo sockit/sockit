@@ -13,6 +13,8 @@ then
     ../../prepmake.sh -DCMAKE_BUILD_TYPE="Debug" -DCMAKE_C_CFLAGS="-m32 -O3" -DCMAKE_CXX_FLAGS="-m32 -D__UNIX__ -O3"
 elif [ $# -gt 0 ] && [ "$1" == "64" ]
 then
+    export CFLAGS="-m64"
+    export CXXFLAGS="-m64"
     ../../prepmake.sh -DCMAKE_BUILD_TYPE="Debug" -DCMAKE_C_CFLAGS="-m64 -O3" -DCMAKE_CXX_FLAGS="-m64 -D__UNIX__ -O3"
 else
     ../../prepmake.sh -DCMAKE_BUILD_TYPE="Debug" -DCMAKE_C_CFLAGS="-mtune=native -O3" -DCMAKE_CXX_FLAGS="-mtune=native -O3 -D__UNIX__"
@@ -28,7 +30,7 @@ then
     make clean
 fi
 
-CORES=lscpu | grep "Core(s) per socket" | awk '{ print $4 }'
+CORES=`lscpu | grep "Core(s) per socket" | awk '{ print $4 }'`
 make -j $CORES --no-print-directory
 cd -
 
