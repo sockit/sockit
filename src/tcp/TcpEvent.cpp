@@ -9,8 +9,8 @@
 
 #include <stdio.h>
 
-TcpEvent::TcpEvent(Tcp * tcp_object, boost::shared_ptr<tcp::socket> connection, string data) :
-	tcp_object(tcp_object), connection(connection), failed(false), data(data)
+TcpEvent::TcpEvent(Tcp * _tcp_object, boost::shared_ptr<tcp::socket> _connection, string _data) :
+	tcp_object(_tcp_object), connection(_connection), failed(false), data(_data)
 {
 	// Check to see if any the parameters are null, and log and fail if this occurs
 	if(tcp_object && connection)
@@ -60,7 +60,7 @@ void TcpEvent::send(const string & data)
 	if(!tcp_object->failed)
 	{
 		tcp_object->active_jobs++;
-		connection->async_send(boost::asio::buffer(data.data(), data.size()),
+        boost::asio::async_write(*connection, boost::asio::buffer(data.data(), data.size()),
 				boost::bind(&Tcp::send_handler, tcp_object, _1, _2, data, host, port, connection));
 	}
 	else

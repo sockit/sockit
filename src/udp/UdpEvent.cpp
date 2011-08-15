@@ -7,8 +7,8 @@
 
 #include "UdpEvent.h"
 
-UdpEvent::UdpEvent(Udp * udp_object, boost::shared_ptr<udp::socket> socket, boost::shared_ptr<udp::endpoint> endpoint, string data) :
-	port(-1), socket(socket), endpoint(endpoint), udp_object(udp_object), failed(false), data(data)
+UdpEvent::UdpEvent(Udp * _udp_object, boost::shared_ptr<udp::socket> _socket, boost::shared_ptr<udp::endpoint> _endpoint, string _data) :
+	port(-1), socket(_socket), endpoint(_endpoint), udp_object(_udp_object), failed(false), data(_data)
 {
 	// Check to see if any the parameters are null, and log and fail if this occurs
 	if (endpoint && udp_object)
