@@ -206,7 +206,7 @@ class Tcp
 		 * A constant representing the maximum number of bytes that a TCP message can be in boost.
 		 * If our message is larger than this, keep trying to send it until all successful bytes were sent.
 		 */
-		static const int MAX_DATA_SIZE = 65536;
+		static const int MAX_DATA_SIZE = 16436;
 
 		/**
 		 * A buffer for receiving data from the remote host.
