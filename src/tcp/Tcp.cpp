@@ -48,31 +48,8 @@ void Tcp::send_handler(const boost::system::error_code & error_code, std::size_t
 		return;
 	}
 
-	if (bytes_transferred != data.size())
-	{
-		// Get the rest of the message, and try resending it
-		string rest_of_buffer(((char*) data.data()) + bytes_transferred, data.size() - bytes_transferred);
-
-		active_jobs_mutex.lock();
-		active_jobs++;
-		active_jobs_mutex.unlock();
-
-		connection->async_send(boost::asio::buffer(rest_of_buffer.data(), rest_of_buffer.size()),
-				boost::bind(&Tcp::send_handler, this, _1, _2, rest_of_buffer, host, port, connection));
-
-		// Log that we had to do this
-		// We could not send all of the message, fire an error and log it
-		string message(
-				string("TCP send failed, only ") + boost::lexical_cast<string>(bytes_transferred) + " of " + boost::lexical_cast<string>(
-						data.size()) + " total bytes were sent");
-		Logger::warn(message, port, host);
-		return;
-	}
-	else
-	{
-		string message("TCP send succeeded, sent " + boost::lexical_cast<string>(bytes_transferred) + " bytes, data is: " + data);
-		Logger::info(message, port, host);
-	}
+	string message("TCP send succeeded, sent " + boost::lexical_cast<string>(bytes_transferred) + " bytes, data is: " + data);
+	Logger::info(message, port, host);
 
 	// Check to see if this is for the last send to complete, and if we're waiting to shutdown
 	active_jobs_mutex.lock();
