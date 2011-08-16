@@ -71,7 +71,7 @@ string Logger::get_date()
 /* Helper for building the directory path. Gets the current timestamp (local time) in HH:MM:SS format */
 string Logger::get_timestamp()
 {
-	boost::posix_time::ptime now = boost::posix_time::second_clock::local_time();
+	boost::posix_time::ptime now = boost::posix_time::microsec_clock::local_time();
 	return boost::posix_time::to_simple_string(now);
 }
 
