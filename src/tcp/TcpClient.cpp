@@ -207,7 +207,7 @@ void TcpClient::send(const string & data)
 		active_jobs_mutex.lock();
 		active_jobs++;
 		active_jobs_mutex.unlock();
-		connection->async_send(boost::asio::buffer(data.data(), data.size()),
+        boost::asio::async_write(*connection, boost::asio::buffer(data.data(), data.size()),
 				boost::bind(&TcpClient::send_handler, this, _1, _2, data, host, port, connection));
 	}
 }
@@ -349,7 +349,7 @@ void TcpClient::flush()
 		data_queue_mutex.unlock();
 
 		// Asynchronously send the data across the connection
-		connection->async_send(boost::asio::buffer(data.data(), data.size()),
+        boost::asio::async_write(*connection, boost::asio::buffer(data.data(), data.size()),
 				boost::bind(&TcpClient::send_handler, this, _1, _2, data, host, port, connection));
 	}
 	data_queue_mutex.unlock();
