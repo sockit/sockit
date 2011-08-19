@@ -1,0 +1,155 @@
+<html> 
+    <head> 
+        <title>Ping-Pong Player 2</title> 
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> 
+        <script src="http://sockit.github.com/scripts/sockit.js"></script>
+        <script src="http://sockit.github.com/scripts/common.js"></script>
+
+	    <style>
+
+		    #out
+		    {
+			    padding: 5px;
+			    width: 900px;
+			    height: 500px;
+			    margin: 0 auto;
+			    background-color: #eeeeee;
+			    overflow: auto;
+		    }
+
+	    </style>
+    </head> 
+    <body> 
+        <div id="out"> 
+        </div> 
+
+	    <script type="text/javascript">
+
+            function output(s)
+            {
+                $("#out").html( $("#out").html() + "<p>" + s + "</p>");
+                scrollDown();
+            }
+
+            function Set() 
+            {
+                var length = 0;
+                var items = {};
+                var val = 57;
+
+                this.add = function(k)
+                {
+                    if (!(k in items))
+                        length++; // don't count twice
+                    items[k] = val;
+                }
+
+                this.contains = function(k) 
+                {
+                    return items[k] == val
+                }
+
+                this.__defineGetter__("length", function() 
+                { 
+                    return length; 
+                });
+            }
+
+            function check_all(event)
+            {
+                var arr = event.read().split(".")
+                for (i in arr)
+                    if(arr[i].length > 0)
+                        check(event, arr[i])
+            }
+
+            var set = new Set()
+            var sockit = loadSockitPlugin();
+            var last_message = -1;
+            var stopped = false;
+
+            function check(event, data)
+            {
+                if(stopped)
+                {
+                    return;
+                }
+
+                console.log("Checking... " + data);
+
+                if(last_message == -1)
+                {
+                    last_message = data;
+                    set.add(data);
+                    return;
+                }
+
+                if(data == "STOP")
+                {
+                    stopped = true;
+                }
+                else if(set.contains(data))
+                {
+                    output("Got a repeat message : " + data)
+                }
+                else if(data != (parseInt(last_message) + 1))
+                {
+                    output("Got message out of order : " + data);
+                    output("Expected " + (parseInt(last_message) + 1));
+                    event.send("STOP");
+                }
+                else
+                {
+                    last_message = parseInt(last_message) + 1
+                    set.add(data)
+                }
+
+                if(data == 999) {
+                    output("Pong!")
+                    set = new Set();
+                    var end = last_message
+                    last_message = -1;
+                    reply_all(event, end);
+                }
+            }
+
+            function reply_all(event, end)
+            {
+                var i = 0;
+                while(i <= end)
+                {
+                    event.send(i+".");
+                    i++;
+                }
+            }
+
+            var client = sockit.createTcpClient("localhost", 8888);
+	        client.addEventListener('disconnect', console.log);
+	        client.addEventListener('data', check_all);
+
+            function bytes(n)
+            {
+                var arr = []
+
+                while(n > 0)
+                {
+                    arr.push(Math.floor(n % 256))
+                    n = Math.floor(n / 256)
+                }
+
+                return arr
+            }
+
+            var i = 0
+            var max_i = 1000;
+            while(i < max_i)
+            {
+                client.send(i+"")
+                i++
+            }
+
+            output("done")
+
+	    </script>
+    </body>
+</html> 
