@@ -1,3 +1,28 @@
+Overview
+=====================
+
+SockIt is a browser plugin that allows Javascript to perform asynchronous, low-level networking functions. 
+The API allows web developers to create servers and clients which perform asynchronous network I/O by using
+Javascript events to perform callbacks. The API provides access to both TCP and UDP protocols, as well as 
+basic concurrency control for tweaking performance.
+
+Code example:
+
+    var client = sockit.createTcpClient("www.google.com", 80);
+    client.addEventListener("data", function(event) {
+      console.log(event.read());
+    });
+    client.send("GET / HTTP/1.0\n\n");
+    
+For pre-built binaries, documentation and demos, see http://sockit.github.com/
+
+
+Security Considerations
+=====================
+
+Installing this extension would give any web-page the permissions to make arbitrary TCP/UDP connections from your machine. Treat this as an experimental tool.
+
+
 Installation
 =====================
 
@@ -35,8 +60,3 @@ building and packaging the project can be found at <a href="http://sockit.github
 
 Run the appropriate build script for your platform. The resulting binaries can be found in <code>bin\\<platform></code> 
 
-
-Security Considerations
-=======================
-
-Installing this extension would give any web-page the permissions to make arbitrary TCP/UDP connections from your machine. Treat this as an experimental tool.
