@@ -32,4 +32,11 @@ Building
 See sockit.github.com and firebreath.org for information about the plugin, and how to build it yourself. Extensive documentation on 
 building and packaging the project can be found at <a href="http://sockit.github.com/developers.html">http://sockit.github.com/developers.html.
 
+
 Run the appropriate build script for your platform. The resulting binaries can be found in <code>bin\\<platform></code> 
+
+
+Security Considerations
+=======================
+
+Installing this extension would give any web-page the permissions to make arbitrary TCP/UDP connections from your machine. Treat this as an experimental tool.
